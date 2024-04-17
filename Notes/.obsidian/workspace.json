@@ -66,9 +66,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "6024da180cd40cac",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Conventional Commits.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -134,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "To-do.md",
+                "file": "Conventional Commits.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "To-do.md",
+                "file": "Conventional Commits.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "To-do.md"
+                "file": "Conventional Commits.md"
               }
             }
           }
@@ -195,10 +207,11 @@
       "command-palette:Apri riquadro comandi": false
     }
   },
-  "active": "db9d4a65579fbda6",
+  "active": "6024da180cd40cac",
   "lastOpenFiles": [
-    "SVM.md",
     "To-do.md",
+    "Conventional Commits.md",
+    "SVM.md",
     "kNN.md",
     "Linear Regression.md",
     "PCA-LR.md",

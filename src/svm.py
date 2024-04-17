@@ -8,11 +8,12 @@ from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm import SVC
 
 class SVM:
-    def __init__(self, fused_data, type="linear"):
-            self.settings.type = type
+    def __init__(self, fused_data):
             self.fused_data = fused_data
 
-    def svm(self):
+    def svm(self, type="linear"):
+        self.settings.type = type
+
         X_data = self.fused_data.X_data
         X_train = self.fused_data.X_train
         Y = self.fused_data.Y

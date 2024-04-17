@@ -22,7 +22,7 @@ class LLDF_Model:
         self.Y = Y
 
 class LLDF:
-    def __init__(self, preprocessing):
+    def __init__(self, preprocessing='snv'):
         self.preprocessing = preprocessing
 
     def lldf(self):
@@ -64,6 +64,8 @@ class LLDF:
             # We can also combine the preprocessing strategies together: Savitzki-Golay - smoothing + SNV
             X_savgol = savgol_filter(X_spectra, 7, polyorder = 2, deriv=0)
             preprocessed_spectra = snv(X_savgol)
+        else:
+            raise Exception(f"LLDF: this type of preprocessing does not exist ({self.preprocessing=})")
 
 
         # Create a new DataFrame with the processed numerical attributes
