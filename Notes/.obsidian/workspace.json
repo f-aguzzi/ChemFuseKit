@@ -4,83 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "34725d03b2696ad2",
+        "id": "2beb91efac296fab",
         "type": "tabs",
         "children": [
           {
-            "id": "dbc3f1558966a3ef",
+            "id": "2b877e54fb75ec5c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PCA-LR.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6da884fb2f6839b9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Linear Regression.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6d8d4999d457eec5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "kNN.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3928dce4707142c9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SVM.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "db9d4a65579fbda6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "To-do.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6024da180cd40cac",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Conventional Commits.md",
+                "file": "Devlog/2024-04-19.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -130,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "fb9c98fe6cf3074d",
@@ -146,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Conventional Commits.md",
+                "file": "Devlog/2024-04-19.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Conventional Commits.md",
+                "file": "Devlog/2024-04-19.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Conventional Commits.md"
+                "file": "Devlog/2024-04-19.md"
               }
             }
           }
@@ -207,12 +147,21 @@
       "command-palette:Apri riquadro comandi": false
     }
   },
-  "active": "6024da180cd40cac",
+  "active": "2b877e54fb75ec5c",
   "lastOpenFiles": [
     "To-do.md",
+    "Templates/Daily devlog.md",
+    "UML/Use cases.md",
+    "Devlog/2024-04-19.md",
+    "Kanban.md",
+    "Devlog",
+    "Templates",
+    "PEP coding standards.md",
+    "Use Case Diagram.md",
+    "UML",
     "Conventional Commits.md",
-    "SVM.md",
     "kNN.md",
+    "SVM.md",
     "Linear Regression.md",
     "PCA-LR.md",
     "Constructors.md",
