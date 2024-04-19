@@ -129,13 +129,21 @@
                 "file": "Devlog/2024-04-19.md"
               }
             }
+          },
+          {
+            "id": "d5a5c176fb47d770",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -149,10 +157,13 @@
   },
   "active": "2b877e54fb75ec5c",
   "lastOpenFiles": [
-    "To-do.md",
+    "Devlog/2024-04-23.md",
+    "Devlog/2024-04-22.md",
+    "Devlog/2024-04-20.md",
     "Templates/Daily devlog.md",
-    "UML/Use cases.md",
     "Devlog/2024-04-19.md",
+    "UML/Use cases.md",
+    "To-do.md",
     "Kanban.md",
     "Devlog",
     "Templates",
