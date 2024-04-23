@@ -102,7 +102,8 @@ used by the Risen project in the future.
 The project will follow the `PEP 8` formatting standard on all the `Python`
 code.
 
-The `git` commits will follow the _Conventional Commits_ guidelines.
+The SCM system will be `git`. All commits will follow the _Conventional
+Commits_ guidelines.
 
 All graphs and diagrams will be made following the `UML` language standards.
 
@@ -166,6 +167,9 @@ Quality will follow from sound coding standards, thorough planning, rigorous
 validation and testing, and high-coverage testing. No other measures will be
 taken to improve quality, which should instead come as a _built-in_ factor if
 all the previously listed principles are correctly followed.
+
+The Python code within the project will be rejected via continuous integration
+on the remote repository if it scores lower than 8/10 on Pylint quality tests.
 
 # 10. Work Packages
 
