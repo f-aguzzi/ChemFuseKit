@@ -1,52 +1,88 @@
 {
   "main": {
-    "id": "eb01d0a6f1962f5e",
+    "id": "1203c0229df73e1e",
     "type": "split",
     "children": [
       {
-        "id": "2beb91efac296fab",
+        "id": "94e9d5803f612753",
         "type": "tabs",
         "children": [
           {
-            "id": "2b877e54fb75ec5c",
+            "id": "66517fa92e5e4e46",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Devlog/2024-04-22.md",
+                "file": "Constructors.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "52bce96610409a39",
+            "id": "2caa76305fb5b8b4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Devlog/2024-04-22.md",
+                "file": "Logistic Regression.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6dda70db89ad2933",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PCA.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "660d4d9168670a42",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SVM.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e4df7a70f5352317",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "kNN.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "04ff4c025f2c16e0",
+    "id": "60af4f6feb533499",
     "type": "split",
     "children": [
       {
-        "id": "f8a3cdc60aeabbad",
+        "id": "0203dda5098272ec",
         "type": "tabs",
         "children": [
           {
-            "id": "fdbd6f5fd01aaf1f",
+            "id": "4965870b0e947e00",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -56,7 +92,7 @@
             }
           },
           {
-            "id": "f11db3628b3fdb5f",
+            "id": "69b4f60d7fac2867",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -71,7 +107,7 @@
             }
           },
           {
-            "id": "e92032a007c3f6a0",
+            "id": "a20b4a3d4c90e97a",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -85,20 +121,27 @@
     "width": 300
   },
   "right": {
-    "id": "fb9c98fe6cf3074d",
+    "id": "a352c7f8678ea16b",
     "type": "split",
     "children": [
       {
-        "id": "9c827f25e4c30ca8",
+        "id": "f08fdf8c7580018a",
         "type": "tabs",
         "children": [
           {
-            "id": "54ea5e06480672de",
+            "id": "b1dfdb5fede05fdf",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "1fde85fb63aa0611",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Devlog/2024-04-22.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,19 +153,18 @@
             }
           },
           {
-            "id": "dbaafc75a16bb96e",
+            "id": "8b992b1cd0869514",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Devlog/2024-04-22.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "9748e0ec4e037ed9",
+            "id": "4f9460d1b07202ef",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -133,29 +175,21 @@
             }
           },
           {
-            "id": "bce02055278d228a",
+            "id": "4e0d56138da7c14f",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "Devlog/2024-04-22.md"
+                "file": "Docs/LLDF.md"
               }
             }
-          },
-          {
-            "id": "d5a5c176fb47d770",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
-              "state": {}
-            }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -167,30 +201,17 @@
       "command-palette:Apri riquadro comandi": false
     }
   },
-  "active": "52bce96610409a39",
+  "active": "4965870b0e947e00",
   "lastOpenFiles": [
-    "UML/Components.md",
-    "Devlog/2024-04-22.md",
-    "Devlog/2024-04-23.md",
-    "UML/Sequence.md",
-    "UML/Process state machine.md",
-    "Devlog/2024-04-20.md",
-    "Devlog/2024-04-19.md",
-    "Templates/Daily devlog.md",
-    "UML/Use cases.md",
-    "To-do.md",
-    "Kanban.md",
-    "Devlog",
-    "Templates",
-    "PEP coding standards.md",
-    "Use Case Diagram.md",
-    "UML",
-    "Conventional Commits.md",
     "kNN.md",
+    "Docs/LLDF.md",
+    "Docs",
+    "Use Case Diagram.md",
+    "To do.md",
     "SVM.md",
-    "Linear Regression.md",
+    "PCA.md",
+    "Logistic Regression.md",
     "PCA-LR.md",
-    "Constructors.md",
-    "PCA.md"
+    "Constructors.md"
   ]
 }
