@@ -42,19 +42,22 @@ class LLDF:
 
     def lldf(self):
         '''Performs low-level data fusion'''
-        spectra = pd.read_excel(
-            self.settings.qepas_path,
-            sheet_name=self.settings.qepas_sheet,
-            index_col=0,
-            header=0
-        )
+        try:
+            spectra = pd.read_excel(
+                self.settings.qepas_path,
+                sheet_name=self.settings.qepas_sheet,
+                index_col=0,
+                header=0
+            )
 
-        ret_time = pd.read_excel(
-            self.settings.rt_path,
-            sheet_name=self.settings.rt_sheet,
-            index_col=0,
-            header=0
-        )
+            ret_time = pd.read_excel(
+                self.settings.rt_path,
+                sheet_name=self.settings.rt_sheet,
+                index_col=0,
+                header=0
+            )
+        except Exception:
+            raise FileNotFoundError("Error opening the selected files.")
 
         # select only numerical attributes
         x_spectra = spectra.iloc[:, 1:]
@@ -81,7 +84,7 @@ class LLDF:
             # Savitzki-Golay - smoothing + SNV
             preprocessed_spectra = self._snv(savgol_filter(x_spectra, 7, polyorder = 2, deriv=0))
         else:
-            raise Exception(
+            raise SyntaxError(
                 f"LLDF: this type of preprocessing does not exist ({self.settings.preprocessing=})"
             )
 
@@ -106,10 +109,9 @@ class LLDF:
 
         self.fused_data = LLDFModel(x_data, x_train, y)
 
-    def export_data(self):
+    def export_data(self, export_path):
         '''Exports the data fusion artifacts to a file'''
-        path = input("Insert the output file path: ")
         x_dataframe = pd.DataFrame(self.fused_data.x_data)
         x_train_dataframe = pd.DataFrame(self.fused_data.x_train)
         y_dataframe = pd.DataFrame(self.fused_data.y)
-        pd.concat([x_train_dataframe, y_dataframe, x_dataframe], axis=1).to_excel(path)
+        pd.concat([x_train_dataframe, y_dataframe, x_dataframe], axis=1).to_excel(export_path)
