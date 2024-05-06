@@ -1,0 +1,29 @@
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Analysing the code with pylint
+        run: python -m unittest src/tests/*.py
+      - name: Check test results
+        run: |
+          test_result=$(python3 -m unittest src/tests/*.py |& grep "FAILED" | wc -w)
+          if (( $(echo "$result") == 0 )); then
+            echo "Tests passed. Commit approved."
+          else
+            echo "Tests failed. Blocking commit."
+            exit 1
+          fi
