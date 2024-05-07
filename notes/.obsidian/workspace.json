@@ -4,71 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "94e9d5803f612753",
+        "id": "2c79aa756f109756",
         "type": "tabs",
         "children": [
           {
-            "id": "66517fa92e5e4e46",
+            "id": "014caccf52e37c80",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Constructors.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2caa76305fb5b8b4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Logistic Regression.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6dda70db89ad2933",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PCA.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "660d4d9168670a42",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SVM.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e4df7a70f5352317",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "kNN.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -179,17 +126,14 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Docs/LLDF.md"
-              }
+              "state": {}
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -201,17 +145,28 @@
       "command-palette:Apri riquadro comandi": false
     }
   },
-  "active": "4965870b0e947e00",
+  "active": "014caccf52e37c80",
   "lastOpenFiles": [
-    "kNN.md",
+    "Devlog/2024-05-07.md",
+    "Devlog/2024-05-06.md",
+    "Devlog/2024-05-08.md",
+    "UML/Process state machine.md",
+    "UML/Use cases.md",
+    "Devlog/2024-04-23.md",
+    "Devlog/2024-04-22.md",
+    "UML/Components.md",
+    "UML/Sequence.md",
+    "Constructors.md",
+    "Conventional Commits.md",
+    "Logistic Regression.md",
+    "To-do.md",
     "Docs/LLDF.md",
+    "kNN.md",
     "Docs",
     "Use Case Diagram.md",
     "To do.md",
     "SVM.md",
     "PCA.md",
-    "Logistic Regression.md",
-    "PCA-LR.md",
-    "Constructors.md"
+    "PCA-LR.md"
   ]
 }
