@@ -13,7 +13,7 @@ class LLDFModel:
         self.y = y
 
 class LLDFSettings:
-    '''Holds the settings for the LDA object.'''
+    '''Holds the settings for the LLDF object.'''
     def __init__(self, qepas_path, qepas_sheet, rt_path, rt_sheet, preprocessing='snv'):
         self.qepas_path = qepas_path
         self.qepas_sheet = qepas_sheet

@@ -1,6 +1,5 @@
 '''This module contains the test cases for the LLDF module.'''
 import unittest
-import os
 from src.lldf import LLDFSettings, LLDF
 
 class TestLLDF(unittest.TestCase):
