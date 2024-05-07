@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     name: Build Docusaurus
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: 18
           cache: npm
+          cache-dependency-path: docs/datafusion_docs
 
       - name: Install dependencies
         run: |
@@ -32,7 +33,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${GITHUB_WORKSPACE}/docs/datafusion_docsbuild
+          path: docs/datafusion_docs/build
 
   deploy:
     name: Deploy to GitHub Pages
