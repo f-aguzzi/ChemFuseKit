@@ -1,14 +1,15 @@
 ---
 title: Project Plan
 author: Federico Aguzzi
-date: \today
-header-includes: |
- \usepackage[a4paper]{geometry}
- \usepackage[english]{babel}
- \usepackage{microtype}
+date: apr 18, 2024
 ---
 
-# 1. Introduction
+# Project Plan
+
+A 14-point project plan, highlighting the strategies and techniques employed in
+this project.
+
+## 1. Introduction
 
 This project is a small part of a larger initiative. Professor Francesco
 Saverio and Doctor Giorgio Felizzato, two chemists from the Law Department of
@@ -47,7 +48,7 @@ this project, to guarantee that computer engineering principles are followed
 correctly. I (Federico Aguzzi) will be the main developer and software
 engineer.
 
-# 2. Process Model
+## 2. Process Model
 
 The process model will take some key concepts from the Agile philosophy while
 also maintaining a more rigorous approach, as much as possible. Given that the
@@ -80,7 +81,7 @@ It's not the most efficient of techniques, but it's the only one that can
 provide the degree of incrementality needed to integrate this part of the
 project with the practices that will need to be used.
 
-# 3. Project Organization
+## 3. Project Organization
 
 As stated in the introduction, the library and application that will result
 from this project will be a small piece in a larger project by the Law
@@ -97,7 +98,7 @@ The data fusion module needs to be _sensor-agnostic_ in the sense that its
 operations should be easily be expanded in case new types of sensors will be
 used by the Risen project in the future.
 
-# 4. Stadards, Guidelines, Procedures
+## 4. Stadards, Guidelines, Procedures
 
 The project will follow the `PEP 8` formatting standard on all the `Python`
 code.
@@ -118,14 +119,14 @@ continuous integration via `Github Actions`.
 At the end of each working day, all the committed code will need to pass
 validation, automated tests and be documented.
 
-# 5. Management Activities
+## 5. Management Activities
 
 This project is mostly a single developer venture; however, given the size of
 the task, self-management on my (Federico Aguzzi's) part is still required.
 This will be made public through kanban boards within the Obsidian development
 notes and through GitHub issues.
 
-# 6. Risks
+## 6. Risks
 
 One possible risk is not to be able to finish the software within the time
 frames imposed by my (Federico Aguzzi's) graduation. This risk will be
@@ -139,13 +140,13 @@ incorrect analyses from the provided data. To mitigate the risk, the
 application will be tested against the original scripts from Dr Felizzato, and
 thorough testing will be carried out.
 
-# 7. Staff
+## 7. Staff
 
 Professor Romolo will be the client, with Dr Felizzato as the product owner.
 Professor Gargantini will have a supervising role, while I (Federico Aguzzi)
 will be the main developer for this subproject.
 
-# 8. Methods and Techniques
+## 8. Methods and Techniques
 
 Development will start from a requirements specification along with a
 single-class proof-of-concept code prototype.
@@ -161,7 +162,7 @@ The code will be tested at each commit through a continuous integration system
 on the remote repository.
 
 
-# 9. Quality Guarantees
+## 9. Quality Guarantees
 
 Quality will follow from sound coding standards, thorough planning, rigorous
 validation and testing, and high-coverage testing. No other measures will be
@@ -171,7 +172,7 @@ all the previously listed principles are correctly followed.
 The Python code within the project will be rejected via continuous integration
 on the remote repository if it scores lower than 8/10 on Pylint quality tests.
 
-# 10. Work Packages
+## 10. Work Packages
 
 The first and most important work package is the extraction of the library from
 Dr Felizzato's scripts. All the following steps rely on the success of this
@@ -187,25 +188,25 @@ Both the library and the application will require extensive validation unit
 testing, during and after the coding phase.
 
 
-# 11. Resources
+## 11. Resources
 
 I (Federico Aguzzi) will be the main developer for this project, building on
 the code previously written by Dr Felizzato and Michele Verdi. 
 
-# 12. Budget and Schedule
+## 12. Budget and Schedule
 
 This project has no budget.
 
 A minimum viable version is projected to be available within the first half of
 May. A fully implemented version is expected for mid-June.
 
-# 13. Changes
+## 13. Changes
 
 The favored idea for the graphical application is to implement it as a web app.
 In case it proves to be too difficult, too slow, or too hard to maintain, the
 project will fall back onto a simpler desktop application.
 
-# 14. Release
+## 14. Release
 
 The software will be released incrementally. The repository will be shared with
 the product owner. Following the philosophy of daily builds, a minimum viable

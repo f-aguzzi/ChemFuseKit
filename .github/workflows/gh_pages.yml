@@ -19,21 +19,21 @@ jobs:
         with:
           node-version: 18
           cache: npm
-          cache-dependency-path: docs/datafusion_docs
+          cache-dependency-path: docs
 
       - name: Install dependencies
         run: |
-          cd ${GITHUB_WORKSPACE}/docs/datafusion_docs
+          cd ${GITHUB_WORKSPACE}/docs
           npm install --frozen-lockfile
       - name: Build website
         run: |
-          cd ${GITHUB_WORKSPACE}/docs/datafusion_docs
+          cd ${GITHUB_WORKSPACE}/docs
           npm run build
 
       - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/datafusion_docs/build
+          path: docs/build
 
   deploy:
     name: Deploy to GitHub Pages

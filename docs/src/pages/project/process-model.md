@@ -1,3 +1,14 @@
+---
+title: Process Model
+description: state machine diagram for the process followed during coding
+date: apr 23, 2024
+---
+
+# Process Model
+
+Here's a state machine diagram for the process followed during coding:
+
+```plantuml
 @startuml
 [*] --> GoalsDefined
 
@@ -75,3 +86,4 @@ state "Commit Thesis" as CommitThs {
 CommitThs --> ThesisUpdate : remote\nPDF build\nfailed
 CommitThs --> [*] : Daily shutdown
 @enduml
+```

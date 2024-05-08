@@ -1,5 +1,14 @@
+---
+title: Use case diagram
+---
+
+# Use case diagram
+
+These are the main use cases for our data fusion and classification library:
+
+```plantuml
 @startuml
-rectangle "Graphical Application" {
+rectangle "Python Library" {
 	(Learn chemiometry)
 	(Classify crime scene data)
 	(Perform data fusion)
@@ -7,7 +16,7 @@ rectangle "Graphical Application" {
 	(Make graphs)
 }
 
-rectangle "Python Library" {
+rectangle "Colab Environment" {
 	(Use library from Colab)
 }
 
@@ -21,9 +30,9 @@ rectangle "Python Library" {
 "Google Colab User" --> (Use library from Colab)
 "System manager" -up-> (Add new functionality)
 
-"Graphical Application" ..|> "Python Library" : <<uses>>
+"Colab Environment" ..|> "Python Library" : <<uses>>
 
-(Use library from Colab) --> (Use Python library)
-(Add new functionality) -up-|> "Graphical Application"
+(Add new functionality) -up-|> "Colab Environment"
 (Add new functionality) -up-|> "Python Library"
 @enduml
+```

@@ -5,6 +5,7 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import {themes as prismThemes} from 'prism-react-renderer';
+const simplePlantUML = require("@akebifiky/remark-simple-plantuml");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -45,6 +46,12 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/f-aguzzi/tesi',
+          remarkPlugins: [simplePlantUML],
+        },
+        pages: {
+          path: 'src/pages',
+          routeBasePath: '',
+          remarkPlugins: [simplePlantUML],
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -70,6 +77,11 @@ const config = {
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'Docs',
+          },
+          {
+            to: '/project/',
+            label: 'Project',
+            position: 'left',
           },
           {
             href: 'https://github.com/f-aguzzi/tesi',
