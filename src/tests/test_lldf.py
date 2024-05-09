@@ -25,7 +25,7 @@ class TestLLDF(unittest.TestCase):
             qepas_sheet='Sheet1',
             rt_path='src/tests/rt.xlsx',
             rt_sheet='Sheet1',
-            preprocessing='qpl' # test with non-existant preprocessing technique
+            preprocessing='qpl' # test with non-existent preprocessing technique
         )
         lldf = LLDF(settings)
         self.assertRaises(SyntaxError, lldf.lldf)
@@ -37,6 +37,28 @@ class TestLLDF(unittest.TestCase):
         lldf.lldf()
         lldf.settings.preprocessing='savgol+snv'
         lldf.lldf()
+    
+    def test_export(self):
+        '''Test case against wrong export settings.'''
+        settings = LLDFSettings(
+            qepas_path='src/tests/qepas.xlsx',
+            qepas_sheet='Sheet1',
+            rt_path='src/tests/rt.xlsx',
+            rt_sheet='Sheet1',
+            preprocessing='snv' # test with non-existent preprocessing technique
+        )
+        lldf = LLDF(settings)
+        
+        # Try exporting data before data fusion
+        with self.assertRaises(RuntimeError):
+            lldf.export_data('path')
+
+        # Perform data fusion
+        lldf.lldf()
+
+        # Try exporting data to an invalid path
+        with self.assertRaises(RuntimeError):
+            lldf.export_data('$£=0\//|') 
 
 if __name__ == '__main__':
     unittest.main()

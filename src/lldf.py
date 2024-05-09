@@ -56,8 +56,8 @@ class LLDF:
                 index_col=0,
                 header=0
             )
-        except Exception:
-            raise FileNotFoundError("Error opening the selected files.")
+        except Exception as exc:
+            raise FileNotFoundError("Error opening the selected files.") from exc
 
         # select only numerical attributes
         x_spectra = spectra.iloc[:, 1:]
@@ -111,7 +111,14 @@ class LLDF:
 
     def export_data(self, export_path):
         '''Exports the data fusion artifacts to a file'''
+        if self.fused_data is None:
+            raise RuntimeError("Cannot export data before data fusion.")
+
         x_dataframe = pd.DataFrame(self.fused_data.x_data)
         x_train_dataframe = pd.DataFrame(self.fused_data.x_train)
         y_dataframe = pd.DataFrame(self.fused_data.y)
-        pd.concat([x_train_dataframe, y_dataframe, x_dataframe], axis=1).to_excel(export_path)
+
+        try:
+            pd.concat([x_train_dataframe, y_dataframe, x_dataframe], axis=1).to_excel(export_path)
+        except Exception as exc:
+            raise RuntimeError("Could not export data to the selected path.") from exc

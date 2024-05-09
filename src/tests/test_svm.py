@@ -45,6 +45,31 @@ class TestSVM(unittest.TestCase):
 
         # Finally, with proper values:
         SVM(lldf.fused_data, svm_settings)
+    
+    def test_svm(self):
+        '''Integration test case.'''
+
+        # Create an LLDF model and initialize it
+        lldf_settings = LLDFSettings(
+            qepas_path='src/tests/qepas.xlsx',
+            qepas_sheet='Sheet1',
+            rt_path='src/tests/rt.xlsx',
+            rt_sheet='Sheet1',
+            preprocessing='snv'
+        )
+        lldf = LLDF(lldf_settings)
+        lldf.lldf()
+
+        # Create an SVM object and train it, with true output
+        svm_settings = SVMSettings(output=True)
+        svm = SVM(lldf.fused_data, svm_settings)
+        svm.svm()
+
+
+        # Create an SVM object and train it, with false output
+        svm_settings = SVMSettings(output=True)
+        svm = SVM(lldf.fused_data, svm_settings)
+        svm.svm()
 
     def test_svm_predict(self):
         '''Test case against prediction parameter issues.'''        

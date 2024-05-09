@@ -41,6 +41,30 @@ class TestLDA(unittest.TestCase):
 
         # Finally, with proper values:
         LDA(lldf.fused_data, lda_settings)
+    
+    def test_lda(self):
+        '''Integration test case.''' 
+        # Create an LLDF model and initialize it
+        lldf_settings = LLDFSettings(
+            qepas_path='src/tests/qepas.xlsx',
+            qepas_sheet='Sheet1',
+            rt_path='src/tests/rt.xlsx',
+            rt_sheet='Sheet1',
+            preprocessing='snv'
+        )
+        lldf = LLDF(lldf_settings)
+        lldf.lldf()
+
+        # Create an LDA object and train it, with true output
+        lda_settings = LDASettings(output=True)
+        lda = LDA(lldf.fused_data, lda_settings)
+        lda.lda()
+
+        # Create an LDA object and train it, with false output
+        lda_settings = LDASettings(output=False)
+        lda = LDA(lldf.fused_data, lda_settings)
+        lda.lda()
+
 
     def test_lda_predict(self):
         '''Test case against prediction parameter issues.'''        

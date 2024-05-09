@@ -58,3 +58,41 @@ class TestPCA(unittest.TestCase):
 
         # Finally, with proper values:
         PCA(lldf.fused_data, lda_settings)
+    
+    def test_pca(self):
+        '''
+        Integration test case to verify that the output does not change based on
+        whether the output is set to true or false
+        '''
+        # Create a LLDF model and initialize it
+        lldf_settings = LLDFSettings(
+            qepas_path='src/tests/qepas.xlsx',
+            qepas_sheet='Sheet1',
+            rt_path='src/tests/rt.xlsx',
+            rt_sheet='Sheet1',
+            preprocessing='snv'
+        )
+        lldf = LLDF(lldf_settings)
+        lldf.lldf()
+
+        # Set up and execute PCA
+        pca_settings = PCASettings(output=True)
+        pca = PCA(lldf.fused_data, pca_settings)
+        pca.pca()
+
+        # Save the results
+        result_true_components = pca.components
+        result_true_array_scores = pca.array_scores
+
+        # Set up and execute PCA (again)
+        pca_settings = PCASettings(output=False)
+        pca = PCA(lldf.fused_data, pca_settings)
+        pca.pca()
+
+       # Save the results
+        result_false_components = pca.components
+        result_false_array_scores = pca.array_scores
+
+        self.assertEqual(result_true_components, result_false_components)
+        self.assertEqual(result_true_array_scores, result_false_array_scores)
+ 
