@@ -34,11 +34,11 @@ ImplementInCode --> TestAndValidate
 
 state "Testing and validation" as TestAndValidate {
 	[*] --> InitiateTestsAndValidation
-	InitiateTestsAndValidation --> Testing
+	InitiateTestsAndValidation --> TestingAndLinting
     InitiateTestsAndValidation --> Validation
-    Testing --> InitiateTestsAndValidation : fail\ntests
+    TestingAndLinting --> InitiateTestsAndValidation : fail\ntests
     Validation --> InitiateTestsAndValidation : fail\nvalidation
-    Testing --> [*] : pass\ntests
+    TestingAndLinting --> [*] : pass\ntests
     Validation --> [*] : pass\nvalidation
 }
 
@@ -47,7 +47,7 @@ TestAndValidate --> Documentation
 state Documentation {
     [*] --> WriteDocs
     WriteDocs --> ValidateDocs
-    ValidateDocs --> WriteDocs : docs wrong:\rewrite
+    ValidateDocs --> WriteDocs : docs wrong:\nrewrite
     ValidateDocs --> [*] : docs ok
 }
 
@@ -56,14 +56,16 @@ Documentation --> CommitRepo
 state "Commit and push to remote repository" as CommitRepo {
 	[*] --> Commit
 	Commit --> Push
-	Push --> RemoteTests : lint\ncode
-	Push --> RemoteBuildPDF : build\ndocs
+	Push --> RemoteLinting: lint\ncode 
+	RemoteLinting --> RemoteTests : test\ncode
+	Push --> RemoteBuildDocusaurus : build\ndocs
 	RemoteTests --> [*]
-	RemoteBuildPDF --> [*]
+	RemoteBuildDocusaurus --> RemoteDeployDocusaurus : deploy to\nGitHub Pages
+	RemoteDeployDocusaurus --> [*]
 }
 
 CommitRepo --> ImplementInCode : remote\ntests\nfailed
-CommitRepo --> Documentation : remote\nPDF build\nfailed
+CommitRepo --> Documentation : remote\nDocusaurus build\nfailed
 CommitRepo --> ThesisUpdate : remote\ntests\npassed
 
 state "Thesis update" as ThesisUpdate {

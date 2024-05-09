@@ -37,7 +37,7 @@ TestAndValidate --> Documentation
 state Documentation {
     [*] --> WriteDocs
     WriteDocs --> ValidateDocs
-    ValidateDocs --> WriteDocs : docs wrong:\rewrite
+    ValidateDocs --> WriteDocs : docs wrong:\nrewrite
     ValidateDocs --> [*] : docs ok
 }
 

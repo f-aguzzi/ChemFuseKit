@@ -1,5 +1,5 @@
 ---
-sidebar-position: 6
+sidebar-position: 7
 ---
 
 # Complete workflow

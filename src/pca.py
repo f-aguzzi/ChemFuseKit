@@ -36,6 +36,7 @@ class PCA:
         self.components = 0
         self.pca_model = None
         self.settings = settings
+        self.array_scores = None
 
     def pca(self):
         '''Performs Principal Component Analysis.'''
@@ -46,15 +47,16 @@ class PCA:
         pca = PC(self.settings.initial_components)
         pca.fit_transform(x_data)
 
+        # Define the class vector (discrete/categorical variable)
+        # y_dataframe = pd.DataFrame(self.fused_data.y, columns=['Substance'])
+        # classes = y_dataframe.astype('category') (a cosa serve?)
+        out_sum = np.cumsum(pca.explained_variance_ratio_)
+
         if self.settings.output:
-            # Define the class vector (discrete/categorical variable)
-            # y_dataframe = pd.DataFrame(self.fused_data.y, columns=['Substance'])
-            # classes = y_dataframe.astype('category') (a cosa serve?)
             print("Proportion of Variance Explained : ", pca.explained_variance_ratio_)
-            out_sum = np.cumsum(pca.explained_variance_ratio_)
             print("Cumulative Prop. Variance Explained: ", out_sum)
 
-        # NEW: autoselect the number of components
+        # Autoselect the number of components
         for i,x in enumerate(out_sum):
             if x >= self.settings.target_variance:
                 self.components = i
@@ -95,7 +97,8 @@ class PCA:
         scores = pd.DataFrame(data=self.pca_model.fit_transform(x_data), columns=pc_cols)
         scores.index = x_data.index
         scores = pd.concat([scores, x_train.Substance], axis = 1)
-        print(f"Scores:\n{scores}")
+        if self.settings.output:
+            print(f"Scores:\n{scores}")
 
         # Prepare the loadings dataframe
         loadings = pd.DataFrame(
@@ -104,36 +107,38 @@ class PCA:
             index=x_data.columns
         )
         loadings["Attributes"] = loadings.index
-        print(f"Loadings:\n{loadings}")
+        if self.settings.output:
+            print(f"Loadings:\n{loadings}")
 
-        # View the scores plot using plotly library
-        fig = px.scatter(
-            scores,
-            x="PC1",
-            y="PC2",
-            color="Substance",
-            hover_data=['Substance'],
-            hover_name=x_data.index
-        )
-        fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-        fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-        fig.update_layout(
-            height=600,
-            width=800,
-            title_text='Scores Plot colored by Substance')
-        fig.show()
+        if self.settings.output:
+            # View the scores plot using plotly library
+            fig = px.scatter(
+                scores,
+                x="PC1",
+                y="PC2",
+                color="Substance",
+                hover_data=['Substance'],
+                hover_name=x_data.index
+            )
+            fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
+            fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
+            fig.update_layout(
+                height=600,
+                width=800,
+                title_text='Scores Plot colored by Substance')
+            fig.show()
 
-        # Plot 3D scores
-        fig = px.scatter_3d(
-            scores,
-            x='PC1',
-            y='PC2',
-            z='PC3',
-            color='Substance',
-            hover_data=['Substance'],
-            hover_name=x_data.index
-        )
-        fig.show()
+            # Plot 3D scores
+            fig = px.scatter_3d(
+                scores,
+                x='PC1',
+                y='PC2',
+                z='PC3',
+                color='Substance',
+                hover_data=['Substance'],
+                hover_name=x_data.index
+            )
+            fig.show()
 
         # Get PCA scores
         t = scores.iloc[:,0:self.components]
@@ -168,22 +173,23 @@ class PCA:
             index = x_data.index
         )
 
-        # Plot the Hotelling T2 vs Q-residuals plot
-        fig = px.scatter(
-            hot_q_data,
-            x="T2",
-            y="Qres",
-            hover_data={'Sample': (hot_q_data.index)},
-            color = "Substance"
-        )
-        fig.add_hline(y=abs(q_conf),line_dash="dot", line_color='Red')
-        fig.add_vline(x=tsq_conf,line_dash="dot", line_color='Red')
-        fig.update_traces(textposition='top center')
-        fig.update_layout(
-            height=600,
-            width=800,
-            title_text="Hotelling's T2 vs Q-residuals")
-        fig.show()
+        if self.settings.output:
+            # Plot the Hotelling T2 vs Q-residuals plot
+            fig = px.scatter(
+                hot_q_data,
+                x="T2",
+                y="Qres",
+                hover_data={'Sample': (hot_q_data.index)},
+                color = "Substance"
+            )
+            fig.add_hline(y=abs(q_conf),line_dash="dot", line_color='Red')
+            fig.add_vline(x=tsq_conf,line_dash="dot", line_color='Red')
+            fig.update_traces(textposition='top center')
+            fig.update_layout(
+                height=600,
+                width=800,
+                title_text="Hotelling's T2 vs Q-residuals")
+            fig.show()
 
         # Normalize Q-residuals and Hotelling's T-squared
         normalized_q = q / np.max(q)
@@ -197,27 +203,31 @@ class PCA:
         }
         normalized_hot_q_data = pd.DataFrame(normalized_hot_q_data, index=x_data.index)
 
-        # Plot the normalized Hotelling T2 vs Q-residuals plot
-        fig_normalized = px.scatter(
-            normalized_hot_q_data,
-            x="T2",
-            y="Qres",
-            hover_data={'Sample': (normalized_hot_q_data.index)},
-            color="Substance"
-        )
-        fig_normalized.add_hline(y=abs(q_conf / np.max(q)), line_dash="dot", line_color='Red')
-        fig_normalized.add_vline(x=tsq_conf / np.max(tsq), line_dash="dot", line_color='Red')
-        fig_normalized.update_traces(textposition='top center')
-        fig_normalized.update_layout(
-            height=600,
-            width=800,
-            title_text="Normalized Hotelling's T2 vs Q-residuals"
-        )
-        fig_normalized.show()
+        if self.settings.output:
+            # Plot the normalized Hotelling T2 vs Q-residuals plot
+            fig_normalized = px.scatter(
+                normalized_hot_q_data,
+                x="T2",
+                y="Qres",
+                hover_data={'Sample': (normalized_hot_q_data.index)},
+                color="Substance"
+            )
+            fig_normalized.add_hline(y=abs(q_conf / np.max(q)), line_dash="dot", line_color='Red')
+            fig_normalized.add_vline(x=tsq_conf / np.max(tsq), line_dash="dot", line_color='Red')
+            fig_normalized.update_traces(textposition='top center')
+            fig_normalized.update_layout(
+                height=600,
+                width=800,
+                title_text="Normalized Hotelling's T2 vs Q-residuals"
+            )
+            fig_normalized.show()
 
         # Assuming 'scores' is your DataFrame with the 'class' column
         # Drop the 'class' column before converting to NumPy array
         array_scores = scores.drop('Substance', axis=1).values
 
-        print(f"Original DataFrame:\n{scores}")
-        print(f"\nNumPy Array without 'Substance' column:\n{array_scores}")
+        if self.settings.output:
+            print(f"Original DataFrame:\n{scores}")
+            print(f"\nNumPy Array without 'Substance' column:\n{array_scores}")
+
+        self.array_scores = array_scores

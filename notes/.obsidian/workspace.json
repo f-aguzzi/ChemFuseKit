@@ -1,18 +1,22 @@
 {
   "main": {
-    "id": "1203c0229df73e1e",
+    "id": "1eb89bfa752407df",
     "type": "split",
     "children": [
       {
-        "id": "2c79aa756f109756",
+        "id": "12787b874046e9fa",
         "type": "tabs",
         "children": [
           {
-            "id": "014caccf52e37c80",
+            "id": "cf57d78b279c78a1",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Devlog/2024-05-09.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -21,15 +25,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "60af4f6feb533499",
+    "id": "a6736c65aacd056b",
     "type": "split",
     "children": [
       {
-        "id": "0203dda5098272ec",
+        "id": "712863b8bcff44f4",
         "type": "tabs",
         "children": [
           {
-            "id": "4965870b0e947e00",
+            "id": "1bc1b5e3c9517554",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -39,7 +43,7 @@
             }
           },
           {
-            "id": "69b4f60d7fac2867",
+            "id": "f24781b1570f00a8",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -54,7 +58,7 @@
             }
           },
           {
-            "id": "a20b4a3d4c90e97a",
+            "id": "fcbe9d1311f4f222",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -68,15 +72,15 @@
     "width": 300
   },
   "right": {
-    "id": "a352c7f8678ea16b",
+    "id": "69d30c5a06e1ba59",
     "type": "split",
     "children": [
       {
-        "id": "f08fdf8c7580018a",
+        "id": "4b659f2ab54d1e61",
         "type": "tabs",
         "children": [
           {
-            "id": "b1dfdb5fede05fdf",
+            "id": "021cc0367f81530b",
             "type": "leaf",
             "state": {
               "type": "calendar",
@@ -84,11 +88,12 @@
             }
           },
           {
-            "id": "1fde85fb63aa0611",
+            "id": "bf331981c87523ab",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Devlog/2024-05-09.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,18 +105,19 @@
             }
           },
           {
-            "id": "8b992b1cd0869514",
+            "id": "726ce3ea78ed9ca4",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Devlog/2024-05-09.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "4f9460d1b07202ef",
+            "id": "eb9d77cdd2e86aea",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -122,11 +128,13 @@
             }
           },
           {
-            "id": "4e0d56138da7c14f",
+            "id": "3d04ea6ef0edd79a",
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Devlog/2024-05-09.md"
+              }
             }
           }
         ]
@@ -145,28 +153,15 @@
       "command-palette:Apri riquadro comandi": false
     }
   },
-  "active": "014caccf52e37c80",
+  "active": "cf57d78b279c78a1",
   "lastOpenFiles": [
-    "Devlog/2024-05-07.md",
-    "Devlog/2024-05-06.md",
     "Devlog/2024-05-08.md",
-    "UML/Process state machine.md",
-    "UML/Use cases.md",
-    "Devlog/2024-04-23.md",
-    "Devlog/2024-04-22.md",
-    "UML/Components.md",
+    "Devlog/2024-05-09.md",
     "UML/Sequence.md",
+    "UML/Use cases.md",
     "Constructors.md",
-    "Conventional Commits.md",
-    "Logistic Regression.md",
-    "To-do.md",
-    "Docs/LLDF.md",
-    "kNN.md",
-    "Docs",
     "Use Case Diagram.md",
-    "To do.md",
-    "SVM.md",
-    "PCA.md",
-    "PCA-LR.md"
+    "PEP coding standards.md",
+    "Devlog/2024-05-07.md"
   ]
 }
