@@ -1,8 +1,8 @@
 on:
   push:
       paths:
-        - 'src'
-        - 'src/tests'
+        - 'src/**'
+        - 'src/tests/**'
 
 jobs:
   build:
