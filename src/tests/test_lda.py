@@ -65,7 +65,6 @@ class TestLDA(unittest.TestCase):
         lda = LDA(lldf.fused_data, lda_settings)
         lda.lda()
 
-
     def test_lda_predict(self):
         '''Test case against prediction parameter issues.'''        
 
