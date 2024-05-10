@@ -23,6 +23,14 @@ function HomepageHeader() {
             Tutorial - 5min ⏱️
           </Link>
         </div>
+        <br />
+        <div className={styles.buttons}>
+          <Link
+            className="button button--secondary button--lg"
+            to="https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/src/notebook.ipynb">
+            Try it on Colab 🔗
+          </Link>
+        </div>
       </div>
     </header>
   );
