@@ -10,7 +10,7 @@ date: apr 18, 2024
 
 The purpose of this project is twofold:
 
-1. extract a library from Dr Felizzato's chemiometric classification scripts;
+1. extract a library from Dr Felizzato's chemometric classification scripts;
 2. create a GUI application on top of the extracted library to make it
   user-friendly.
 
@@ -21,7 +21,7 @@ The project is partly inspired from the
 [`Spectra`](https://www.spectrapp.unito.it/app/spectrapp) web app made by the
 Univeristy of Torino, but with a twist: it will be based on an innovative _data
 fusion_ approach that will analyze and process data from multiple sensors of
-multiple tipes, all at once, to give the best possible chemiometrical
+multiple tipes, all at once, to give the best possible chemometrical
 classification on the given data.
 
 ## <u>Input data</u>

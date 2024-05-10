@@ -10,7 +10,7 @@ const simplePlantUML = require("@akebifiky/remark-simple-plantuml");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Colab Data Fusion and Analysis',
-  tagline: 'Chemiometry on the go',
+  tagline: 'Chemometrics on the go',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here

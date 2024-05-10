@@ -23,7 +23,7 @@ Michele Verdi, a previous undergraduate thesist worked, under the guidance of
 Doctor Felizzato, on a _data fusion_ module to join and preprocess datasets
 from two different types of sensors, with the purpose of enabling a unitary,
 more accurate analysis of the sensor data. In the meanwhile, Doctor Felizzato
-worked on chemiometric classification scripts to be run on the output of the
+worked on chemometric classification scripts to be run on the output of the
 data fusion model. The purpose of this project is twofold: firstly, to extract
 an easier-to-use library from those scripts, and then, to build a graphical
 application on top of the library, to make the work publicly accessible to
@@ -35,7 +35,7 @@ after my (Federico Aguzzi's) work is done.
 The entirety of the project will have to comply with the directives of the
 Italian State Police, which will be the first direct user of the results of
 Professor Romolo's project. As of today, no existing software provides an
-entire pipeline for analyzing chemiometric forensic data, while also including
+entire pipeline for analyzing chemometric forensic data, while also including
 a data fusion system, preprocessing, training, classification, plotting and
 graphing. The closest option is the _Spectra_ web app from Politecnico of
 Turin, but it lacks data fusion and has limitations on import-export operations
@@ -53,7 +53,7 @@ engineer.
 The process model will take some key concepts from the Agile philosophy while
 also maintaining a more rigorous approach, as much as possible. Given that the
 core of the classification system is already set out in Doctor Felizzato's
-scripts, and that I have no experience with chemiometry, all the refactoring
+scripts, and that I have no experience with chemometrics, all the refactoring
 efforts will need to alter as little as possible from the flow of
 data in the original code.
 
@@ -153,7 +153,7 @@ single-class proof-of-concept code prototype.
 
 The user interface for the graphical application will be designed as an
 evolutionary prototype, and then incrementally connected to the underlying
-chemiometrics library until all functionality is completely implemented.
+chemometrics library until all functionality is completely implemented.
 
 All requirements, use cases and class structures for the library will be
 designed and represented through UML graphs before starting to code.

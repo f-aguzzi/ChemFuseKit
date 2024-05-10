@@ -3,7 +3,7 @@
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Pylint](https://github.com/f-aguzzi/tesi/actions/workflows/pylint.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
 [![Unittest](https://github.com/f-aguzzi/tesi/actions/workflows/unittest.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
-[![](https://img.shields.io/badge/Read_the_docs-GitHub_Pages-orange)](https://f-aguzzi.github.io/tesi/)
+[![](https://img.shields.io/badge/Read_the_docs-GitHub_Pages-darkorange)](https://f-aguzzi.github.io/tesi/)
 [![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/src/notebook.ipynb)
 
 <p align="center">
@@ -11,7 +11,7 @@
 </p>
 
 A minimal Python / Jupyter Notebook / Colab library for data fusion and
-chemiometrical analysis.
+chemometrical analysis.
 
 Developed as Federico Aguzzi's Computer Engineering undergraduate thesis
 project, under the supervision of Software Engineering Professor
@@ -19,7 +19,7 @@ project, under the supervision of Software Engineering Professor
 based on the scripts made by Dr
 [Giorgio Felizzato](https://www.unibg.it/ugov/person/139887)
 and the research of Professor
-[Francesco Saverio Romolo](https://www.unibg.it/ugov/person/80828)
+[Francesco Saverio Romolo](https://unibg.unifind.cineca.it/individual?uri=http%3A%2F%2Firises.unibg.it%2Fresource%2Fperson%2F80828)
 of the Law Department of the University of Bergamo. Further info on the project
 [here](https://f-aguzzi.github.io/tesi/project).
 

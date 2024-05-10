@@ -9,7 +9,7 @@ These are the main use cases for our data fusion and classification library:
 ```plantuml
 @startuml
 rectangle "Python Library" {
-	(Learn chemiometry)
+	(Learn chemometry)
 	(Classify crime scene data)
 	(Perform data fusion)
 	(Import and export data)
@@ -22,7 +22,7 @@ rectangle "Colab Environment" {
 
 (Add new functionality)
 
-"Student" --> (Learn chemiometry)
+"Student" --> (Learn chemometry)
 "Forensic Analyst" --> (Classify crime scene data)
 "Anyone" --> (Perform data fusion)
 "Anyone" --> (Import and export data)
