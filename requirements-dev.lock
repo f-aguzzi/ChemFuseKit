@@ -8,14 +8,20 @@
 #   with-sources: false
 
 -e file:.
+astroid==3.1.0
+    # via pylint
 contourpy==1.2.1
     # via matplotlib
 cycler==0.12.1
     # via matplotlib
+dill==0.3.8
+    # via pylint
 et-xmlfile==1.1.0
     # via openpyxl
 fonttools==4.51.0
     # via matplotlib
+isort==5.13.2
+    # via pylint
 joblib==1.4.2
     # via scikit-learn
 kiwisolver==1.4.5
@@ -23,6 +29,8 @@ kiwisolver==1.4.5
 matplotlib==3.8.4
     # via progetto
     # via seaborn
+mccabe==0.7.0
+    # via pylint
 numpy==1.26.4
     # via contourpy
     # via matplotlib
@@ -41,8 +49,11 @@ pandas==2.2.2
     # via seaborn
 pillow==10.3.0
     # via matplotlib
+platformdirs==4.2.1
+    # via pylint
 plotly==5.22.0
     # via progetto
+pylint==3.1.1
 pyparsing==3.1.2
     # via matplotlib
 python-dateutil==2.9.0.post0
@@ -63,5 +74,7 @@ tenacity==8.3.0
     # via plotly
 threadpoolctl==3.5.0
     # via scikit-learn
+tomlkit==0.12.5
+    # via pylint
 tzdata==2024.1
     # via pandas

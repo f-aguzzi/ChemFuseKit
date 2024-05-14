@@ -15,13 +15,12 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install the latest version of rye
+        uses: eifinger/setup-rye@v3
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pylint
-          pip install -r requirements.txt
+        run: rye sync
       - name: Analysing the code with pylint
-        run: pylint --disable=C0114,C0115,C0116 --exit-zero src/**/*.py src/*.py
+        run: rye run pylint --disable=C0114,C0115,C0116 --exit-zero src/**/*.py src/*.py
       - name: Check Pylint score
         run: |
           pylint_score=$(pylint --disable=all --enable=metrics --output-format=text src/**/*.py src/*.py | grep 'Raw metrics' | awk '{print $4}')

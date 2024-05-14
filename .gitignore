@@ -14,3 +14,6 @@ site
 .idea
 token.txt
 dist
+
+# rye lint
+.ruff_cache
