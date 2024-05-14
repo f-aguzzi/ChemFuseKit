@@ -1,7 +1,7 @@
 [project]
-name = "progetto"
+name = "colab_datafusion_analysis"
 version = "0.1.0"
-description = "Add your description here"
+description = "A minimal Python / Jupyter Notebook / Colab library for data fusion and chemometrical analysis."
 authors = [
     { name = "Federico Aguzzi", email = "62149513+f-aguzzi@users.noreply.github.com" }
 ]
@@ -15,6 +15,9 @@ dependencies = [
     "scikit-learn>=1.4.2",
     "plotly>=5.22.0",
 ]
+readme = "readme.md"
+repository = "https://github.com/f-aguzzi/tesi"
+documentation = "https://f-aguzzi.github.io/tesi/"
 requires-python = ">= 3.8"
 
 [build-system]
@@ -27,8 +30,14 @@ dev-dependencies = [
     "pylint>=3.1.1",
 ]
 
+[tool.rye.scripts]
+test = "python -m unittest discover tests"
+pylint-local = "pylint colab_datafusuion_analysis/**/*.py"
+pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero colab_datafusion_analysis/**/*.py"
+pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text colab_datafusuion_analysis/**/.py"
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/progetto"]
+packages = ["src"]

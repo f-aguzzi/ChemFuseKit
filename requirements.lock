@@ -21,28 +21,28 @@ joblib==1.4.2
 kiwisolver==1.4.5
     # via matplotlib
 matplotlib==3.8.4
-    # via progetto
+    # via colab-datafusion-analysis
     # via seaborn
 numpy==1.26.4
+    # via colab-datafusion-analysis
     # via contourpy
     # via matplotlib
     # via pandas
-    # via progetto
     # via scikit-learn
     # via scipy
     # via seaborn
 openpyxl==3.1.2
-    # via progetto
+    # via colab-datafusion-analysis
 packaging==24.0
     # via matplotlib
     # via plotly
 pandas==2.2.2
-    # via progetto
+    # via colab-datafusion-analysis
     # via seaborn
 pillow==10.3.0
     # via matplotlib
 plotly==5.22.0
-    # via progetto
+    # via colab-datafusion-analysis
 pyparsing==3.1.2
     # via matplotlib
 python-dateutil==2.9.0.post0
@@ -51,12 +51,12 @@ python-dateutil==2.9.0.post0
 pytz==2024.1
     # via pandas
 scikit-learn==1.4.2
-    # via progetto
+    # via colab-datafusion-analysis
 scipy==1.13.0
-    # via progetto
+    # via colab-datafusion-analysis
     # via scikit-learn
 seaborn==0.13.2
-    # via progetto
+    # via colab-datafusion-analysis
 six==1.16.0
     # via python-dateutil
 tenacity==8.3.0

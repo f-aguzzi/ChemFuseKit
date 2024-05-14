@@ -1,8 +1,8 @@
 on:
   push:
       paths:
-        - 'src/**'
-        - 'src/tests/**'
+        - 'colab_datafusion_analysis/**'
+        - 'tests/**'
         - '.github/workflows/**'
 
 jobs:
@@ -18,13 +18,12 @@ jobs:
           python_version: 3.12
           use_uv: true
       - name: Install dependencies
-        run: |
-          rye sync --no-lock
+        run: rye sync --no-lock
       - name: Run unit tests on the code
-        run: rye run python -m unittest ${GITHUB_WORKSPACE}/src/tests/*.py
+        run: rye run test
       - name: Check test results
         run: |
-          test_result=$(python3 -m unittest ${GITHUB_WORKSPACE}/src/tests/*.py |& grep "FAILED" | wc -w)
+          test_result=$(rye run test |& grep "FAILED" | wc -w)
           if (( $(echo "$test_result") == 0 )); then
             echo "Tests passed. Commit approved."
           else

@@ -1,7 +1,7 @@
 on:
   push:
       paths:
-        - 'src/**'
+        - 'colab_datafusion_analysis/**'
         - '.github/workflows/**'
 
 jobs:
@@ -13,15 +13,12 @@ jobs:
       - name: Install the latest version of rye
         uses: eifinger/setup-rye@v3
       - name: Install dependencies
-        run: |
-          rye config --set-bool behavior.use-uv=true
-          rye pin 3.11.1
-          rye sync
+        run: rye sync --no-lock
       - name: Analysing the code with pylint
-        run: rye run pylint --disable=C0114,C0115,C0116 --exit-zero src/**/*.py src/*.py
+        run: rye run pylint-ci
       - name: Check Pylint score
         run: |
-          pylint_score=$(pylint --disable=all --enable=metrics --output-format=text src/**/*.py src/*.py | grep 'Raw metrics' | awk '{print $4}')
+          pylint_score=$(rye run pylint-score-ci | grep 'Raw metrics' | awk '{print $4}')
           if (( $(echo "$pylint_score < 8" | bc -l) )); then
             echo "Pylint score is below 8. Blocking commit."
             exit 1

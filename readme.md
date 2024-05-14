@@ -27,7 +27,7 @@ of the Law Department of the University of Bergamo. Further info on the project
 
 You can try this demo:
 
-[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/src/notebook.ipynb)
+[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/cda_example_notebook.ipynb)
 
 and find instructions [here](https://f-aguzzi.github.io/tesi/docs/tutorial).
 
