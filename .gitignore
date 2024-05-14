@@ -4,3 +4,13 @@
 **/__pycache__/
 src/tests/test_x_data.numbers
 src/tests/test_x_data.xlsx
+
+# rye
+target
+.venv
+.env
+/x
+site
+.idea
+token.txt
+dist
