@@ -55,7 +55,7 @@ class LDA:
         y_dataframe = pd.DataFrame(self.y, columns=['Substance'])
 
         scores = pd.concat([scores, y_dataframe], axis = 1)
-        
+
         if self.settings.output:
             print(scores)
 
@@ -86,7 +86,7 @@ class LDA:
             title_text='3D colored by Substance for Linear Discriminant Analysis')
             fig.show()
 
-        lda2 = LD(n_components=self.settings.components) 
+        lda2 = LD(n_components=self.settings.components)
 
         self.x_train, x_test, y_train, y_test = train_test_split(
             (scores.drop('Substance', axis=1).values),
@@ -141,4 +141,3 @@ class LDA:
 
         y_pred = self.model.predict(x_data)
         return y_pred
-

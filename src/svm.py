@@ -17,8 +17,6 @@ class SVMSettings:
         self.type = type
         self.output = output
 
-            
-
 class SVM:
     '''Class for Support Vector Machine analysis of the data'''
     def __init__(self, fused_data, settings):
