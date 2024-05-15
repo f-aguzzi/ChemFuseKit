@@ -45,7 +45,7 @@ The constructor can raise:
 ## Example
 
 ```python
-from lr import LR
+from colab_datafusion_analysis.lr import LR
 
 # Initialize and train the LR class
 lr = LR(settings, array_scores, y)

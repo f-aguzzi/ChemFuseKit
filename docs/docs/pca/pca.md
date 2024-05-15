@@ -38,7 +38,7 @@ The constructor can raise:
 ## Example
 
 ```python
-from pca import PCA
+from colab_datafusion_analysis.pca import PCA
 
 # Initialize and run the PCA class
 pca = PCA(lldf.fused_data, pca_settings)

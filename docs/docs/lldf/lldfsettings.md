@@ -24,7 +24,7 @@ LLDFSettings(qepas_path, qepas_sheet, rt_path, rt_sheet, preprocessing='snv')
 ## Example
 
 ```python
-from lldf import LLDFSettings
+from colab_datafusion_analysis.lldf import LLDFSettings
 
 # Initialize the settings for low-level data fusion
 lldf_settings = LLDFSettings(

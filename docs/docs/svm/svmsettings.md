@@ -29,7 +29,7 @@ The constructor raises:
 ## Example
 
 ```python
-from svm import SVMSettings
+from colab_datafusion_analysis.svm import SVMSettings
 
 # Initialize the settings for Support Vector Machine
 svm_settings = SVMSettings(

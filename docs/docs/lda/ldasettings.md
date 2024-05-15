@@ -24,7 +24,7 @@ The constructor raises:
 ## Example
 
 ```python
-from lda import LDASettings
+from colab_datafusion_analysis.lda import LDASettings
 
 settings = LDASettings(
     components=(pca.components - 1),    # one less component than the number determined by PCA

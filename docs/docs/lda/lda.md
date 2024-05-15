@@ -9,7 +9,7 @@ A class to store the data, methods and artifacts for _Linear Discriminant Analys
 ## Syntax
 
 ```python
-LDA((ldf_model, settings)
+LDA(lldf_model, settings)
 ```
 
 ## Constructor parameters
@@ -45,7 +45,7 @@ The constructor can raise:
 ## Example
 
 ```python
-from lda import LDA
+from colab_datafusion_analysis.lda import LDA
 
 # Initialize and run the LDA class
 lda = LDA(lldf.fused_data, settings)

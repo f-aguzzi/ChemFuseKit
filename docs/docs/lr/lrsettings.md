@@ -34,7 +34,7 @@ The constructor raises:
 ## Example
 
 ```python
-from lr import LRSettings
+from colab_datafusion_analysis.lr import LRSettings
 
 settings = LRSettings(
     algorithm='newton-cg',

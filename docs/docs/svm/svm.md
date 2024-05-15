@@ -42,7 +42,7 @@ The constructor raises:
 ## Example
 
 ```python
-from svm import SVM
+from colab_datafusion_analysis.svm import SVM
 
 # Initialize and run the SVM class
 svm = LDA(lldf.fused_data, settings)

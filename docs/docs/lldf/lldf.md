@@ -48,7 +48,7 @@ LLDF(lldf_settings)
 ## Example
 
 ```python
-from lldf import LLDF
+from colab_datafusion_analysis.lldf import LLDF
 
 # Initialize and run low-level data fusion
 lldf = LLDF(lldf_settings)

@@ -8,6 +8,11 @@ Let's discover **Data Fusion**.
 
 As a simple example, we will train an LDA model and use it for classification.
 
+First of all, let's install the package:
+```bash
+pip install colab_datafusion_analysis
+```
+
 ## First step: data fusion
 
 We will load the `LLDFSettings` with the paths to some Excel datasheets, containing
@@ -19,7 +24,7 @@ The `LLDF` class will take these settings and perform low-level data fusion on t
 two Excel tables we picked.
 
 ```python
-from lldf import LLDFSettings, LLDF
+from colab_datafusion_analysis.lldf import LLDFSettings, LLDF
 
 # Initialize the settings for low-level data fusion
 lldf_settings = LLDFSettings(
@@ -50,7 +55,7 @@ of components for the subsequent `LDA` analysis step.
 As in the previous case, we will set it up with the help of the `PCASettings` class.
 
 ```python
-from pca import PCASettings, PCA
+from colab_datafusion_analysis.pca import PCASettings, PCA
 
 # Initialize the settings for Principal Component Analysis
 pca_settings = PCASettings(
@@ -75,8 +80,7 @@ In this step we will set up the `LDASettings` and then run the `LDA` analysis wi
 component than what we figured out from the `PCA` analysis of the previous step.
 
 ```python
-from lda import LDA
-from lda import LDASettings
+from colab_datafusion_analysis.lda import LDASettings, LDA
 
 settings = LDASettings(
     components=(pca.components - 1),    # one less component than the number determined by PCA
@@ -94,8 +98,6 @@ We will pick a random sample from the dataset and see whether the trained `LDA` 
 can identify it correctly.
 
 ```python
-import pandas as pd
-
 # Let's pick a random sample from the dataset and see if it gets recognized correctly:
 x_data_sample = lldf.fused_data.x_train.iloc[119] # should be DMMP
 x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
