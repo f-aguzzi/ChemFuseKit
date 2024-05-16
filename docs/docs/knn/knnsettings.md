@@ -30,7 +30,7 @@ KNNSettings(n_neighbors, metric, weights, algorithm, output, test_split)
     - `brute`
   or be a callable object.
 - `output`: toggles graph output. Defaults to `False`.
-- `test_split`: toggles the training split test phase. Requires `output` to be set to `True` to work.
+- `test_split`: toggles the training split test phase. Defaults to `False`. Requires `output` to be set to `True` to work.
 
 The constructor raises:
 - `ValueError("Invalid n_neighbors number: should be a positive integer.")` if the number of components is not valid.
