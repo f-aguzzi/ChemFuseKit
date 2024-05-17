@@ -10,7 +10,9 @@ date: apr 18, 2024
 
 The purpose of this project is twofold:
 
-1. extract a library from Dr Felizzato's chemometric classification scripts;
+1. extract a library from [Dr
+Felizzato](https://www.unibg.it/ugov/person/139887)'s chemometric classification
+scripts;
 2. create a GUI application on top of the extracted library to make it
   user-friendly.
 

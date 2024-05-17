@@ -11,13 +11,17 @@ this project.
 
 ## 1. Introduction
 
-This project is a small part of a larger initiative. Professor Francesco
-Saverio and Doctor Giorgio Felizzato, two chemists from the Law Department of
-our university, are conducting research on the use of real-time gas-phase
-sensors for the purpose of forensics. This initiative, too, is a subproject of
-the EU _RISEN_ project for real-time forensics. The sensors in use were
-developed for a previous project Professor Romolo took part in, the _BONAS_
-project for explosive precursor detection.
+This project is a small part of a larger initiative. [Professor Francesco
+Saverio
+Romolo](https://unibg.unifind.cineca.it/individual?uri=http%3A%2F%2Firises.unibg.it%2Fresource%2Fperson%2F80828)
+and [Doctor Giorgio Felizzato](https://www.unibg.it/ugov/person/139887), two
+chemists from the Law Department of our university, are conducting research on
+the use of real-time gas-phase sensors for the purpose of forensics. This
+initiative, too, is a subproject of the EU [_RISEN_](https://www.risen-h2020.eu)
+project for real-time forensics. The sensors in use were developed for a
+previous project Professor Romolo took part in, the
+[_BONAS_](https://cordis.europa.eu/project/id/261685/reporting) project for
+explosive precursor detection.
 
 Michele Verdi, a previous undergraduate thesist worked, under the guidance of
 Doctor Felizzato, on a _data fusion_ module to join and preprocess datasets
@@ -37,44 +41,45 @@ Italian State Police, which will be the first direct user of the results of
 Professor Romolo's project. As of today, no existing software provides an
 entire pipeline for analyzing chemometric forensic data, while also including
 a data fusion system, preprocessing, training, classification, plotting and
-graphing. The closest option is the _Spectra_ web app from Politecnico of
-Turin, but it lacks data fusion and has limitations on import-export operations
-during intermediate phases.
+graphing. The closest option is the [_Spectra_](http://spectrapp.unito.it) web
+app from University of Turin, but it lacks data fusion and has limitations on
+import-export operations during intermediate phases.
 
-Doctor Felizzato will take the role of the _product owner_, while Professor
-Angelo Michele Gargantini from the Department of Management, Information and
-Production of the School of Engineering will supervise the technical aspects of
-this project, to guarantee that computer engineering principles are followed
-correctly. I (Federico Aguzzi) will be the main developer and software
-engineer.
+Doctor Felizzato will take the role of the _product owner_, while [Professor
+Angelo Michele Gargantini](https://cs.unibg.it/gargantini/) from the Department
+of Management, Information and Production of the School of Engineering will
+supervise the technical aspects of this project, to guarantee that computer
+engineering principles are followed correctly. I (Federico Aguzzi) will be the
+main developer and software engineer.
 
 ## 2. Process Model
 
-The process model will take some key concepts from the Agile philosophy while
-also maintaining a more rigorous approach, as much as possible. Given that the
-core of the classification system is already set out in Doctor Felizzato's
-scripts, and that I have no experience with chemometrics, all the refactoring
-efforts will need to alter as little as possible from the flow of
-data in the original code.
+The process model will take some key concepts from the [Agile
+philosophy](https://agilemanifesto.org) while also maintaining a more rigorous
+approach, as much as possible. Given that the core of the classification system
+is already set out in Doctor Felizzato's scripts, and that I have no experience
+with chemometrics, all the refactoring efforts will need to alter as little as
+possible from the flow of data in the original code.
 
 The development will be incremental: first will come the library, and then the
 application. Classification techniques will be added one at a time. To ensure
 that at least some part of the code will remain usable, the library needs to be
-perfectly usable as a standalone, and to be compatible with _Jupyter Notebook_.
-As it was stated previously, other students will continue the project,
-therefore it needs to be modularized and documented well enough to allow other
-maintainers to build on it, especially the library, in case the graphical
-application will ever need to be thrown out.
+perfectly usable as a standalone, and to be compatible with [_Jupyter
+Notebook_](https://jupyter.org).  As it was stated previously, other students
+will continue the project, therefore it needs to be modularized and documented
+well enough to allow other maintainers to build on it, especially the library,
+in case the graphical application will ever need to be thrown out.
 
 All requirements, use cases and class structures for the library will be
 designed and represented through UML graphs before starting to code.
 
-This project will also take some rules from the _eXtreme Programming_ playbook,
-mainly short or even daily sprints, _test-driven development_ and _continuous
-integration_. This is because the project development can be anticipated to be
-incredibly uneven and hard to track; it is therefore paramount to make sure
-that an updated working version of the software is always available, in case
-the development takes a wrong turn at some point in the future.
+This project will also take some rules from the [_eXtreme
+Programming_](http://www.extremeprogramming.org) playbook, mainly short or even
+daily sprints, _test-driven development_ and _continuous integration_. This is
+because the project development can be anticipated to be incredibly uneven and
+hard to track; it is therefore paramount to make sure that an updated working
+version of the software is always available, in case the development takes a
+wrong turn at some point in the future.
 
 The interface of the application will be designed with a mock-up prototype.
 It's not the most efficient of techniques, but it's the only one that can
@@ -100,24 +105,28 @@ used by the Risen project in the future.
 
 ## 4. Stadards, Guidelines, Procedures
 
-The project will follow the `PEP 8` formatting standard on all the `Python`
-code.
+The project will follow the [`PEP 8`](https://peps.python.org/pep-0008/)
+formatting standard on all the `Python` code.
 
-The SCM system will be `git`. All commits will follow the _Conventional
-Commits_ guidelines.
+The SCM system will be [`git`](https://git-scm.com). All commits will follow the
+[_Conventional Commits_](http://conventionalcommits.org) guidelines.
 
-All graphs and diagrams will be made following the `UML` language standards.
+All graphs and diagrams will be made following the [`UML`](http://uml.org)
+language standards.
 
-All documents except the notes and devlogs in the `Obsidian` vault will be
-written in _Pandoc Markdown_ with \LaTeX extensions, and will be compiled to
-PDF with `pandoc`. All the Obisidian notes will be written in plain Markdown
-with the extensions provided by Obisidian plugins.
+All documents except the notes and devlogs in the
+[`Obsidian`](https://obsidian.md) vault will be written in _Pandoc Markdown_
+with \LaTeX extensions, and will be compiled to PDF with
+[`pandoc`](https://pandoc.org). All the Obisidian notes will be written in plain
+[Markdown](https://www.markdownguide.org) with the extensions provided by
+Obisidian plugins.
 
-Given that the development will be test-driven, testing will be carried out
-with Python's built-in `unittest` module. The workflow will be made into a
-continuous integration via `Github Actions`.
-At the end of each working day, all the committed code will need to pass
-validation, automated tests and be documented.
+Given that the development will be test-driven, testing will be carried out with
+Python's built-in [`unittest`](https://docs.python.org/3/library/unittest.html)
+module. The workflow will be made into a continuous integration via [`Github
+Actions`](https://docs.github.com/en/actions).  At the end of each working day,
+all the committed code will need to pass validation, automated tests and be
+documented.
 
 ## 5. Management Activities
 
