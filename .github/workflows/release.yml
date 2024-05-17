@@ -72,4 +72,5 @@ jobs:
             @semantic-release/changelog@6
             conventional-changelog-conventionalcommits@7
         env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}

@@ -1,6 +1,5 @@
 # `chemfusekit`: Data Fusion and Analysis in Colab
 
-[![Downloads](https://static.pepy.tech/badge/chemfusekit)](https://pepy.tech/project/chemfusekitx\)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Pylint](https://github.com/f-aguzzi/tesi/actions/workflows/pylint.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
 [![Unittest](https://github.com/f-aguzzi/tesi/actions/workflows/unittest.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
