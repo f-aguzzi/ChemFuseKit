@@ -37,15 +37,15 @@ class TestSVM(unittest.TestCase):
         svm_settings = SVMSettings()
 
         # First, construct the object with null model:
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             SVM(None, svm_settings)
 
         # Then, construct the object with null settings:
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             SVM(lldf.fused_data, None)
 
         # Now, with both null:
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             SVM(None, None)
 
         # Finally, with proper values:

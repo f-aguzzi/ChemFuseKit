@@ -1,4 +1,6 @@
 '''Linear Discriminant Analysis module'''
+from typing import Optional
+
 import numpy as np
 import pandas as pd
 
@@ -11,9 +13,11 @@ import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from chemfusekit.lldf import LLDFModel
+
 class LDASettings:
     '''Holds the settings for the LDA object.'''
-    def __init__(self, components=3, output=False):
+    def __init__(self, components: int = 3, output: bool = False):
         if components <= 2:
             raise ValueError("Invalid component number: must be a > 1 integer.")
         self.components = components
@@ -21,16 +25,12 @@ class LDASettings:
 
 class LDA:
     '''Class to store the data, methods and artifacts for Linear Discriminant Analysis'''
-    def __init__(self, lldf_model, settings):
-        if lldf_model is None:
-            raise TypeError("The LLDF model for LDA cannot be null.")
-        if settings is None:
-            raise TypeError("The LDA settings object cannot be null.")
+    def __init__(self, lldf_model: LLDFModel, settings: LDASettings):
         self.settings = settings
         self.x_data = lldf_model.x_data
         self.x_train = lldf_model.x_train
         self.y = lldf_model.y
-        self.model = None
+        self.model: Optional[LD] = None
 
     def lda(self):
         '''Performs Linear Discriminant Analysis'''
@@ -132,7 +132,7 @@ class LDA:
         # Print the classification report
         print(classification_report(y_test, y_pred, digits=2))
 
-    def predict(self, x_data):
+    def predict(self, x_data: pd.DataFrame):
         '''Performs LDA prediction once the model is trained.'''
         if x_data is None:
             raise TypeError("X data for LDA prediction must be non-empty.")

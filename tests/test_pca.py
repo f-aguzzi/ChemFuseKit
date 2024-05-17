@@ -14,7 +14,7 @@ class TestPCA(unittest.TestCase):
 
         # Test for rejection of an out-of-bounds confidence level:
         with self.assertRaises(ValueError):
-            PCASettings(confidence_level=3)
+            PCASettings(confidence_level=3.00)
 
         # Test for rejection of insufficient initial components:
         with self.assertRaises(ValueError):

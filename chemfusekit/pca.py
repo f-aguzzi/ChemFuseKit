@@ -1,4 +1,6 @@
 '''Principal Component Analysis Module'''
+from typing import Optional
+
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -8,11 +10,13 @@ from sklearn.decomposition import PCA as PC
 
 import scipy.stats
 
+from chemfusekit.lldf import LLDFModel
+
 class PCASettings:
     '''Holds the settings for the PCA object.'''
-    def __init__(self, target_variance=0.95,
-                 confidence_level=0.05,
-                 initial_components=10, output=False):
+    def __init__(self, target_variance: float = 0.95,
+                 confidence_level: float = 0.05,
+                 initial_components: int = 10, output: bool = False):
         if target_variance < 0:
             raise ValueError("Target variance should be positive or null.")
         if confidence_level < 0 or confidence_level > 1:
@@ -27,16 +31,16 @@ class PCASettings:
 
 class PCA:
     '''A class to store the data, methods and artifacts for Principal Component Analysis'''
-    def __init__(self, fused_data, settings):
+    def __init__(self, fused_data: LLDFModel, settings: PCASettings):
         if fused_data is None:
             raise TypeError("The LLDF model for PCA cannot be null.")
         if settings is None:
             raise TypeError("The PCA settings object cannot be null.")
         self.fused_data = fused_data
         self.components = 0
-        self.pca_model = None
+        self.pca_model: Optional[PC] = None
         self.settings = settings
-        self.array_scores = None
+        self.array_scores: Optional[np.ndarray] = None
 
     def pca(self):
         '''Performs Principal Component Analysis.'''

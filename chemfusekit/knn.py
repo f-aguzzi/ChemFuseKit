@@ -1,7 +1,12 @@
 '''k-Nearest Neighbors Analysis module'''
+from typing import Optional
+from beartype.typing import Callable
+
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
+
+import pandas as pd
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -12,12 +17,12 @@ class KNNSettings:
     '''Holds the settings for the kNN object.'''
     def __init__(
             self,
-            n_neighbors=15,
-            metric='euclidean',
-            weights='uniform',
-            algorithm='auto',
-            output=False,
-            test_split=False
+            n_neighbors: int = 15,
+            metric: str | Callable = 'euclidean',
+            weights: str | Callable = 'uniform',
+            algorithm: str = 'auto',
+            output: bool = False,
+            test_split: bool = False
         ):
         if n_neighbors < 1:
             raise ValueError("Invalid n_neighbors number: should be a positive integer.")
@@ -31,11 +36,6 @@ class KNNSettings:
             raise  ValueError(
                 "Invalid algorithm: should be 'auto', 'ball_tree', 'kd_tree' or 'brute'."
             )
-        if type(output) is not bool:
-            print(type(output))
-            raise TypeError("Invalid output: should be a boolean value.")
-        if type(test_split) is not bool:
-            raise TypeError("Invalid test_split: should be a boolean value.")
         if test_split is True and output is False:
             raise Warning(
                 "You selected test_split but it won't run because you disabled the output."
@@ -49,14 +49,14 @@ class KNNSettings:
 
 class KNN:
     '''Class to store the data, methods and artifacts for k-Nearest Neighbors Analysis'''
-    def __init__(self, settings, fused_data):
+    def __init__(self, settings: KNNSettings, fused_data: LLDFModel):
         if type(settings) is not KNNSettings:
             raise TypeError("Invalid settings: should be a KNNSettings-class object.")
         if type(fused_data) is not LLDFModel:
             raise TypeError("Invalid fused_data: shold be a LLDFModel-class object.")
         self.settings = settings
         self.fused_data = fused_data
-        self.model = None
+        self.model: Optional[KNeighborsClassifier] = None
 
     def knn(self):
         '''Performs k-Nearest Neighbors Analysis'''
@@ -152,7 +152,7 @@ class KNN:
             # Print the classification report
             print(classification_report(y_test, y_pred, digits=2))
 
-    def predict(self, x_data):
+    def predict(self, x_data: pd.DataFrame):
         '''Performs kNN prediction once the model is trained.'''
         if x_data is None:
             raise TypeError("X data for kNN prediction must be non-empty.")

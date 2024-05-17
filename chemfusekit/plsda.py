@@ -1,4 +1,6 @@
 '''Partial Least Squares Discriminant Analysis module.'''
+from typing import Optional
+
 import pandas as pd
 import numpy as np
 
@@ -16,14 +18,9 @@ from chemfusekit.lldf import LLDFModel
 
 class PLSDASettings:
     '''Holds the settings for the PLSDA object.'''
-    def __init__(self, n_components=3, output=False, test_split=False):
+    def __init__(self, n_components: int = 3, output: bool = False, test_split: bool = False):
         if n_components < 1:
             raise ValueError("Invalid n_components number: should be a positive integer.")
-        if type(output) is not bool:
-            print(type(output))
-            raise TypeError("Invalid output: should be a boolean value.")
-        if type(test_split) is not bool:
-            raise TypeError("Invalid test_split: should be a boolean value.")
         if test_split is True and output is False:
             raise Warning(
                 "You selected test_split but it won't run because you disabled the output."
@@ -38,13 +35,9 @@ class PLSDA:
     Discriminant Analysis
     '''
     def __init__(self, settings: PLSDASettings, fused_data: LLDFModel):
-        if type(settings) is not PLSDASettings:
-            raise TypeError("Invalid settings: should be a PLSDASettings-class object")
-        if type(fused_data) is not LLDFModel:
-            raise TypeError("Invalid fused_data: should be a LLDFModel-class object")
         self.settings = settings
         self.fused_data = fused_data
-        self.model: PLSR = None
+        self.model: Optional[PLSR] = None
 
     def plsda(self):
         '''Performs Partial Least Squares Discriminant Analysis'''
@@ -186,7 +179,7 @@ class PLSDA:
             # Print the classification report
             print(classification_report(y_test, pred, digits=2))
 
-    def predict(self, x_data):
+    def predict(self, x_data: pd.DataFrame):
         '''Performs PLSDA prediction once the model is trained.'''
         if x_data is None:
             raise TypeError("X data for PLSDA prediction must be non-empty.")

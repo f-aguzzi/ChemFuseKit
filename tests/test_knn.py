@@ -19,7 +19,7 @@ class TestKNN(unittest.TestCase):
         # metric parameter
         with self.assertRaises(ValueError):
             KNNSettings(metric='invalid attribute') # Non-existent technique
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             value = 3
             KNNSettings(metric=value)   # Non-callable
 
@@ -31,7 +31,7 @@ class TestKNN(unittest.TestCase):
         # weights parameter
         with self.assertRaises(ValueError):
             KNNSettings(weights='invalid attribute') # Non-existent technique
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             value = 3
             KNNSettings(weights=value)   # Non-callable
 

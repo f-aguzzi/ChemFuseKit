@@ -1,4 +1,6 @@
 '''Performs low-level data fusion on input arrays, outputs the results'''
+from typing import Optional
+
 import numpy as np
 import pandas as pd
 from scipy.signal import savgol_filter
@@ -7,14 +9,21 @@ from scipy.signal import savgol_filter
 
 class LLDFModel:
     '''Models the output data from the LLDF operation'''
-    def __init__(self, x_data, x_train, y):
+    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray):
         self.x_data = x_data
         self.x_train = x_train
         self.y = y
 
 class LLDFSettings:
     '''Holds the settings for the LLDF object.'''
-    def __init__(self, qepas_path, qepas_sheet, rt_path, rt_sheet, preprocessing='snv'):
+    def __init__(
+        self,
+        qepas_path: str,
+        qepas_sheet: str,
+        rt_path: str,
+        rt_sheet: str,
+        preprocessing: str = 'snv'
+    ):
         self.qepas_path = qepas_path
         self.qepas_sheet = qepas_sheet
         self.rt_path = rt_path
@@ -23,11 +32,11 @@ class LLDFSettings:
 
 class LLDF:
     '''Holds together all the data, methods and artifacts of the LLDF operation'''
-    def __init__(self, settings):
+    def __init__(self, settings: LLDFSettings):
         self.settings = settings
-        self.fused_data = None
+        self.fused_data: Optional[LLDFModel] = None
 
-    def _snv(self, input_data):
+    def _snv(self, input_data: np.ndarray):
         '''Applies normalization to an input array'''
         # Define a new array and populate it with the corrected data
         output_data = np.zeros_like(input_data)
@@ -109,7 +118,7 @@ class LLDF:
 
         self.fused_data = LLDFModel(x_data, x_train, y)
 
-    def export_data(self, export_path):
+    def export_data(self, export_path: str):
         '''Exports the data fusion artifacts to a file'''
         if self.fused_data is None:
             raise RuntimeError("Cannot export data before data fusion.")
