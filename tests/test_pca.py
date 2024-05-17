@@ -1,7 +1,7 @@
 '''This module contains the test cases for the PCA module.'''
 import unittest
-from colab_datafusion_analysis.pca import PCASettings, PCA
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF
+from chemfusekit.pca import PCASettings, PCA
+from chemfusekit.lldf import LLDFSettings, LLDF
 
 class TestPCA(unittest.TestCase):
     '''Test suite for the PCA module.'''

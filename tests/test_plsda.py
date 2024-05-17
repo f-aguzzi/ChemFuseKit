@@ -1,7 +1,7 @@
 '''This module contains the test cases for the KNN module.'''
 import unittest
-from colab_datafusion_analysis.plsda import PLSDASettings, PLSDA
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF, LLDFModel
+from chemfusekit.plsda import PLSDASettings, PLSDA
+from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel
 
 class TestPLSDA(unittest.TestCase):
     '''Test suite for the PLSDA module.'''

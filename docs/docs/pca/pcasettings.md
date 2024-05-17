@@ -24,7 +24,7 @@ PCASettings(target_variance, confidence_level, initial_components, output)
 ## Example
 
 ```python
-from colab_datafusion_analysis.pca import PCASettings
+from chemfusekit.pca import PCASettings
 
 # Initialize the settings for Principal Component Analysis
 pca_settings = PCASettings(

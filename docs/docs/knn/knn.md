@@ -41,7 +41,7 @@ The constructor can raise:
 ## Example
 
 ```python
-from colab_datafusion_analysis.knn import KNN
+from chemfusekit.knn import KNN
 
 # Initialize and run the LDA class
 knn = KNN(settings, lldf.fused_data)

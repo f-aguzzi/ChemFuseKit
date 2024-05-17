@@ -1,4 +1,4 @@
-# Colab Data Fusion and Analysis
+# `chemfusekit`: Data Fusion and Analysis in Colab
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Pylint](https://github.com/f-aguzzi/tesi/actions/workflows/pylint.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
@@ -36,13 +36,15 @@ and find instructions [here](https://f-aguzzi.github.io/tesi/docs/tutorial).
 ## Features
 
 - **data fusion**: join data from different sensors to increase the quality and
-  precision of your chemiometrical analysis
+  precision of your chemometrical analysis
 - **model training**: train, save and load statistical models
 - **data classification**: use your models to classify and predict
 
-Here's a list of the currently available modules, with more on the way:
+Here's a list of the currently available modules:
 - **LLDF**: *Low-Level Data Fusion*
 - **PCA**: *Principal Component Analysis*
 - **LDA**: *Linear Discriminant Analysis*
 - **SVM**: *Support Vector Machine*
 - **LR**: *Logistic Regression*
+- **KNN**: *k_Neighbors Analysis*
+- **PLSDA**: *Partial Least Squres Discriminant Analysis*

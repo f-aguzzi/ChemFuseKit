@@ -6,7 +6,7 @@ from sklearn.metrics import confusion_matrix, classification_report
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from colab_datafusion_analysis.lldf import LLDFModel
+from chemfusekit.lldf import LLDFModel
 
 class KNNSettings:
     '''Holds the settings for the kNN object.'''

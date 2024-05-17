@@ -44,7 +44,7 @@ The constructor raises:
 ## Example
 
 ```python
-from colab_datafusion_analysis.knn import KNNSettings
+from chemfusekit.knn import KNNSettings
 
 settings = KNNSettings(
     n_neighbors=20,     # pick 20 neighbors

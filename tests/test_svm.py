@@ -1,7 +1,7 @@
 '''This module contains the test cases for the SVM module.'''
 import unittest
-from colab_datafusion_analysis.svm import SVMSettings, SVM
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF
+from chemfusekit.svm import SVMSettings, SVM
+from chemfusekit.lldf import LLDFSettings, LLDF
 
 class TestSVM(unittest.TestCase):
     '''Test suite for the LDA module.'''

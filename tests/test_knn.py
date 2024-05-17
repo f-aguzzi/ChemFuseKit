@@ -1,7 +1,7 @@
 '''This module contains the test cases for the KNN module.'''
 import unittest
-from colab_datafusion_analysis.knn import KNNSettings, KNN
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF, LLDFModel
+from chemfusekit.knn import KNNSettings, KNN
+from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel
 
 class TestKNN(unittest.TestCase):
     '''Test suite for the KNN module.'''

@@ -9,7 +9,7 @@ const simplePlantUML = require("@akebifiky/remark-simple-plantuml");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Colab Data Fusion and Analysis',
+  title: 'ChemFuseKit`: Colab Data Fusion and Analysis',
   tagline: 'Chemometrics on the go',
   favicon: 'img/favicon.ico',
 

@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
 
-from colab_datafusion_analysis.lldf import LLDFModel
+from chemfusekit.lldf import LLDFModel
 
 class PLSDASettings:
     '''Holds the settings for the PLSDA object.'''

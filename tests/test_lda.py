@@ -1,7 +1,7 @@
 '''This module contains the test cases for the LDA module.'''
 import unittest
-from colab_datafusion_analysis.lda import LDASettings, LDA
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF
+from chemfusekit.lda import LDASettings, LDA
+from chemfusekit.lldf import LLDFSettings, LLDF
 
 class TestLDA(unittest.TestCase):
     '''Test suite for the LDA module.'''

@@ -41,7 +41,7 @@ The constructor can raise:
 ## Example
 
 ```python
-from colab_datafusion_analysis.knn import PLSDA
+from chemfusekit.knn import PLSDA
 
 # Initialize and run the LDA class
 plsda = PLSDA(settings, lldf.fused_data)

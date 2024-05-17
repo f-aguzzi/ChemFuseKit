@@ -1,6 +1,6 @@
 .DS_Store
 *.pyc
-colab-datafusion-analysis/.ipynb_checkpoints
+**/.ipynb_checkpoints
 **/__pycache__/
 
 # rye

@@ -1,6 +1,6 @@
 '''This module contains the test cases for the LLDF module.'''
 import unittest
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF
+from chemfusekit.lldf import LLDFSettings, LLDF
 
 class TestLLDF(unittest.TestCase):
     '''Test suite for the LLDF module.'''

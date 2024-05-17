@@ -45,7 +45,7 @@ The constructor can raise:
 ## Example
 
 ```python
-from colab_datafusion_analysis.lda import LDA
+from chemfusekit.lda import LDA
 
 # Initialize and run the LDA class
 lda = LDA(lldf.fused_data, settings)

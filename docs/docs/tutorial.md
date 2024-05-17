@@ -24,7 +24,7 @@ The `LLDF` class will take these settings and perform low-level data fusion on t
 two Excel tables we picked.
 
 ```python
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF
+from chemfusekit.lldf import LLDFSettings, LLDF
 
 # Initialize the settings for low-level data fusion
 lldf_settings = LLDFSettings(
@@ -55,7 +55,7 @@ of components for the subsequent `LDA` analysis step.
 As in the previous case, we will set it up with the help of the `PCASettings` class.
 
 ```python
-from colab_datafusion_analysis.pca import PCASettings, PCA
+from chemfusekit.pca import PCASettings, PCA
 
 # Initialize the settings for Principal Component Analysis
 pca_settings = PCASettings(
@@ -80,7 +80,7 @@ In this step we will set up the `LDASettings` and then run the `LDA` analysis wi
 component than what we figured out from the `PCA` analysis of the previous step.
 
 ```python
-from colab_datafusion_analysis.lda import LDASettings, LDA
+from chemfusekit.lda import LDASettings, LDA
 
 settings = LDASettings(
     components=(pca.components - 1),    # one less component than the number determined by PCA

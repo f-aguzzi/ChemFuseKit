@@ -27,7 +27,7 @@ The constructor raises:
 ## Example
 
 ```python
-from colab_datafusion_analysis.plsda import PLSDASettings
+from chemfusekit.plsda import PLSDASettings
 
 # Initialize the settings for Partial Least Squares Discriminant Analysis
 plsda_settings = PLSDASettings(

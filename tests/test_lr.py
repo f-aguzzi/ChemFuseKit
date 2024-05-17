@@ -1,8 +1,8 @@
 '''This module contains the test cases for the LR module.'''
 import unittest
-from colab_datafusion_analysis.lldf import LLDFSettings, LLDF
-from colab_datafusion_analysis.pca import PCASettings, PCA
-from colab_datafusion_analysis.lr import LRSettings, LR
+from chemfusekit.lldf import LLDFSettings, LLDF
+from chemfusekit.pca import PCASettings, PCA
+from chemfusekit.lr import LRSettings, LR
 
 class TestLR(unittest.TestCase):
     '''Test suite for the LR module.'''
