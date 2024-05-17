@@ -40,4 +40,4 @@ pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text co
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["chemfusekit"]

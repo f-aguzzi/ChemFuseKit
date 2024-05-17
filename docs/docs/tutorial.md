@@ -10,7 +10,7 @@ As a simple example, we will train an LDA model and use it for classification.
 
 First of all, let's install the package:
 ```bash
-pip install colab_datafusion_analysis
+pip install chemfusekit 
 ```
 
 ## First step: data fusion

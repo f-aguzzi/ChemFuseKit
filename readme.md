@@ -1,10 +1,11 @@
 # `chemfusekit`: Data Fusion and Analysis in Colab
 
+[![Downloads](https://static.pepy.tech/badge/chemfusekit)](https://pepy.tech/project/chemfusekitx\)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Pylint](https://github.com/f-aguzzi/tesi/actions/workflows/pylint.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
 [![Unittest](https://github.com/f-aguzzi/tesi/actions/workflows/unittest.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
 [![](https://img.shields.io/badge/Read_the_docs-GitHub_Pages-darkorange)](https://f-aguzzi.github.io/tesi/)
-[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/cda_example_notebook.ipynb)
+[![Try It On Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/cda_example_notebook.ipynb)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/f-aguzzi/tesi/main/docs/static/img/logo.svg" alt="Library Logo" style="width: 20%;">
@@ -25,7 +26,14 @@ of the Law Department of the University of Bergamo. Further info on the project
 
 <br />
 
-You can try this demo:
+Get it on `pip`:
+```bash
+pip install chemfusekit
+```
+
+<br />
+
+You can also try this demo:
 
 [![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/cda_example_notebook.ipynb)
 
