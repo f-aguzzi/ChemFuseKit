@@ -10,12 +10,14 @@ from sklearn.svm import SVC
 
 class SVMSettings:
     '''Holds the settings for the SVM object.'''
-    def __init__(self, type='linear', output=False):
-        if type is None:
-            raise TypeError("Type cannot be null.")
+    def __init__(self, kernel='linear', output=False):
+        if kernel is None:
+            raise TypeError("Kernel cannot be null.")
+        if kernel not in ['linear', 'poly', 'gaussian', 'sigmoid']:
+            raise ValueError("Invalid type: must be linear, poly, gaussian or sigmoid")
         if output is None:
             raise TypeError("Output selection cannot be null.")
-        self.type = type
+        self.kernel = kernel
         self.output = output
 
 class SVM:
@@ -45,17 +47,17 @@ class SVM:
         )
 
         # Linear kernel
-        if self.settings.type == 'linear':
+        if self.settings.kernel == 'linear':
             svm_model = SVC(kernel='linear', probability=True)
             # svmlinear.predict_proba(X_train)
         # Polynomial kernel
-        elif self.settings.type == 'poly':
+        elif self.settings.kernel == 'poly':
             svm_model = SVC(kernel='poly', degree=8)
         # Gaussian kernel - radial basis function
-        elif self.settings.type == 'gaussian':
+        elif self.settings.kernel == 'gaussian':
             svm_model = SVC(kernel='rbf')
         # Sigmoid classifier
-        elif self.settings.type == 'sigmoid':
+        elif self.settings.kernel == 'sigmoid':
             svm_model = SVC(kernel='sigmoid')
         else:
             raise ValueError(f"SVM: this type of kernel does not exist ({self.settings.type=})")

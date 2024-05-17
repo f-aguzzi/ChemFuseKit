@@ -14,6 +14,11 @@ class TestSVM(unittest.TestCase):
         # Test against null output selector
         with self.assertRaises(TypeError):
             SVMSettings('linear', None)
+        with self.assertRaises(ValueError):
+        # Test against non-existent kernels
+            SVMSettings(kernel='made up name')
+        # Now call with proper values:
+        SVMSettings(kernel='gaussian', output=True)
 
     def test_svm_constructor(self):
         '''Test case against constructor parameter issues.'''

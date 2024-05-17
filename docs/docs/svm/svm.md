@@ -9,7 +9,7 @@ A class to store the data, methods and artifacts for _Principal Component Analys
 ## Syntax
 
 ```python
-PCA(fused_data, settings)
+SVM(fused_data, settings)
 ```
 
 ## Constructor parameters
@@ -37,7 +37,7 @@ The constructor raises:
 - `predict(self, x_data)`: performs classification based on SVM
   - *raises*:
     - `RuntimeError("The model hasn't been trained yet!")` if the model is null
-    -  `TypeError("X data for prediction cannot be empty.")` if the input data is null
+    - `TypeError("X data for prediction cannot be empty.")` if the input data is null
 
 ## Example
 
