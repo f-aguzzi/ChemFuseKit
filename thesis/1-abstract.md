@@ -11,5 +11,5 @@
 
     Un sistema ben strutturato, costruito su componenti open source esistenti, consente ai non programmatori di modificarlo e migliorarlo, risolvendo problemi pratici e rimanendo facilmente espandibile dagli utenti diretti - un risultato irraggiungibile senza i contributi dell'ingegneria del software.
 
-    Fornendo un'alternativa più semplice, rapida ed efficace alle alternative, sia commerciali che open source - e soprattutto, integrando per la prima volta un approccio *data fusion* in una libreria di analisi - questo progetto mira a fornire uno strumento leggero e comodo per le analisi chemiometriche.
+    Fornendo un'alternativa più semplice, rapida ed efficace alle alternative, sia commerciali che open source - e soprattutto, integrando per la prima volta un approccio \emph{data fusion} in una libreria di analisi - questo progetto mira a fornire uno strumento leggero e comodo per le analisi chemiometriche.
 \end{center}
