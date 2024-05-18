@@ -17,7 +17,7 @@ jobs:
         run: |
           echo "files=$(printf '"%s" ' thesis/*.md)" > $GITHUB_OUTPUT
 
-      - uses: docker://pandoc/latex:3.13
+      - uses: docker://pandoc/latex:2.9
         with:
           args: -o "thesis/tesi_federico_aguzzi.pdf" ${{ steps.files_list.outputs.files }}
 
