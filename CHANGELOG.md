@@ -1,3 +1,10 @@
+## [1.1.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.0.0...v1.1.0-beta.1) (2024-05-18)
+
+
+### Features
+
+* beartype integration ([2f823ce](https://github.com/f-aguzzi/tesi/commit/2f823cebee0cb8006523d9e0d6aaa673484bd928)), closes [#7](https://github.com/f-aguzzi/tesi/issues/7)
+
 ## 1.0.0 (2024-05-17)
 
 
