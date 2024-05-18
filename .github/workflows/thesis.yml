@@ -21,7 +21,6 @@ jobs:
         with:
           args: >- 
             --output=thesis/tesi_federico_aguzzi.pdf
-            --template=thesis/template.tex
             ${{ steps.files_list.outputs.files }}
 
           
