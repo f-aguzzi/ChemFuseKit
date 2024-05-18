@@ -12,17 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: create file list
-        id: files_list
-        run: |
-          echo "files=$(printf '"%s" 'thesis/*.md)" > $GITHUB_OUTPUT
-
       - uses: docker://pandoc/latex:2.9
         with:
-          args: --output="thesis/tesi_federico_aguzzi.pdf" ${{ steps.files_list.outputs.files }}
+          args: thesis/*.md -o "thesis/tesi_federico_aguzzi.pdf"
 
           
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: thesis
           path: thesis
