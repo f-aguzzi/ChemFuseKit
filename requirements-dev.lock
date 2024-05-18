@@ -10,6 +10,8 @@
 -e file:.
 astroid==3.1.0
     # via pylint
+beartype==0.18.5
+    # via chemfusekit
 contourpy==1.2.1
     # via matplotlib
 cycler==0.12.1
@@ -27,12 +29,12 @@ joblib==1.4.2
 kiwisolver==1.4.5
     # via matplotlib
 matplotlib==3.8.4
-    # via colab-datafusion-analysis
+    # via chemfusekit
     # via seaborn
 mccabe==0.7.0
     # via pylint
 numpy==1.26.4
-    # via colab-datafusion-analysis
+    # via chemfusekit
     # via contourpy
     # via matplotlib
     # via pandas
@@ -40,19 +42,19 @@ numpy==1.26.4
     # via scipy
     # via seaborn
 openpyxl==3.1.2
-    # via colab-datafusion-analysis
+    # via chemfusekit
 packaging==24.0
     # via matplotlib
     # via plotly
 pandas==2.2.2
-    # via colab-datafusion-analysis
+    # via chemfusekit
     # via seaborn
 pillow==10.3.0
     # via matplotlib
 platformdirs==4.2.1
     # via pylint
 plotly==5.22.0
-    # via colab-datafusion-analysis
+    # via chemfusekit
 pylint==3.1.1
 pyparsing==3.1.2
     # via matplotlib
@@ -62,12 +64,12 @@ python-dateutil==2.9.0.post0
 pytz==2024.1
     # via pandas
 scikit-learn==1.4.2
-    # via colab-datafusion-analysis
+    # via chemfusekit
 scipy==1.13.0
-    # via colab-datafusion-analysis
+    # via chemfusekit
     # via scikit-learn
 seaborn==0.13.2
-    # via colab-datafusion-analysis
+    # via chemfusekit
 six==1.16.0
     # via python-dateutil
 tenacity==8.3.0

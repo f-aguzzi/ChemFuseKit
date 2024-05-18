@@ -9,20 +9,15 @@ A class to store the data, methods and artifacts for _Logistic Regression_.
 ## Syntax
 
 ```python
-LR(settings, array_scores, y):
+LR(settings: LRSettings, array_scores: np.ndarray, y: np.ndarray):
 ```
 
 ## Constructor parameters
 
 - `settings`: object of type [`LRSettings`](./lrsettings.md). Contains the settings for
   the `LR` object.
-- `array_scores`: product of [`PCA` analysis](../pca/).
-- `y`: product of [`PCA` analysis](../pca/).
-
-The constructor can raise:
-- `TypeError("Settings cannot be null.")` if `settings` is a null value;
-- `TypeError("Array scores cannot be null.")` if `array_scores` is a null value;
-- `TypeError("Y cannot be null.")` if `y` is a null value.
+- `array_scores`: `np.ndarray`, product of [`PCA` analysis](../pca/).
+- `y`: `np.ndarray`, product of [`PCA` analysis](../pca/).
 
 ## Fields
 

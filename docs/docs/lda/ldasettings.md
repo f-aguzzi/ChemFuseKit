@@ -9,7 +9,7 @@ Holds the settings for the [`LDA`](./lda.md) object.
 ## Syntax
 
 ```python
-LDASettings(components, output)
+LDASettings(components: int, output: bool)
 ```
 
 ## Fields and constructor parameters

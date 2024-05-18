@@ -1,35 +1,31 @@
 '''Support Vector Machine module.'''
-import matplotlib.pyplot as plt
-# matplotlib inline
+from typing import Optional
 
+import pandas as pd
+
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm import SVC
 
+from chemfusekit.lldf import LLDFModel
+
 class SVMSettings:
     '''Holds the settings for the SVM object.'''
-    def __init__(self, kernel='linear', output=False):
-        if kernel is None:
-            raise TypeError("Kernel cannot be null.")
+    def __init__(self, kernel: str = 'linear', output: bool = False):
         if kernel not in ['linear', 'poly', 'gaussian', 'sigmoid']:
             raise ValueError("Invalid type: must be linear, poly, gaussian or sigmoid")
-        if output is None:
-            raise TypeError("Output selection cannot be null.")
         self.kernel = kernel
         self.output = output
 
 class SVM:
     '''Class for Support Vector Machine analysis of the data'''
-    def __init__(self, fused_data, settings):
-        if fused_data is None:
-            raise ValueError("Fused data input cannot be empty.")
-        if settings is None:
-            raise ValueError("Settings cannot be empty.")
+    def __init__(self, fused_data: LLDFModel, settings: SVMSettings):
         self.fused_data = fused_data
         self.settings = settings
-        self.model = None
+        self.model: Optional[SVC] = None
 
     def svm(self):
         '''Performs Support Vector Machine analysis'''
@@ -95,7 +91,7 @@ class SVM:
             # Print the classification report
             print(classification_report(y_test, y_pred, digits=2))
 
-    def predict(self, x_data):
+    def predict(self, x_data: pd.DataFrame):
         '''Performs SVM prediction once the model is trained'''
         if self.model is None:
             raise RuntimeError("The model hasn't been trained yet!")

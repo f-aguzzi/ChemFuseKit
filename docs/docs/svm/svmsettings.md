@@ -9,7 +9,7 @@ Holds the settings for the [`SVM`](./svm.md) object.
 ## Syntax
 
 ```python
-SVMSettings(kernel, output)
+SVMSettings(kernel: str, output: bool)
 ```
 
 ## Fields and constructor parameters
@@ -23,9 +23,7 @@ SVMSettings(kernel, output)
 - `output`: toggles graph output. Defaults to `False`.
 
 The constructor raises:
-- `TypeError("Kernel cannot be null.")` if the kernel type is null
 - `ValueError("Invalid type: must be linear, poly, gaussian or sigmoid")` if the selected kernel is not one of the available
-- `TypeError("Output selection cannot be null.")` if the output selection is invalid
 
 ## Example
 

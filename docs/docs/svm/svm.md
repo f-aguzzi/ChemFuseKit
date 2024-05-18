@@ -9,12 +9,12 @@ A class to store the data, methods and artifacts for _Principal Component Analys
 ## Syntax
 
 ```python
-SVM(fused_data, settings)
+SVM(fused_data: LLDFModel, settings: SVMSettings)
 ```
 
 ## Constructor parameters
 
-- `fused_data`: object of type [`LLDF`](../lldf/lldf.md). Contains the data to be analyzed.
+- `fused_data`: object of type [`LLDFModel`](../lldf/lldfmodel.md). Contains the data to be analyzed.
 - `settings`: object of type [`SVMSettings`](./svmsettings.md). Contains the settings for
   the `SVM` object.
 
@@ -24,7 +24,7 @@ The constructor raises:
 
 ## Fields
 
-- `fused_data`: object of type [`LLDF`](../lldf/lldf.md). Contains the data to be analyzed.
+- `fused_data`: object of type [`LLDFModel`](../lldf/lldfmodel.md). Contains the data to be analyzed.
 - `settings`: object of type [`SVMSettings`](./svmsettings.md). Contains the settings for
   the `PCA` object. 
 - `pca_model`: an `SVM` model from `scikit-learn`. Defaults to `None`.
@@ -37,7 +37,6 @@ The constructor raises:
 - `predict(self, x_data)`: performs classification based on SVM
   - *raises*:
     - `RuntimeError("The model hasn't been trained yet!")` if the model is null
-    - `TypeError("X data for prediction cannot be empty.")` if the input data is null
 
 ## Example
 

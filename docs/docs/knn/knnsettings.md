@@ -9,7 +9,14 @@ Holds the settings for the [`KNN`](knn.md) object.
 ## Syntax
 
 ```python
-KNNSettings(n_neighbors, metric, weights, algorithm, output, test_split)
+KNNSettings(
+  n_neighbors: int,
+  metric: str | Callable,
+  weights: str | Callable,
+  algorithm: str,
+  output: bool,
+  test_split: false
+)
 ```
 
 ## Fields and constructor parameters
@@ -37,8 +44,6 @@ The constructor raises:
 - `ValueError("Invalid metric: should be 'minkwoski', 'precomputed', 'euclidean' or a callable.")` if the chosen metric is neither available nor a callable function.
 - `ValueError("Invalid weight: should be 'uniform', 'distance' or a callable")` if the chosen weight is neither available nor a callable function.
 - `ValueError("Invalid algorithm: should be 'auto', 'ball_tree', 'kd_tree' or 'brute'.")` if the chosen algotithm does not exist.
-- `TypeError("Invalid output: should be a boolean value.")` if the `output` parameter is not boolean.
-- `TypeError("Invalid test_split: should be a boolean value.")` if the `test_split` parameter is not boolean.
 - `Warning("You selected test_split but it won't run because you disabled the output.")` if `test_split` is run with `output` set to false (split tests only produce graphical output, and are useless when run with disabled output).
 
 ## Example

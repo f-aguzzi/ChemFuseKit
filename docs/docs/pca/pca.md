@@ -9,18 +9,14 @@ A class to store the data, methods and artifacts for _Principal Component Analys
 ## Syntax
 
 ```python
-PCA(fused_data, settings)
+PCA(fused_data: LLDFModel, settings: PCASettings)
 ```
 
 ## Constructor parameters
 
-- `fused_data`: object of type [`LLDF`](../lldf/lldf.md). Contains the data to be analyzed.
+- `fused_data`: object of type [`LLDFModel`](../lldf/lldf.md). Contains the data to be analyzed.
 - `settings`: object of type [`PCASettings`](./pcasettings.md). Contains the settings for
   the `PCA` object.
-
-The constructor can raise:
-- `TypeError("The LLDF model for PCA cannot be null.")` if `fused_data` is a null value
-- `TypeError("The PCA settings object cannot be null.")` if `settings` is a null value
 
 ## Fields
 

@@ -1,5 +1,9 @@
 '''This module contains the test cases for the KNN module.'''
 import unittest
+
+import numpy as np
+import pandas as pd
+
 from chemfusekit.plsda import PLSDASettings, PLSDA
 from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel
 
@@ -42,7 +46,7 @@ class TestPLSDA(unittest.TestCase):
         lldf.lldf()
 
         # settings parameter
-        wrong_settings = LLDFModel([1], [1], [1])
+        wrong_settings = LLDFModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
         with self.assertRaises(TypeError):
             PLSDA(wrong_settings, lldf.fused_data)  # pass an object of the wrong class as settings
 

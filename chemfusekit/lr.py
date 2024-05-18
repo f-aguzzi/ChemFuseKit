@@ -1,4 +1,9 @@
 '''Logistic Regression Module'''
+from typing import Optional
+
+import numpy as np
+import pandas as pd
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
@@ -7,11 +12,7 @@ import matplotlib.pyplot as plt
 
 class LRSettings:
     '''Holds the settings for the LR object.'''
-    def __init__(self, algorithm='liblinear', output=False):
-        if algorithm is None:
-            raise TypeError("The algorithm cannot be null.")
-        if output is None:
-            raise TypeError("The output selector cannot be null.")
+    def __init__(self, algorithm: str = 'liblinear', output: bool = False):
         if algorithm not in [
             'lbfgs',
             'liblinear',
@@ -26,17 +27,11 @@ class LRSettings:
 
 class LR:
     '''Class to store the data, methods and artifacts for Logistic Regression'''
-    def __init__(self, settings, array_scores, y):
-        if settings is None:
-            raise TypeError("Settings cannot be null.")
-        if array_scores is None:
-            raise TypeError("Array scores cannot be null.")
-        if y is None:
-            raise TypeError("Y cannot be null.")
+    def __init__(self, settings: LRSettings, array_scores: np.ndarray, y: np.ndarray):
         self.settings = settings
         self.array_scores = array_scores
         self.y = y
-        self.model = None
+        self.model: Optional[LogisticRegression] = None
 
     def lr(self):
         '''Performs Logistic Regression'''
@@ -212,10 +207,8 @@ class LR:
             # Print the classification report
             print(classification_report(y_test, predictions, digits=2))
 
-    def predict(self, x_sample):
-        '''Performs LR prediction once the model is trained.'''   
-        if x_sample is None:
-            raise TypeError("Cannot classify a null sample.")
+    def predict(self, x_sample: pd.DataFrame):
+        '''Performs LR prediction once the model is trained.'''
         if self.model is None:
             raise RuntimeError("The LR model is not trained yet!")
 
