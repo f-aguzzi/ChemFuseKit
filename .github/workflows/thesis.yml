@@ -19,9 +19,7 @@ jobs:
 
       - uses: docker://pandoc/latex:2.9
         with:
-          args: >- 
-            --output="thesis/tesi_federico_aguzzi.pdf"
-            ${{ steps.files_list.outputs.files }}
+          args: --output="thesis/tesi_federico_aguzzi.pdf" ${{ steps.files_list.outputs.files }}
 
           
       - uses: actions/upload-artifact@v3
