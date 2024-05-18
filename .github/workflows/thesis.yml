@@ -4,7 +4,7 @@ on:
   push:
       paths:
         - 'thesis/**'
-        - '.github/workflows/**'
+        - '.github/workflows/thesis.yml'
 
 jobs:
   convert_via_pandoc:
@@ -20,7 +20,7 @@ jobs:
       - uses: docker://pandoc/latex:2.9
         with:
           args: >- 
-            --output=thesis/tesi_federico_aguzzi.pdf
+            --output="thesis/tesi_federico_aguzzi.pdf"
             ${{ steps.files_list.outputs.files }}
 
           
