@@ -9,7 +9,7 @@ The `LLDF` class is used for _low-level data fusion_.
 ## Syntax
 
 ```python
-LLDF(lldf_settings)
+LLDF(lldf_settings: LLDFSettings)
 ```
 
 ## Constructor parameters

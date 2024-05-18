@@ -32,10 +32,6 @@ class PCASettings:
 class PCA:
     '''A class to store the data, methods and artifacts for Principal Component Analysis'''
     def __init__(self, fused_data: LLDFModel, settings: PCASettings):
-        if fused_data is None:
-            raise TypeError("The LLDF model for PCA cannot be null.")
-        if settings is None:
-            raise TypeError("The PCA settings object cannot be null.")
         self.fused_data = fused_data
         self.components = 0
         self.pca_model: Optional[PC] = None

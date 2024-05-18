@@ -5,7 +5,7 @@ description: Our continuous integration workflow.
 
 # Continuous Integration
 
-Our remote repository operates three continuous integration / continuous deployment workflows.
+Our remote repository operates four continuous integration / continuous deployment workflows.
 
 Two of the workflows are about code quality:
 - a [`pylint`](https://pylint.readthedocs.io/en/stable/)` workflow that rejects commits with a code quality lower than 8.00
@@ -13,4 +13,6 @@ Two of the workflows are about code quality:
 
 A third workflow is about documentation deployment:
 - a [`Docusaurus`](https://docusaurus.io) page builder that automatically deploys this documentation
-  website to [`GitHub Pages`](https://pages.github.com).
+  website to [`GitHub Pages`](https://pages.github.com)
+
+A fourth, final workflow automates semantic releases.

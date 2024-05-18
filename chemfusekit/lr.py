@@ -208,9 +208,7 @@ class LR:
             print(classification_report(y_test, predictions, digits=2))
 
     def predict(self, x_sample: pd.DataFrame):
-        '''Performs LR prediction once the model is trained.'''   
-        if x_sample is None:
-            raise TypeError("Cannot classify a null sample.")
+        '''Performs LR prediction once the model is trained.'''
         if self.model is None:
             raise RuntimeError("The LR model is not trained yet!")
 

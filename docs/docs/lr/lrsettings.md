@@ -9,7 +9,7 @@ Holds the settings for the [`LR`](./lr.md) object.
 ## Syntax
 
 ```python
-LRSettings(algorithm, output)
+LRSettings(algorithm: str, output: bool)
 ```
 
 ## Fields and constructor parameters
@@ -24,10 +24,6 @@ LRSettings(algorithm, output)
 - `output`: toggles graph output. Defaults to `False`.
 
 The constructor raises:
-- `TypeError("The algorithm cannot be null.")` if the `algorithm` parameter is a
-  null value;
-- `TypeError("The output selector cannot be null.")` if the `output` parameter
-  is a null value;
 - `ValueError("This algorithm does not exist.")` if the selected `algorithm`
   is not a valid option.
 

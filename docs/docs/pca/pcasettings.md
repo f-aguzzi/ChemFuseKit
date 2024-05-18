@@ -9,7 +9,12 @@ Holds the settings for the [`PCA`](./pca.md) object.
 ## Syntax
 
 ```python
-PCASettings(target_variance, confidence_level, initial_components, output)
+PCASettings(
+  target_variance: float,
+  confidence_level: float,
+  initial_components: int,
+  output: bool
+)
 ```
 
 ## Fields and constructor parameters
