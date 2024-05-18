@@ -1,0 +1,28 @@
+name: Compile thesis to PDF
+
+on:
+  push:
+      paths:
+        - 'thesis/**'
+        - '.github/workflows/thesis.yml'
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: create file list
+        id: files_list
+        run: |
+          echo "files=$(printf '"%s" ' thesis/*.md)" > $GITHUB_OUTPUT
+
+      - uses: docker://pandoc/latex:2.9
+        with:
+          args: -o "thesis/tesi_federico_aguzzi.pdf" ${{ steps.files_list.outputs.files }}
+
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: thesis
+          path: thesis
