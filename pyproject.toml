@@ -33,9 +33,9 @@ dev-dependencies = [
 
 [tool.rye.scripts]
 test = "python -m unittest discover tests"
-pylint-local = "pylint colab_datafusuion_analysis/**/*.py"
-pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero colab_datafusion_analysis/**/*.py"
-pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text colab_datafusuion_analysis/**/.py"
+pylint-local = "pylint chemfusekit/**/*.py"
+pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero chemfusekit/**/*.py"
+pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text chemfusekit/**/.py"
 
 [tool.hatch.metadata]
 allow-direct-references = true
