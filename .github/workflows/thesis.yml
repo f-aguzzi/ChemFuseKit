@@ -20,7 +20,7 @@ jobs:
       - uses: docker://pandoc/latex:2.9
         with:
           args: >- 
-            --output=thesis/Tesi\ Triennale\ Federico\ Aguzzi.pdf
+            --output=thesis/tesi_federico_aguzzi.pdf
             --template=thesis/template.tex
             ${{ steps.files_list.outputs.files }}
 
