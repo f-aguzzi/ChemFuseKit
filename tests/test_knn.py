@@ -1,5 +1,9 @@
 '''This module contains the test cases for the KNN module.'''
 import unittest
+
+import pandas as pd
+import numpy as np
+
 from chemfusekit.knn import KNNSettings, KNN
 from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel
 
@@ -73,7 +77,7 @@ class TestKNN(unittest.TestCase):
         lldf.lldf()
 
         # settings parameter
-        wrong_settings = LLDFModel([1], [1], [1])
+        wrong_settings = LLDFModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
         with self.assertRaises(TypeError):
             KNN(wrong_settings, lldf.fused_data)  # pass an object of the wrong class as settings
 
