@@ -100,8 +100,13 @@ class TestKNN(unittest.TestCase):
         lldf = LLDF(lldf_settings)
         lldf.lldf()
 
-        # Set up and run KNN
+        # Set up and run KNN (no output)
         knn_settings = KNNSettings()
+        knn = KNN(knn_settings, lldf.fused_data)
+        knn.knn()
+
+        # With output
+        knn_settings = KNNSettings(output=True)
         knn = KNN(knn_settings, lldf.fused_data)
         knn.knn()
 

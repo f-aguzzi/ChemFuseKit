@@ -8,8 +8,12 @@ class TestLDA(unittest.TestCase):
 
     def test_lda_settings(self):
         '''Test case against settings errors.'''
+        # Check for negative component rejection
         with self.assertRaises(ValueError):
             LDASettings(components=-3, output=True)
+        # Check if split tests with no output cause warnings:
+        with self.assertRaises(Warning):
+            LDASettings(output=False,test_split=True)
 
     def test_lda_constructor(self):
         '''Test case against constructor parameter issues.'''
@@ -62,6 +66,11 @@ class TestLDA(unittest.TestCase):
 
         # Create an LDA object and train it, with false output
         lda_settings = LDASettings(output=False)
+        lda = LDA(lldf.fused_data, lda_settings)
+        lda.lda()
+
+        # Create an LDA object and train it, with true output and split tests
+        lda_settings = LDASettings(output=True, test_split=True)
         lda = LDA(lldf.fused_data, lda_settings)
         lda.lda()
 

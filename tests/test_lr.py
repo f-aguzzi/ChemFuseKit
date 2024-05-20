@@ -17,25 +17,33 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(ValueError):
             LRSettings(
                 algorithm='unknown',
-                output=True
+                output=True,
+                test_split=True
             )
 
         # Should raise an exception when any of the inputs is a null value
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm=None,
-                output=True
+                output=True,
+                test_split=True
             )
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm='liblinear',
-                output=None
-            )
+                output=None,
+                test_split=True
+            ) 
         with self.assertRaises(TypeError):
             LRSettings(
-                algorithm=None,
-                output=None
+                algorithm='liblinear',
+                output=True,
+                test_split=None
             )
+        
+        # Check if split tests with no output cause warnings:
+        with self.assertRaises(Warning):
+            LRSettings(output=False,test_split=True)
 
         # Should not raise any exception when the input is correct
         LRSettings(
@@ -90,7 +98,13 @@ class TestLR(unittest.TestCase):
         pca.pca()
         pca.pca_stats()
 
+        # With no output
         lr_settings = LRSettings()
+        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr.lr()
+
+        # With output and split tests
+        lr_settings = LRSettings(output=True, test_split=True)
         lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
         lr.lr()
 
