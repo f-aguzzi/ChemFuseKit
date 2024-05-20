@@ -3,13 +3,8 @@ from typing import Optional
 from beartype.typing import Callable
 
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report
 
 import pandas as pd
-
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 from chemfusekit.lldf import LLDFModel
 from chemfusekit.__utils import run_split_test, print_confusion_matrix
@@ -51,10 +46,6 @@ class KNNSettings:
 class KNN:
     '''Class to store the data, methods and artifacts for k-Nearest Neighbors Analysis'''
     def __init__(self, settings: KNNSettings, fused_data: LLDFModel):
-        if type(settings) is not KNNSettings:
-            raise TypeError("Invalid settings: should be a KNNSettings-class object.")
-        if type(fused_data) is not LLDFModel:
-            raise TypeError("Invalid fused_data: shold be a LLDFModel-class object.")
         self.settings = settings
         self.fused_data = fused_data
         self.model: Optional[KNeighborsClassifier] = None

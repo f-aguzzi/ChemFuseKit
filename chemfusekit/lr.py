@@ -5,10 +5,6 @@ import numpy as np
 import pandas as pd
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, classification_report
-from sklearn.model_selection import train_test_split
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 from chemfusekit.__utils import run_split_test, print_confusion_matrix
 
@@ -82,16 +78,12 @@ class LR:
             print(predictions)
             print(scores)
 
-            cm = confusion_matrix(self.y, predictions)
-            print(confusion_matrix(predictions, self.y))
-            print(classification_report(self.y, predictions, digits=2))
-
             print_confusion_matrix(
                 self.y,
                 predictions,
                 "Confusion Matrix based on whole data set",
             )
-        
+
         if self.settings.test_split and self.settings.output:
             split_model = LogisticRegression(
                 solver='lbfgs',

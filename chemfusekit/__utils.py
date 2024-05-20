@@ -1,12 +1,16 @@
+'''Utilities model: functions that are shared between different classes'''
+from sklearn.cross_decomposition import PLSRegression as PLSR
 from sklearn.model_selection import train_test_split
-
 from sklearn.metrics import confusion_matrix, classification_report
+
+import numpy as np
 
 import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 def graph_output(scores, model, name: str):
+    '''A reusable graphing function.'''
     print(scores)
     print(f"""
         explained variance ratio with {name}:
@@ -35,6 +39,7 @@ def graph_output(scores, model, name: str):
     fig.show()
 
 def run_split_test(x, y, model, extended=False):
+    '''A function to run split tests on trained models.'''
     x_train, x_test, y_train, y_test = train_test_split(
         x,
         y,
@@ -45,8 +50,9 @@ def run_split_test(x, y, model, extended=False):
     )
 
     model.fit(x_train, y_train)
-    model.predict(x_test)
     y_pred = model.predict(x_test)
+
+    # TODO: add something to print _x_scores multimodally
 
     if extended:
         # We can see the classes the model used
@@ -64,6 +70,7 @@ def run_split_test(x, y, model, extended=False):
         have a Negative sample. Otherwise, it will be Positive
         '''
         probabilities = model.predict_proba(x_train)
+        print(probabilities)
 
         # This tells us the accuracy of our model in calibration
         model.score(x_train, y_train)
@@ -73,10 +80,15 @@ def run_split_test(x, y, model, extended=False):
         print("Calibration predictions: ")
         print(predictions)
         print_confusion_matrix(y_train, predictions, "Confusion matrix based on training set")
+ 
+    if isinstance(model, PLSR):
+        y_pred = np.int8(np.abs(np.around(y_pred, decimals=0)))
 
     print_confusion_matrix(y_test, y_pred, "Confusion matrix based on evaluation set")
 
+# TODO: make multimodal
 def print_confusion_matrix(y1, y2, title):
+    '''Function to simplify the plotting of confusion matrices'''
     cm = confusion_matrix(y1, y2)
 
     # Get unique class labels from y_true
@@ -100,4 +112,4 @@ def print_confusion_matrix(y1, y2, title):
     plt.show()
 
     # Print the classification report
-    print(classification_report(y2, y2, digits=2))
+    print(classification_report(y1, y2, digits=2))

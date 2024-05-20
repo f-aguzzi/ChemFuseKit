@@ -18,7 +18,7 @@ class TestSVM(unittest.TestCase):
         with self.assertRaises(TypeError):
             SVMSettings('linear', None, False)
         # Test against non-existent kernels
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             SVMSettings('linear', False, None)
 
         # Check if split tests with no output cause warnings:

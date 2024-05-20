@@ -8,10 +8,6 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
-import plotly.express as px
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 from chemfusekit.lldf import LLDFModel
 from chemfusekit.__utils import graph_output, run_split_test
 
@@ -67,7 +63,7 @@ class LDA:
         # Show graphs if required by the user
         if self.settings.output:
             graph_output(scores, self.model, "Linear Discriminant Analysis")
-            
+
             # Run split tests if required by the user
             if self.settings.test_split:
                 run_split_test(
