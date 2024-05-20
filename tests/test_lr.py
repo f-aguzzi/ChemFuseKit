@@ -1,5 +1,9 @@
 '''This module contains the test cases for the LR module.'''
 import unittest
+
+import numpy as np
+import pandas as pd
+
 from chemfusekit.lldf import LLDFSettings, LLDF
 from chemfusekit.pca import PCASettings, PCA
 from chemfusekit.lr import LRSettings, LR
@@ -13,25 +17,33 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(ValueError):
             LRSettings(
                 algorithm='unknown',
-                output=True
+                output=True,
+                test_split=True
             )
 
         # Should raise an exception when any of the inputs is a null value
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm=None,
-                output=True
+                output=True,
+                test_split=True
             )
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm='liblinear',
-                output=None
-            )
+                output=None,
+                test_split=True
+            ) 
         with self.assertRaises(TypeError):
             LRSettings(
-                algorithm=None,
-                output=None
+                algorithm='liblinear',
+                output=True,
+                test_split=None
             )
+        
+        # Check if split tests with no output cause warnings:
+        with self.assertRaises(Warning):
+            LRSettings(output=False,test_split=True)
 
         # Should not raise any exception when the input is correct
         LRSettings(
@@ -45,27 +57,27 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(TypeError):
             LR(
                 settings=None,
-                array_scores=[21.0, 3.44, 7.65],
-                y=[7.854, 1.543, 93.55]
+                array_scores=np.asarray([21.0, 3.44, 7.65]),
+                y=np.asarray([7.854, 1.543, 93.55])
             )
         with self.assertRaises(TypeError):
             LR(
                 settings=LRSettings(),
                 array_scores=None,
-                y=[7.854, 1.543, 93.55]
+                y=np.asarray([7.854, 1.543, 93.55])
             )
         with self.assertRaises(TypeError):
             LR(
                 settings=LRSettings(),
-                array_scores=[21.0, 3.44, 7.65],
+                array_scores=np.asarray([21.0, 3.44, 7.65]),
                 y=None
             )
 
         # Should not raise any exception when all inputs are valid
         LR(
             settings=LRSettings(),
-            array_scores=[21.0, 3.44, 7.65],
-            y=[7.854, 1.543, 93.55]
+            array_scores=np.asarray([21.0, 3.44, 7.65]),
+            y=np.asarray([7.854, 1.543, 93.55])
         )
 
     def test_lr(self):
@@ -86,7 +98,13 @@ class TestLR(unittest.TestCase):
         pca.pca()
         pca.pca_stats()
 
+        # With no output
         lr_settings = LRSettings()
+        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr.lr()
+
+        # With output and split tests
+        lr_settings = LRSettings(output=True, test_split=True)
         lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
         lr.lr()
 
@@ -95,7 +113,7 @@ class TestLR(unittest.TestCase):
         '''Test case against prediction input errors.'''
         # Set up the model
         lr_settings = LRSettings()
-        lr = LR(lr_settings, [7.02, 8.11], [43.1, 0.06])
+        lr = LR(lr_settings, np.asarray([7.02, 8.11]), np.asarray([43.1, 0.06]))
 
         # Shold raise an exception when started with no data
         with self.assertRaises(TypeError):
@@ -103,4 +121,4 @@ class TestLR(unittest.TestCase):
 
         # Should raise an exception when started with no training
         with self.assertRaises(RuntimeError):
-            lr.predict([4.03, 3.14])
+            lr.predict(pd.DataFrame([4.03, 3.14]))

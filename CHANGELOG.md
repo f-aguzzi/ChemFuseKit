@@ -1,3 +1,27 @@
+## [1.1.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2024-05-20)
+
+
+### Bug Fixes
+
+* add missing checks to LLDFSettings ([3d57752](https://github.com/f-aguzzi/tesi/commit/3d577527eefd0b183a66c378d53cb1f1ee506343)), closes [#20](https://github.com/f-aguzzi/tesi/issues/20)
+
+
+### chore
+
+* **thesis:** set up build system (merge from [#22](https://github.com/f-aguzzi/tesi/issues/22)) ([0b13ed3](https://github.com/f-aguzzi/tesi/commit/0b13ed346448f0eeefecbc6fd051eb7c98919650))
+
+
+### Refactor
+
+* extract split tests and graphs (merge [#23](https://github.com/f-aguzzi/tesi/issues/23)) ([6865c88](https://github.com/f-aguzzi/tesi/commit/6865c88d70b650de5e8440807b0194022a15dc0e))
+
+## [1.1.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.0.0...v1.1.0-beta.1) (2024-05-18)
+
+
+### Features
+
+* beartype integration ([2f823ce](https://github.com/f-aguzzi/tesi/commit/2f823cebee0cb8006523d9e0d6aaa673484bd928)), closes [#7](https://github.com/f-aguzzi/tesi/issues/7)
+
 ## 1.0.0 (2024-05-17)
 
 

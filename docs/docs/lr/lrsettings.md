@@ -9,7 +9,7 @@ Holds the settings for the [`LR`](./lr.md) object.
 ## Syntax
 
 ```python
-LRSettings(algorithm, output)
+LRSettings(algorithm: str, output: bool)
 ```
 
 ## Fields and constructor parameters
@@ -22,14 +22,12 @@ LRSettings(algorithm, output)
     - `sag`
     - `saga`
 - `output`: toggles graph output. Defaults to `False`.
+- `test_split`: toggles split testing. Defaults to `False`.
 
 The constructor raises:
-- `TypeError("The algorithm cannot be null.")` if the `algorithm` parameter is a
-  null value;
-- `TypeError("The output selector cannot be null.")` if the `output` parameter
-  is a null value;
 - `ValueError("This algorithm does not exist.")` if the selected `algorithm`
   is not a valid option.
+- `Warning("You selected test_split but it won't run because you disabled the output.")` if split tests are run with `output` disabled
 
 ## Example
 
@@ -38,6 +36,7 @@ from chemfusekit.lr import LRSettings
 
 settings = LRSettings(
     algorithm='newton-cg',
-    output=True # graphs will be printed
+    output=True,  # graphs will be printed
+    test_split=True # split testing is enabled
 )
 ```

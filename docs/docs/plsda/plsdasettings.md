@@ -9,7 +9,7 @@ Holds the settings for the [`PLSDA`](./plsda.md) object.
 ## Syntax
 
 ```python
-PLSDASettings(n_components, output, test_split)
+PLSDASettings(n_components: int, output: bool, test_split: bool)
 ```
 
 ## Fields and constructor parameters
@@ -20,8 +20,6 @@ PLSDASettings(n_components, output, test_split)
 
 The constructor raises:
 - `ValueError("Invalid n_components number: should be a positive integer.")` if the number of components is below 1.
-- `TypeError("Invalid output: should be a boolean value.")` if the `output` parameter is not boolean.
-- `TypeError("Invalid test_split: should be a boolean value.")` if the `test_split` parameter is not boolean.
 - `Warning("You selected test_split but it won't run because you disabled the output.")` if `test_split` is run with `output` set to false (split tests only produce graphical output, and are useless when run with disabled output).
 
 ## Example

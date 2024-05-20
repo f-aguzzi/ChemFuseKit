@@ -9,18 +9,14 @@ A class to store the data, methods and artifacts for _Linear Discriminant Analys
 ## Syntax
 
 ```python
-LDA(lldf_model, settings)
+LDA(lldf_model: LLDFModel, settings: LDASettings)
 ```
 
 ## Constructor parameters
 
-- `lldf_model`: object of type [`LLDF`](../lldf/lldf.md). Contains the data to be analyzed.
+- `lldf_model`: object of type [`LLDFModel`](../lldf/lldfmodel.md). Contains the data to be analyzed.
 - `settings`: object of type [`LDASettings`](./ldasettings.md). Contains the settings for
   the `LDA` object.
-
-The constructor can raise:
-- `TypeError("The LLDF model for LDA cannot be null.")` if `fused_data` is null
-- `TypeError("The LDA settings object cannot be null.")` if `settings` is null
 
 ## Fields
 
@@ -30,7 +26,7 @@ The constructor can raise:
   - `x_data` 
   - `x_train`
   - `y`
-- `model`: an `LDA` model from `scikit-learn`. Defaults to `None`.
+- `model`: a `LinearDiscriminantAnalysis` model from `scikit-learn`. Defaults to `None`.
 
 ## Methods
 
@@ -39,7 +35,6 @@ The constructor can raise:
   graphs and stats about LDA predictions
 - `predict(self, x_data)`: performs LDA prediction once the model is trained.
   - *raises*:
-    - `TypeError("X data for LDA prediction must be non-empty.")` if the input data is null
     - `RuntimeError("The LDA model is not trained yet!")` if the LDA model hasn't been trained yet
 
 ## Example

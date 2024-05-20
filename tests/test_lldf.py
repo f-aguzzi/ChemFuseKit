@@ -20,14 +20,26 @@ class TestLLDF(unittest.TestCase):
 
     def test_preprocessing_techniques(self):
         '''Test case against wrong preprocessing user input.'''
+        with self.assertRaises(SyntaxError):
+            settings = LLDFSettings(
+                qepas_path='tests/qepas.xlsx',
+                qepas_sheet='Sheet1',
+                rt_path='tests/rt.xlsx',
+                rt_sheet='Sheet1',
+                preprocessing='qpl' # test with non-existent preprocessing technique
+            )
+        # Now a correct value:
         settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='qpl' # test with non-existent preprocessing technique
-        )
+                qepas_path='tests/qepas.xlsx',
+                qepas_sheet='Sheet1',
+                rt_path='tests/rt.xlsx',
+                rt_sheet='Sheet1',
+                preprocessing='snv' # test with non-existent preprocessing technique
+            )
+
+        # Make the value wrong and test LLDF
         lldf = LLDF(settings)
+        lldf.settings.preprocessing='qpl' 
         self.assertRaises(SyntaxError, lldf.lldf)
 
         # now check if it works with the three real processing techniques:

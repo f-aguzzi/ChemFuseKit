@@ -3,7 +3,7 @@ on:
   push:
       paths:
         - 'colab_datafusion_analysis/**'
-        - '.github/workflows/**'
+        - '.github/workflows/pylint.yml'
 
 jobs:
   build:

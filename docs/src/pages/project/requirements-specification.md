@@ -6,6 +6,10 @@ date: apr 18, 2024
 
 # Requirements Specification
 
+:::note
+This requirements specification was written on April 18th, 2024. The project priorities have changed since then. For a constantly updated document about the philosophy and goals of this project, check out [Project Philosophy](./project-philosophy.md).
+:::
+
 ## <u>Introduction</u>
 
 The purpose of this project is twofold:

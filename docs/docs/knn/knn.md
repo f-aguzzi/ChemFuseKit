@@ -9,7 +9,7 @@ A class to store the data, methods and artifacts for _k-Nearest Neighbors Analys
 ## Syntax
 
 ```python
-KNN(settings, fused_data)
+KNN(settings: KNNSettings, fused_data: LLDFModel)
 ```
 
 ## Constructor parameters
@@ -17,10 +17,6 @@ KNN(settings, fused_data)
 - `fused_data`: object of type [`LLDFModel`](../lldf/lldfmodel.md). Contains the data to be analyzed.
 - `settings`: object of type [`KNNSettings`](knnsettings.md). Contains the settings for
   the `KNN` object.
-
-The constructor can raise:
-- `TypeError("Invalid settings: should be a KNNSettings-class object.")` if `settings` is of the wrong type
-- `TypeError("Invalid fused_data: shold be a LLDFModel-class object.")` if `fused_data` is of the wrong type
 
 ## Fields
 
@@ -35,7 +31,6 @@ The constructor can raise:
 - `knn(self)`: trains the k-Neighbors Analysis model
 - `predict(self, x_data)`: performs LDA prediction once the model is trained.
   - *raises*:
-    - `TypeError("X data for kNN prediction must be non-empty.")` if the input data is null
     - `RuntimeError("The kNN model is not trained yet!")` if the `KNN` model hasn't been trained yet
 
 ## Example

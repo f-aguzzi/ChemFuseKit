@@ -1,6 +1,6 @@
 [project]
 name = "chemfusekit"
-version = "1.0.0"
+version = "1.1.0b2"
 description = "A minimal Python / Jupyter Notebook / Colab library for data fusion and chemometrical analysis."
 authors = [
     { name = "Federico Aguzzi", email = "62149513+f-aguzzi@users.noreply.github.com" }
@@ -14,6 +14,7 @@ dependencies = [
     "openpyxl>=3.1.2",
     "scikit-learn>=1.4.2",
     "plotly>=5.22.0",
+    "beartype>=0.18.5",
 ]
 readme = "readme.md"
 repository = "https://github.com/f-aguzzi/tesi"
@@ -32,9 +33,9 @@ dev-dependencies = [
 
 [tool.rye.scripts]
 test = "python -m unittest discover tests"
-pylint-local = "pylint colab_datafusuion_analysis/**/*.py"
-pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero colab_datafusion_analysis/**/*.py"
-pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text colab_datafusuion_analysis/**/.py"
+pylint-local = "pylint chemfusekit/**/*.py"
+pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero chemfusekit/**/*.py"
+pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text chemfusekit/**/.py"
 
 [tool.hatch.metadata]
 allow-direct-references = true

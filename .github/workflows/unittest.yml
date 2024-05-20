@@ -4,7 +4,7 @@ on:
       paths:
         - 'colab_datafusion_analysis/**'
         - 'tests/**'
-        - '.github/workflows/**'
+        - '.github/workflows/unittest.yml'
 
 jobs:
   build:
