@@ -10,15 +10,24 @@ class TestSVM(unittest.TestCase):
         '''Test case against settings errors.'''
         # Test against null type
         with self.assertRaises(TypeError):
-            SVMSettings(None, False)
+            SVMSettings(None, False, False)
         # Test against null output selector
         with self.assertRaises(TypeError):
-            SVMSettings('linear', None)
-        with self.assertRaises(ValueError):
+            SVMSettings('linear', None, False)
+        # Test against null test_split selector
+        with self.assertRaises(TypeError):
+            SVMSettings('linear', None, False)
         # Test against non-existent kernels
-            SVMSettings(kernel='made up name')
+        with self.assertRaises(TypeError):
+            SVMSettings('linear', False, None)
+
+        # Check if split tests with no output cause warnings:
+        with self.assertRaises(Warning):
+            SVMSettings(output=False,test_split=True)
+
         # Now call with proper values:
-        SVMSettings(kernel='gaussian', output=True)
+        SVMSettings(kernel='gaussian', output=True, test_split=False)
+
 
     def test_svm_constructor(self):
         '''Test case against constructor parameter issues.'''

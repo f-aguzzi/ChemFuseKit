@@ -56,7 +56,7 @@ class TestPLSDA(unittest.TestCase):
         with self.assertRaises(TypeError):
             PLSDA(knn_settings, wrong_fused_data)  # pass an object of the wrong class as fused_data
     
-    def test_knn(self):
+    def test_plsda(self):
         '''Integration test case for the training function.'''
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(
@@ -69,10 +69,15 @@ class TestPLSDA(unittest.TestCase):
         lldf = LLDF(lldf_settings)
         lldf.lldf()
 
-        # Set up and run PLSDA
+        # Set up and run PLSDA (no output)
         plsda_settings = PLSDASettings()
         plsda = PLSDA(plsda_settings, lldf.fused_data)
         plsda.plsda()
+
+        # Run with output and split testing
+        plsda_settings = PLSDASettings(output=True, test_split=True)
+        plsda = PLSDA(plsda_settings, lldf.fused_data)
+        plsda.plsda() 
     
     def test_prediction(self):
         '''Test case against prediction parameter issues.'''

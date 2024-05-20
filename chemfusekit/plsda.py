@@ -4,17 +4,13 @@ from typing import Optional
 import pandas as pd
 import numpy as np
 
-import seaborn as sns
 import plotly.express as px
-import matplotlib.pyplot as plt
 
-from sklearn.preprocessing import scale
 from sklearn.cross_decomposition import PLSRegression as PLSR
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report
-
 
 from chemfusekit.lldf import LLDFModel
+from chemfusekit.__utils import print_confusion_matrix, run_split_test
+
 
 class PLSDASettings:
     '''Holds the settings for the PLSDA object.'''
@@ -41,29 +37,31 @@ class PLSDA:
 
     def plsda(self):
         '''Performs Partial Least Squares Discriminant Analysis'''
-        x = scale(self.fused_data.x_data.values)
+        x = self.fused_data.x_data
         y = self.fused_data.x_train.Substance.astype('category').cat.codes
 
-        regr_pls = PLSR(self.settings.n_components)
+        regr_pls = PLSR(n_components=self.settings.n_components)
         regr_pls.fit_transform(x,y)
 
         # Save the model
         self.model = regr_pls
 
         if self.settings.output:
-            regr_pls.fit_transform(x,y)
-            print(regr_pls.x_scores_)
+            # Re-create the model
+            regr_pls_2 = PLSR(n_components=self.settings.n_components)
+            regr_pls_2.fit_transform(x,y)
 
             # Scores
-            scores = regr_pls.x_scores_
-            scores = pd.DataFrame(scores, columns = ['LV1','LV2','LV3'])
+            scores = regr_pls_2.x_scores_
+            lv_cols = [f"LV{i+1}" for i in range(self.settings.n_components)]
+            scores = pd.DataFrame(scores, columns = lv_cols)
             scores.index = self.fused_data.x_train.index
             y = self.fused_data.x_train.Substance
             scores = pd.concat([scores, y], axis = 1)
             print(scores)
 
             # Loadings
-            loadings = pd.DataFrame(regr_pls.x_loadings_,columns = ["LV1",'LV2','LV3'])
+            loadings = pd.DataFrame(regr_pls.x_loadings_,columns = lv_cols)
             loadings["Attributes"] = self.fused_data.x_train.iloc[:,1:].columns
             print(loadings)
 
@@ -98,86 +96,21 @@ class PLSDA:
                 title_text='Loadings Plot')
             fig.show()
 
+
             # Predictions
-            pred=regr_pls.predict(self.fused_data.x_data)
-            print(pred)
+            pred = regr_pls.predict(x)
+            pred = np.int8(np.abs(np.around(pred, decimals=0)))
+            print(f"Predicted data:\n\n{pred}")
 
-            pred = np.abs(np.around(pred, decimals= 0))
-            print(pred)
+            # Print confusion matrix
+            y = self.fused_data.x_train.Substance.astype('category').cat.codes 
+            print_confusion_matrix(y, pred, "Confusion Matrix based on training set")
 
-            # Confusion matrix
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(y, pred)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(y))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False,
-                vmin=0,
-                vmax=cm.max()
-            )
-
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on training set')
-            plt.show()
-
-            # Print the classification report
-            print(classification_report(y, pred, digits=2))
 
         if self.settings.output and self.settings.test_split:
-            x_train, x_test, y_train, y_test = train_test_split(
-                self.fused_data.x_data,
-                y,
-                train_size=0.7,
-                shuffle=True,
-                stratify=y)
-
-            regr_pls = PLSR(self.settings.n_components)
-            regr_pls.fit_transform(x_train,y_train)
-            print(regr_pls.x_scores_)
-
-            pred = regr_pls.predict(x_test)
-            print(pred)
-
-            pred= np.abs(np.around(pred, decimals= 0))
-            print(pred)
-
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(y_test, pred)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(y_test))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False,
-                vmin=0,
-                vmax=cm.max()
-            )
-
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on evaluation set')
-            plt.show()
-
-            # Print the classification report
-            print(classification_report(y_test, pred, digits=2))
+            x = self.fused_data.x_data
+            y = self.fused_data.x_train.Substance.astype('category').cat.codes
+            run_split_test(x, y, PLSR(self.settings.n_components))
 
     def predict(self, x_data: pd.DataFrame):
         '''Performs PLSDA prediction once the model is trained.'''

@@ -14,11 +14,16 @@ from chemfusekit.lldf import LLDFModel
 
 class SVMSettings:
     '''Holds the settings for the SVM object.'''
-    def __init__(self, kernel: str = 'linear', output: bool = False):
+    def __init__(self, kernel: str = 'linear', output: bool = False, test_split: bool = False):
         if kernel not in ['linear', 'poly', 'gaussian', 'sigmoid']:
             raise ValueError("Invalid type: must be linear, poly, gaussian or sigmoid")
+        if test_split is True and output is False:
+            raise Warning(
+                "You selected test_split but it won't run because you disabled the output."
+            )
         self.kernel = kernel
         self.output = output
+        self.test_split = test_split
 
 class SVM:
     '''Class for Support Vector Machine analysis of the data'''
