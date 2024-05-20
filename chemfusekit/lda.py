@@ -17,11 +17,16 @@ from chemfusekit.lldf import LLDFModel
 
 class LDASettings:
     '''Holds the settings for the LDA object.'''
-    def __init__(self, components: int = 3, output: bool = False):
+    def __init__(self, components: int = 3, output: bool = False, test_split: bool = False):
         if components <= 2:
             raise ValueError("Invalid component number: must be a > 1 integer.")
+        if test_split is True and output is False:
+            raise Warning(
+                "You selected test_split but it won't run because you disabled the output."
+            )
         self.components = components
         self.output = output
+        self.test_split = test_split
 
 class LDA:
     '''Class to store the data, methods and artifacts for Linear Discriminant Analysis'''
@@ -56,6 +61,9 @@ class LDA:
 
         scores = pd.concat([scores, y_dataframe], axis = 1)
 
+        # Store the traiend model
+        self.model = lda
+
         if self.settings.output:
             print(scores)
 
@@ -86,23 +94,24 @@ class LDA:
             title_text='3D colored by Substance for Linear Discriminant Analysis')
             fig.show()
 
-        lda2 = LD(n_components=self.settings.components)
+        if self.settings.test_split and self.settings.output:
 
-        self.x_train, x_test, y_train, y_test = train_test_split(
-            (scores.drop('Substance', axis=1).values),
-            self.y,
-            test_size=0.3,
-            random_state=42
-        )
+            lda2 = LD(n_components=self.settings.components)
 
-        lda2.fit(self.x_train, y_train)
-        lda2.predict(x_test)
-        y_pred = lda2.predict(x_test)
+            self.x_train, x_test, y_train, y_test = train_test_split(
+                (scores.drop('Substance', axis=1).values),
+                self.y,
+                test_size=0.3,
+                random_state=42
+            )
 
-        if self.settings.output:
+            lda2.fit(self.x_train, y_train)
+            lda2.predict(x_test)
+            y_pred = lda2.predict(x_test)
+
             self.__print_prediction_graphs(y_test, y_pred)
 
-        self.model = lda
+            
 
     def __print_prediction_graphs(self, y_test, y_pred):
         '''Helper function to print graphs and stats about LDA predictions.'''

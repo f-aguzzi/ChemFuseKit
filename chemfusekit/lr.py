@@ -12,7 +12,8 @@ import matplotlib.pyplot as plt
 
 class LRSettings:
     '''Holds the settings for the LR object.'''
-    def __init__(self, algorithm: str = 'liblinear', output: bool = False):
+    def __init__(self, algorithm: str = 'liblinear', output: bool = False,
+                 test_split: bool = False):
         if algorithm not in [
             'lbfgs',
             'liblinear',
@@ -22,8 +23,13 @@ class LRSettings:
             'saga'
         ]:
             raise ValueError(f"{algorithm}: this algorithm does not exist.")
+        if test_split is True and output is False:
+            raise Warning(
+                "You selected test_split but it won't run because you disabled the output."
+            )
         self.algorithm = algorithm
         self.output = output
+        self.test_split = test_split
 
 class LR:
     '''Class to store the data, methods and artifacts for Logistic Regression'''
@@ -103,46 +109,47 @@ class LR:
 
             # Print the classification report
             print(classification_report(self.y, predictions, digits=2))
+        
+        if self.settings.test_split and self.settings.output:
 
-        # Split the data set int training set and evaluation set
-        x_train, x_test, y_train, y_test = train_test_split(
-            self.array_scores,
-            self.y,
-            train_size=0.7,
-            shuffle=True,
-            stratify=self.y
-        )
+            # Split the data set int training set and evaluation set
+            x_train, x_test, y_train, y_test = train_test_split(
+                self.array_scores,
+                self.y,
+                train_size=0.7,
+                shuffle=True,
+                stratify=self.y
+            )
 
-        model = LogisticRegression(
-            solver='lbfgs',
-            random_state=0,
-            class_weight='balanced',
-            max_iter=10000
-        ).fit(x_train, y_train)
+            split_model = LogisticRegression(
+                solver='lbfgs',
+                random_state=0,
+                class_weight='balanced',
+                max_iter=10000
+            ).fit(x_train, y_train)
 
-        if self.settings.output:
+
             # we can see the classes the model used
-            print(model.classes_)
+            print(split_model.classes_)
             # See the intercept of the model
-            print(model.intercept_)
+            print(split_model.intercept_)
             # See the coefficients of the model - that can be easily interpreted
             # (correlating or not with y)
-            print(model.coef_)
+            print(split_model.coef_)
 
-        '''
-        Evaluate the model: each sample has a probability of belonging to Positive
-        or Negative outcome. Class 0 is Negative, class 1 is Positive.  If the value
-        of the first column (probability of being Negative) is higher than 0.5, we
-        have a Negative sample. Otherwise, it will be Positive
-        '''
-        probabilities = model.predict_proba(x_train)
+            '''
+            Evaluate the model: each sample has a probability of belonging to Positive
+            or Negative outcome. Class 0 is Negative, class 1 is Positive.  If the value
+            of the first column (probability of being Negative) is higher than 0.5, we
+            have a Negative sample. Otherwise, it will be Positive
+            '''
+            probabilities = split_model.predict_proba(x_train)
 
-        # This tells us the accuracy of our model in calibration
-        model.score(x_train, y_train)
+            # This tells us the accuracy of our model in calibration
+            split_model.score(x_train, y_train)
 
-        predictions = model.predict(x_train)
+            predictions = split_model.predict(x_train)
 
-        if self.settings.output:
             print("Calibration predictions: ")
             print(predictions)
 
