@@ -26,6 +26,9 @@ LLDFSettings(
 - `preprocessing`: a `str` with the name of the preprocessing to be applied to the QEPAS data.
    Available options: `snv` (normalization), `savgol` (Savitski-Golay smoothing), `savgol+snv` (both).
 
+The constructor throws:
+- `TypeError("This type of preprocessing does not exist.")` if the preprocessing parameter is not one of the three available.
+
 ## Example
 
 ```python

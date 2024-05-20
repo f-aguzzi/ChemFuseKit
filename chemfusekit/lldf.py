@@ -24,6 +24,8 @@ class LLDFSettings:
         rt_sheet: str,
         preprocessing: str = 'snv'
     ):
+        if preprocessing not in ['snv', 'savgol', 'savgol+snv']:
+            raise SyntaxError("This type of preprocessing does not exist.")
         self.qepas_path = qepas_path
         self.qepas_sheet = qepas_sheet
         self.rt_path = rt_path
