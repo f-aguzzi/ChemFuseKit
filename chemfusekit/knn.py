@@ -12,6 +12,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 from chemfusekit.lldf import LLDFModel
+from chemfusekit.__utils import run_split_test, print_confusion_matrix
 
 class KNNSettings:
     '''Holds the settings for the kNN object.'''
@@ -77,80 +78,21 @@ class KNN:
             y_pred = knn.predict(self.fused_data.x_data)
             print(y_pred)
 
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(self.fused_data.y, y_pred)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(self.fused_data.y))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False, vmin=0,
-                vmax=cm.max()
+            print_confusion_matrix(
+                self.fused_data.y,
+                y_pred,
+                "Confusion Matrix based on the whole data set"
             )
-
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on the whole data set')
-            plt.show()
-
-            # Print the classification report
-            print(classification_report(self.fused_data.y, y_pred, digits=2))
 
         if self.settings.test_split and self.settings.output:
-            # Split the data into a training set and a test set
-            x_train, x_test, y_train, y_test = train_test_split(
-                self.fused_data.x_data,
-                self.fused_data.y,
-                test_size=0.3,
-                random_state=42
-            )
-
-            # Train the kNN model on the training section of the dataset
-            knn = KNeighborsClassifier(
+            knn_split = KNeighborsClassifier(
                 n_neighbors=self.settings.n_neighbors,
                 metric=self.settings.metric,
                 weights=self.settings.weights,
                 algorithm=self.settings.algorithm
             )
-            knn.fit(x_train, y_train)
+            run_split_test(self.fused_data.x_data, self.fused_data.y, knn_split)
 
-            # View the prediction on the test data
-            y_pred = knn.predict(x_test)
-            print(y_pred)
-
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(y_test, y_pred)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(y_test))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False,
-                vmin=0,
-                vmax=cm.max()
-            )
-
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on evaluation set')
-            plt.show()
-
-            # Print the classification report
-            print(classification_report(y_test, y_pred, digits=2))
 
     def predict(self, x_data: pd.DataFrame):
         '''Performs kNN prediction once the model is trained.'''

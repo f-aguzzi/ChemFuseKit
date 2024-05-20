@@ -33,13 +33,7 @@ class TestLR(unittest.TestCase):
                 algorithm='liblinear',
                 output=None,
                 test_split=True
-            )
-        with self.assertRaises(TypeError):
-            LRSettings(
-                algorithm='liblinear',
-                output=True,
-                test_split=True
-            )
+            ) 
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm='liblinear',
@@ -104,7 +98,13 @@ class TestLR(unittest.TestCase):
         pca.pca()
         pca.pca_stats()
 
+        # With no output
         lr_settings = LRSettings()
+        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr.lr()
+
+        # With output and split tests
+        lr_settings = LRSettings(output=True, test_split=True)
         lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
         lr.lr()
 

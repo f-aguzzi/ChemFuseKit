@@ -10,6 +10,8 @@ from sklearn.model_selection import train_test_split
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from chemfusekit.__utils import run_split_test, print_confusion_matrix
+
 class LRSettings:
     '''Holds the settings for the LR object.'''
     def __init__(self, algorithm: str = 'liblinear', output: bool = False,
@@ -79,140 +81,26 @@ class LR:
             print(probabilities)
             print(predictions)
             print(scores)
+
             cm = confusion_matrix(self.y, predictions)
             print(confusion_matrix(predictions, self.y))
             print(classification_report(self.y, predictions, digits=2))
 
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(self.y, predictions)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(self.y))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False,
-                vmin=0,
-                vmax=cm.max()
+            print_confusion_matrix(
+                self.y,
+                predictions,
+                "Confusion Matrix based on whole data set",
             )
-
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on whole data set')
-            plt.show()
-
-            # Print the classification report
-            print(classification_report(self.y, predictions, digits=2))
         
         if self.settings.test_split and self.settings.output:
-
-            # Split the data set int training set and evaluation set
-            x_train, x_test, y_train, y_test = train_test_split(
-                self.array_scores,
-                self.y,
-                train_size=0.7,
-                shuffle=True,
-                stratify=self.y
-            )
-
             split_model = LogisticRegression(
                 solver='lbfgs',
                 random_state=0,
                 class_weight='balanced',
                 max_iter=10000
-            ).fit(x_train, y_train)
-
-
-            # we can see the classes the model used
-            print(split_model.classes_)
-            # See the intercept of the model
-            print(split_model.intercept_)
-            # See the coefficients of the model - that can be easily interpreted
-            # (correlating or not with y)
-            print(split_model.coef_)
-
-            '''
-            Evaluate the model: each sample has a probability of belonging to Positive
-            or Negative outcome. Class 0 is Negative, class 1 is Positive.  If the value
-            of the first column (probability of being Negative) is higher than 0.5, we
-            have a Negative sample. Otherwise, it will be Positive
-            '''
-            probabilities = split_model.predict_proba(x_train)
-
-            # This tells us the accuracy of our model in calibration
-            split_model.score(x_train, y_train)
-
-            predictions = split_model.predict(x_train)
-
-            print("Calibration predictions: ")
-            print(predictions)
-
-
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(y_train, predictions)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(y_train))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False,
-                vmin=0,
-                vmax=cm.max()
             )
 
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on training set')
-            plt.show()
-
-            # Print the classification report
-            print(model.predict(x_test))
-
-            # This tells us the accuracy of our model in calibration
-            print(model.score(x_test, y_test))
-
-            predictions = model.predict(x_test)
-            cm = confusion_matrix(y_test, predictions)
-
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(y_test, predictions)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(y_test))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False,
-                vmin=0,
-                vmax=cm.max()
-            )
-
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on evaluation set')
-            plt.show()
-
-            # Print the classification report
-            print(classification_report(y_test, predictions, digits=2))
+            run_split_test(self.array_scores, self.y, split_model, extended=True)
 
     def predict(self, x_sample: pd.DataFrame):
         '''Performs LR prediction once the model is trained.'''

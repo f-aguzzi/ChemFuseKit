@@ -6,7 +6,6 @@ import pandas as pd
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 from sklearn.model_selection import train_test_split
-
 from sklearn.metrics import confusion_matrix, classification_report
 
 import plotly.express as px
@@ -14,6 +13,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 from chemfusekit.lldf import LLDFModel
+from chemfusekit.__utils import graph_output, run_split_test
 
 class LDASettings:
     '''Holds the settings for the LDA object.'''
@@ -64,82 +64,17 @@ class LDA:
         # Store the traiend model
         self.model = lda
 
+        # Show graphs if required by the user
         if self.settings.output:
-            print(scores)
-
-            print(f"""
-                explained variance ratio (three components) with LDA:
-                {lda.explained_variance_ratio_}
-            """)
-
-            # Display the explained variance ratio
-            print("Explained Variance Ratio:", lda.explained_variance_ratio_)
-
-            #Scores plot
-            fig = px.scatter(scores, x="LV1", y="LV2", color="Substance", hover_data=['Substance'])
-            fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-            fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-            fig.update_layout(
-                height=600,
-                width=800,
-                title_text='Scores Plot')
-            fig.show()
-
-            # Plot 3D scores
-            fig = px.scatter_3d(scores, x='LV1', y='LV2', z='LV3',
-                                color='Substance', hover_data=['Substance'],
-                                hover_name=scores.index
-            )
-            fig.update_layout(
-            title_text='3D colored by Substance for Linear Discriminant Analysis')
-            fig.show()
-
-        if self.settings.test_split and self.settings.output:
-
-            lda2 = LD(n_components=self.settings.components)
-
-            self.x_train, x_test, y_train, y_test = train_test_split(
-                (scores.drop('Substance', axis=1).values),
-                self.y,
-                test_size=0.3,
-                random_state=42
-            )
-
-            lda2.fit(self.x_train, y_train)
-            lda2.predict(x_test)
-            y_pred = lda2.predict(x_test)
-
-            self.__print_prediction_graphs(y_test, y_pred)
-
+            graph_output(scores, self.model, "Linear Discriminant Analysis")
             
-
-    def __print_prediction_graphs(self, y_test, y_pred):
-        '''Helper function to print graphs and stats about LDA predictions.'''
-        # Assuming 'y_test' and 'y_pred' are your true and predicted labels
-        cm = confusion_matrix(y_test, y_pred)
-
-        # Get unique class labels from y_true
-        class_labels = sorted(set(y_test))
-
-        # Plot the confusion matrix using seaborn with custom colormap (Blues)
-        sns.heatmap(cm,
-            annot=True,
-            fmt='d',
-            cmap='Blues',
-            xticklabels=class_labels,
-            yticklabels=class_labels,
-            cbar=False,
-            vmin=0,
-            vmax=cm.max()
-        )
-
-        plt.xlabel('Predicted')
-        plt.ylabel('True')
-        plt.title('Confusion Matrix based on evaluation set')
-        plt.show()
-
-        # Print the classification report
-        print(classification_report(y_test, y_pred, digits=2))
+            # Run split tests if required by the user
+            if self.settings.test_split:
+                run_split_test(
+                    (scores.drop('Substance', axis=1).values),
+                    self.y,
+                    LD(n_components=self.settings.components)
+                )
 
     def predict(self, x_data: pd.DataFrame):
         '''Performs LDA prediction once the model is trained.'''
