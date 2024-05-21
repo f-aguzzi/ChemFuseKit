@@ -1,6 +1,7 @@
 '''This module contains the test cases for the PCA module.'''
 import unittest
-from chemfusekit.pca import PCASettings, PCA
+import copy
+from chemfusekit.pca import PCASettings, PCA, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF
 
 class TestPCA(unittest.TestCase):
@@ -25,7 +26,7 @@ class TestPCA(unittest.TestCase):
             target_variance=0.98,
             confidence_level=0.9,
             initial_components=8,
-            output=True
+            output=GraphMode.GRAPHIC
         )
 
     def test_pca_constructor(self):
@@ -75,17 +76,39 @@ class TestPCA(unittest.TestCase):
         lldf = LLDF(lldf_settings)
         lldf.lldf()
 
-        # Set up and execute PCA
-        pca_settings = PCASettings(output=True)
+        # Set up and execute PCA (graph output)
+        pca_settings = PCASettings(output=GraphMode.GRAPHIC)
         pca = PCA(lldf.fused_data, pca_settings)
         pca.pca()
 
         # Save the results
-        result_true_components = pca.components
-        result_true_array_scores = pca.array_scores
+        result_true_components = copy.deepcopy(pca.components)
+        result_true_array_scores = copy.deepcopy(pca.array_scores)
 
         # Set up and execute PCA (again)
-        pca_settings = PCASettings(output=False)
+        pca_settings = PCASettings(output=GraphMode.NONE)
+        pca = PCA(lldf.fused_data, pca_settings)
+        pca.pca()
+
+       # Save the results
+        result_false_components = pca.components
+        result_false_array_scores = pca.array_scores
+
+        self.assertEqual(result_true_components, result_false_components)
+        self.assertEqual(result_true_array_scores, result_false_array_scores)
+
+
+        # Set up and execute PCA (text output)
+        pca_settings = PCASettings(output=GraphMode.GRAPHIC)
+        pca = PCA(lldf.fused_data, pca_settings)
+        pca.pca()
+
+        # Save the results
+        result_true_components = copy.deepcopy(pca.components)
+        result_true_array_scores = copy.deepcopy(pca.array_scores)
+
+        # Set up and execute PCA (again)
+        pca_settings = PCASettings(output=GraphMode.NONE)
         pca = PCA(lldf.fused_data, pca_settings)
         pca.pca()
 

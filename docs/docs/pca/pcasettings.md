@@ -13,7 +13,7 @@ PCASettings(
   target_variance: float,
   confidence_level: float,
   initial_components: int,
-  output: bool
+  output: GraphMode
 )
 ```
 
@@ -24,7 +24,7 @@ PCASettings(
 - `confidence_level`: the confidence level for statistical tests. Defaults to 0.05.
 - `initial_components`: the minimum amount of components to be used in the PCA model.
   Defaults to 10.
-- `output`: toggles graph output. Defaults to `False`.
+- `output`: toggles graph output. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
 
 ## Example
 
@@ -36,6 +36,6 @@ pca_settings = PCASettings(
     target_variance=0.99,
     confidence_level=0.05,
     initial_components=10,
-    output=True # graphs will be printed
+    output=GraphMode.GRAPHIC  # graphs will be printed
 )
 ```

@@ -1,6 +1,6 @@
 '''This module contains the test cases for the LDA module.'''
 import unittest
-from chemfusekit.lda import LDASettings, LDA
+from chemfusekit.lda import LDASettings, LDA, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF
 
 class TestLDA(unittest.TestCase):
@@ -10,10 +10,10 @@ class TestLDA(unittest.TestCase):
         '''Test case against settings errors.'''
         # Check for negative component rejection
         with self.assertRaises(ValueError):
-            LDASettings(components=-3, output=True)
+            LDASettings(components=-3, output=GraphMode.TEXT)
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
-            LDASettings(output=False,test_split=True)
+            LDASettings(output=GraphMode.NONE, test_split=True)
 
     def test_lda_constructor(self):
         '''Test case against constructor parameter issues.'''
@@ -59,18 +59,23 @@ class TestLDA(unittest.TestCase):
         lldf = LLDF(lldf_settings)
         lldf.lldf()
 
-        # Create an LDA object and train it, with true output
-        lda_settings = LDASettings(output=True)
+        # Create an LDA object and train it, with graphical output
+        lda_settings = LDASettings(output=GraphMode.GRAPHIC)
         lda = LDA(lldf.fused_data, lda_settings)
         lda.lda()
 
-        # Create an LDA object and train it, with false output
-        lda_settings = LDASettings(output=False)
+        # Create an LDA object and train it, with text output
+        lda_settings = LDASettings(output=GraphMode.TEXT)
+        lda = LDA(lldf.fused_data, lda_settings)
+        lda.lda()
+
+        # Create an LDA object and train it, with no output
+        lda_settings = LDASettings(output=GraphMode.NONE)
         lda = LDA(lldf.fused_data, lda_settings)
         lda.lda()
 
         # Create an LDA object and train it, with true output and split tests
-        lda_settings = LDASettings(output=True, test_split=True)
+        lda_settings = LDASettings(output=GraphMode.TEXT, test_split=True)
         lda = LDA(lldf.fused_data, lda_settings)
         lda.lda()
 

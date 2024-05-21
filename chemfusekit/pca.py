@@ -11,12 +11,13 @@ from sklearn.decomposition import PCA as PC
 import scipy.stats
 
 from chemfusekit.lldf import LLDFModel
+from chemfusekit.__utils import print_table, GraphMode
 
 class PCASettings:
     '''Holds the settings for the PCA object.'''
     def __init__(self, target_variance: float = 0.95,
                  confidence_level: float = 0.05,
-                 initial_components: int = 10, output: bool = False):
+                 initial_components: int = 10, output: GraphMode = GraphMode.NONE):
         if target_variance < 0:
             raise ValueError("Target variance should be positive or null.")
         if confidence_level < 0 or confidence_level > 1:
@@ -52,10 +53,6 @@ class PCA:
         # classes = y_dataframe.astype('category') (a cosa serve?)
         out_sum = np.cumsum(pca.explained_variance_ratio_)
 
-        if self.settings.output:
-            print("Proportion of Variance Explained : ", pca.explained_variance_ratio_)
-            print("Cumulative Prop. Variance Explained: ", out_sum)
-
         # Autoselect the number of components
         for i,x in enumerate(out_sum):
             if x >= self.settings.target_variance:
@@ -63,9 +60,16 @@ class PCA:
                 break
         self.components = max(self.components, 3)
 
-        if self.settings.output:
-            print(f"Running PCA with {self.components} components")
+        compsexpv = [[(i+1), pca.explained_variance_ratio_[i]] for i in np.arange(pca.n_components_)]
+        comps, expv = zip(*compsexpv)
+        print_table(
+            ["Components", "Explained Variance"],
+            [comps, expv],
+            "Proportion of Variance Explained",
+            mode=self.settings.output
+        )
 
+        if self.settings.output is GraphMode.GRAPHIC:
             # PCA scree plot
             pc_values = np.arange(pca.n_components_) + 1
             plt.plot(pc_values, pca.explained_variance_ratio_, 'ro-', linewidth=2)
@@ -74,11 +78,21 @@ class PCA:
             plt.ylabel('Proportion of Variance Explained')
             plt.show()
 
+        compsexpv = [[(i+1), out_sum[i]] for i in np.arange(pca.n_components_)]
+        comps, expv = zip(*compsexpv)
+        print_table(
+            ["Components", "Cumulative Explained Variance"],
+            [comps, expv],
+            "Cumulative Proportion of Variance Explained",
+            mode=self.settings.output
+        )
+
+        if self.settings.output is GraphMode.GRAPHIC:
             # Cumulative explained variance ratio
             plt.plot(pc_values, out_sum, 'ro-', linewidth=2)
-            plt.title('Scree Plot')
+            plt.title('Scree Plot (cumulative)')
             plt.xlabel('Principal Component')
-            plt.ylabel('Cumulative Prop. Variance Explained')
+            plt.ylabel('Cumulative Proportional Variance Explained')
             plt.show()
 
         # Run PCA producing the pca_model with a proper number of components
@@ -97,8 +111,13 @@ class PCA:
         scores = pd.DataFrame(data=self.pca_model.fit_transform(x_data), columns=pc_cols)
         scores.index = x_data.index
         scores = pd.concat([scores, x_train.Substance], axis = 1)
-        if self.settings.output:
-            print(f"Scores:\n{scores}")
+        
+        print_table(
+            pc_cols + ['Substance'],
+            [scores.iloc[:,i] for i in range(scores.shape[1])],
+            "PCA scores for each component",
+            self.settings.output
+        )
 
         # Prepare the loadings dataframe
         loadings = pd.DataFrame(
@@ -107,10 +126,15 @@ class PCA:
             index=x_data.columns
         )
         loadings["Attributes"] = loadings.index
-        if self.settings.output:
-            print(f"Loadings:\n{loadings}")
+    
+        print_table(
+            pc_cols + ['Retention Time'],
+            [loadings.iloc[:,i] for i in range(loadings.shape[1])],
+            "PCA Loadings",
+            self.settings.output
+        )
 
-        if self.settings.output:
+        if self.settings.output is GraphMode.GRAPHIC:
             # View the scores plot using plotly library
             fig = px.scatter(
                 scores,
@@ -125,7 +149,7 @@ class PCA:
             fig.update_layout(
                 height=600,
                 width=800,
-                title_text='Scores Plot colored by Substance')
+                title_text='PCA Scores Plot colored by Substance')
             fig.show()
 
             # Plot 3D scores
@@ -173,7 +197,7 @@ class PCA:
             index = x_data.index
         )
 
-        if self.settings.output:
+        if self.settings.output is GraphMode.GRAPHIC:
             # Plot the Hotelling T2 vs Q-residuals plot
             fig = px.scatter(
                 hot_q_data,
@@ -203,7 +227,7 @@ class PCA:
         }
         normalized_hot_q_data = pd.DataFrame(normalized_hot_q_data, index=x_data.index)
 
-        if self.settings.output:
+        if self.settings.output is GraphMode.GRAPHIC:
             # Plot the normalized Hotelling T2 vs Q-residuals plot
             fig_normalized = px.scatter(
                 normalized_hot_q_data,
@@ -222,12 +246,16 @@ class PCA:
             )
             fig_normalized.show()
 
+
         # Assuming 'scores' is your DataFrame with the 'class' column
         # Drop the 'class' column before converting to NumPy array
         array_scores = scores.drop('Substance', axis=1).values
 
-        if self.settings.output:
-            print(f"Original DataFrame:\n{scores}")
-            print(f"\nNumPy Array without 'Substance' column:\n{array_scores}")
+        print_table(
+            pc_cols,
+            [array_scores[:,i] for i in range(array_scores.shape[1])],
+            "Array without 'Substance' column",
+            self.settings.output
+        )
 
         self.array_scores = array_scores
