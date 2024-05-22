@@ -7,7 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 
 from chemfusekit.lldf import LLDFModel
-from chemfusekit.__utils import run_split_test, print_confusion_matrix
+from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
 
 class KNNSettings:
     '''Holds the settings for the kNN object.'''
@@ -17,7 +17,7 @@ class KNNSettings:
             metric: str | Callable = 'euclidean',
             weights: str | Callable = 'uniform',
             algorithm: str = 'auto',
-            output: bool = False,
+            output: GraphMode = GraphMode.NONE,
             test_split: bool = False
         ):
         if n_neighbors < 1:
@@ -32,7 +32,7 @@ class KNNSettings:
             raise  ValueError(
                 "Invalid algorithm: should be 'auto', 'ball_tree', 'kd_tree' or 'brute'."
             )
-        if test_split is True and output is False:
+        if test_split is True and output is GraphMode.NONE:
             raise Warning(
                 "You selected test_split but it won't run because you disabled the output."
             )
@@ -64,16 +64,21 @@ class KNN:
         # Save the trained model
         self.model = knn
 
-        if self.settings.output:
-            # View the prediction on the test data
-            y_pred = knn.predict(self.fused_data.x_data)
-            print(y_pred)
+        # View the prediction on the test data
+        y_pred = knn.predict(self.fused_data.x_data)
+        print_table(
+            ["Predictions"],
+            y_pred.reshape(1,len(y_pred)),
+            "Data and predictions",
+            self.settings.output
+        )
 
-            print_confusion_matrix(
-                self.fused_data.y,
-                y_pred,
-                "Confusion Matrix based on the whole data set"
-            )
+        print_confusion_matrix(
+            self.fused_data.y,
+            y_pred,
+            "Confusion Matrix based on the whole data set",
+            self.settings.output
+        )
 
         if self.settings.test_split and self.settings.output:
             knn_split = KNeighborsClassifier(
