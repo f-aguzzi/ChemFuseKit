@@ -3,27 +3,26 @@ from typing import Optional
 
 import pandas as pd
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm import SVC
 
 from chemfusekit.lldf import LLDFModel
+from chemfusekit.__utils import GraphMode, run_split_test, print_confusion_matrix
+
 
 class SVMSettings:
     '''Holds the settings for the SVM object.'''
-    def __init__(self, kernel: str = 'linear', output: bool = False, test_split: bool = False):
+    def __init__(self, kernel: str = 'linear', output: GraphMode = GraphMode.NONE,
+                 test_split: bool = False):
         if kernel not in ['linear', 'poly', 'gaussian', 'sigmoid']:
             raise ValueError("Invalid type: must be linear, poly, gaussian or sigmoid")
-        if test_split is True and output is False:
+        if test_split is True and output is GraphMode.NONE:
             raise Warning(
                 "You selected test_split but it won't run because you disabled the output."
             )
         self.kernel = kernel
         self.output = output
         self.test_split = test_split
+
 
 class SVM:
     '''Class for Support Vector Machine analysis of the data'''
@@ -35,22 +34,9 @@ class SVM:
     def svm(self):
         '''Performs Support Vector Machine analysis'''
 
-        x_data = self.fused_data.x_data
-        x_train = self.fused_data.x_train
-        y = self.fused_data.y
-
-        x_train, x_test, y_train, y_test = train_test_split(
-            x_data,
-            y,
-            train_size=0.7,
-            shuffle=True,
-            stratify=y
-        )
-
         # Linear kernel
         if self.settings.kernel == 'linear':
             svm_model = SVC(kernel='linear', probability=True)
-            # svmlinear.predict_proba(X_train)
         # Polynomial kernel
         elif self.settings.kernel == 'poly':
             svm_model = SVC(kernel='poly', degree=8)
@@ -61,40 +47,26 @@ class SVM:
         elif self.settings.kernel == 'sigmoid':
             svm_model = SVC(kernel='sigmoid')
         else:
-            raise ValueError(f"SVM: this type of kernel does not exist ({self.settings.type=})")
+            raise ValueError(f"SVM: this type of kernel does not exist ({self.settings.kernel=})")
 
-        svm_model.fit(x_train, y_train)
+        svm_model.fit(self.fused_data.x_data, self.fused_data.y)
         self.model = svm_model
 
-        if self.settings.output:
-            y_pred = svm_model.predict(x_test)
+        predictions = svm_model.predict(self.fused_data.x_data)
+        print_confusion_matrix(
+            self.fused_data.y,
+            predictions,
+            "Confusion matrix based on the whole data set",
+            mode=self.settings.output
+        )
 
-            # Assuming 'y_true' and 'y_pred' are your true and predicted labels
-            cm = confusion_matrix(y_test, y_pred)
-
-            # Get unique class labels from y_true
-            class_labels = sorted(set(y_test))
-
-            # Plot the confusion matrix using seaborn with custom colormap (Blues)
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt='d',
-                cmap='Blues',
-                xticklabels=class_labels,
-                yticklabels=class_labels,
-                cbar=False,
-                vmin=0,
-                vmax=cm.max()
+        if self.settings.test_split:
+            run_split_test(
+                x=self.fused_data.x_data,
+                y=self.fused_data.y,
+                model=SVC(kernel=self.settings.kernel),
+                mode=self.settings.output
             )
-
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix based on evaluation set')
-            plt.show()
-
-            # Print the classification report
-            print(classification_report(y_test, y_pred, digits=2))
 
     def predict(self, x_data: pd.DataFrame):
         '''Performs SVM prediction once the model is trained'''

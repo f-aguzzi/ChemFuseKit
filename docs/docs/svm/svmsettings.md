@@ -9,7 +9,7 @@ Holds the settings for the [`SVM`](./svm.md) object.
 ## Syntax
 
 ```python
-SVMSettings(kernel: str, output: bool)
+SVMSettings(kernel: str, output: GraphMode, test_split: bool)
 ```
 
 ## Fields and constructor parameters
@@ -20,7 +20,7 @@ SVMSettings(kernel: str, output: bool)
   - `gaussian`
   - `sigmoid`
   Defaults to `linear`.
-- `output`: toggles graph output. Defaults to `False`.
+- `output`: toggles graph output. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
 - `test_split`: toggles split testing. Defaults to `False`.
 
 The constructor raises:
@@ -30,12 +30,12 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.svm import SVMSettings
+from chemfusekit.svm import SVMSettings, GraphMode
 
 # Initialize the settings for Support Vector Machine
 svm_settings = SVMSettings(
     type='linear',
-    output=True,  # graphs will be printed
+    output=GraphMode.GRAPHIC,   # graphs will be printed
     test_split=True # split testing is enabled
 )
 ```
