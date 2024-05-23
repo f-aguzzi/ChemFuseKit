@@ -1,6 +1,6 @@
 [project]
 name = "chemfusekit"
-version = "1.1.0b3"
+version = "1.1.1b1"
 description = "A minimal Python / Jupyter Notebook / Colab library for data fusion and chemometrical analysis."
 authors = [
     { name = "Federico Aguzzi", email = "62149513+f-aguzzi@users.noreply.github.com" }
