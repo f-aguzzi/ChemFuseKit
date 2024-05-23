@@ -49,7 +49,7 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.knn import KNNSettings
+from chemfusekit.knn import KNNSettings, GraphMode
 
 settings = KNNSettings(
     n_neighbors=20,     # pick 20 neighbors

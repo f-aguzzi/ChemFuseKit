@@ -29,7 +29,7 @@ PCASettings(
 ## Example
 
 ```python
-from chemfusekit.pca import PCASettings
+from chemfusekit.pca import PCASettings, GraphMode
 
 # Initialize the settings for Principal Component Analysis
 pca_settings = PCASettings(

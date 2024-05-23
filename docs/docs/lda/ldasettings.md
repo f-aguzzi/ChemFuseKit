@@ -27,7 +27,7 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.lda import LDASettings
+from chemfusekit.lda import LDASettings, GraphMode
 
 settings = LDASettings(
     components=(pca.components - 1),    # one less component than the number determined by PCA
