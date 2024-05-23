@@ -4,8 +4,7 @@
 [![Pylint](https://github.com/f-aguzzi/tesi/actions/workflows/pylint.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
 [![Unittest](https://github.com/f-aguzzi/tesi/actions/workflows/unittest.yml/badge.svg)](https://github.com/f-aguzzi/tesi/)
 [![](https://img.shields.io/badge/Read_the_docs-GitHub_Pages-darkorange)](https://f-aguzzi.github.io/tesi/)
-[![Try It On Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/cda_example_notebook.ipynb)
-
+[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/pca_lda_example_notebook.ipynb)
 <p align="center">
   <img src="https://raw.githubusercontent.com/f-aguzzi/tesi/main/docs/static/img/logo.svg" alt="Library Logo" style="width: 20%;">
 </p>
@@ -34,7 +33,7 @@ pip install chemfusekit
 
 You can also try this demo:
 
-[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/cda_example_notebook.ipynb)
+[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/pca_lda_example_notebook.ipynb)
 
 and find instructions [here](https://f-aguzzi.github.io/tesi/docs/tutorial).
 

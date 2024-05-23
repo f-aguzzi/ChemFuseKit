@@ -42,7 +42,7 @@ def graph_output(scores, model, name: str, mode: GraphMode = GraphMode.GRAPHIC):
         # Scores table
         print_table(
             scores.columns,
-            [scores.iloc[:,i] for i in range(scores.shape[1])],
+            [scores.iloc[:, i] for i in range(scores.shape[1])],
             f"{name} Scores"
         )
 
@@ -63,6 +63,7 @@ def graph_output(scores, model, name: str, mode: GraphMode = GraphMode.GRAPHIC):
         )
         fig.update_layout(title_text=f"3D colored by Substance for {name}")
         fig.show()
+
 
 def print_table(header_values, cell_values, title: str, mode: GraphMode = GraphMode.GRAPHIC):
     '''Multimodal table printing utility.'''
@@ -93,6 +94,7 @@ def print_table(header_values, cell_values, title: str, mode: GraphMode = GraphM
         # Print the table using tabulate
         print(tabulate(table, headers="firstrow", tablefmt="rounded_outline"))
 
+
 def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAPHIC):
     '''A function to run split tests on trained models.'''
 
@@ -110,99 +112,79 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
     )
 
     model.fit(x_train, y_train)
-    y_pred = model.predict(x_test)
+    y_pred = model.predict(x_train)
 
     # TODO: add something to print _x_scores multimodally
 
     if extended:
-        if mode is GraphMode.TEXT:
-            # We can see the model.classes_ the model used
-            print(model.classes_)
-            # See the model.intercept_ of the model
-            print(model.intercept_)
-            # See the coefficients of the model - that can be easily interpreted
-            # (correlating or not with y)
-            print(model.coef_)
+        probabilities = model.predict_proba(x_train)
+        score = model.score(x_train, y_train)
+        predictions = model.predict(x_train)
 
-            probabilities = model.predict_proba(x_train)
-            print(probabilities)
+        # See the classes the model used
+        classes = model.classes_
+        classes = classes.reshape((1, len(classes)))
+        coefficients = model.coef_.transpose()
+        intercepts = model.intercept_.reshape((1, len(model.intercept_)))
+        print_table(
+            ["Class"] + [f"Coefficient {i + 1}" for i in range(model.coef_.shape[1])] + ["Intercept (bias)"],
+            np.concatenate((classes, coefficients, intercepts)),
+            "LR Coefficients + Intercept (split test, training set)",
+            mode
+        )
 
-            # This tells us the accuracy of our model in calibration
-            print(f"Model score:\n{model.score(x_train, y_train)}")
+        # Training predictions table
+        sample_column = y_train.reshape((1, y_train.shape[0]))
+        pred_column = predictions.reshape((1, predictions.shape[0]))
+        prob_column = probabilities.transpose()
 
-            predictions = model.predict(x_train)
-            print(f"Calibration predictions:\n{predictions}")
-        
-        if mode is GraphMode.GRAPHIC: 
-            probabilities = model.predict_proba(x_train)
-            score = model.score(x_train, y_train)
-            predictions = model.predict(x_train)
-
-            # Class table
-            fig_classes = go.Figure(data=[go.Table(
-                header=dict(values=["Classes"],
-                            fill_color='paleturquoise',
-                            align='left'),
-                cells=dict(values=[model.classes_],
-                        fill_color='lavender',
-                        align='left'))
-            ])
-            fig_classes.update_layout(title="Model Classes")
-
-            # Intercept table
-            fig_intercept = go.Figure(data=[go.Table(
-                header=dict(values=["Intercept"],
-                            fill_color='paleturquoise',
-                            align='left'),
-                cells=dict(values=[model.intercept_],
-                        fill_color='lavender',
-                        align='left'))
-            ])
-            fig_intercept.update_layout(title="Model Intercept")
-
-            # Coefficient table
-            fig_coef = go.Figure(data=[go.Table(
-                header=dict(values=["Features"] + [f"Class {i}" for i in range(model.coef_.shape[0])],
-                            fill_color='paleturquoise',
-                            align='left'),
-                cells=dict(values=[[f"Feature {i}" for i in range(model.coef_.shape[1])] + list(model.coef_.T)],
-                        fill_color='lavender',
-                        align='left'))
-            ])
-            fig_coef.update_layout(title="Model Coefficients")
-
-            # Probabilities table
-            fig_proba = go.Figure(data=[go.Table(
-                header=dict(values=["Sample"] + [f"Class {i} Prob" for i in range(probabilities.shape[1])],
-                            fill_color='paleturquoise',
-                            align='left'),
-                cells=dict(values=[[f"Sample {i}" for i in range(probabilities.shape[0])] + list(probabilities.T)],
-                        fill_color='lavender',
-                        align='left'))
-            ])
-            fig_proba.update_layout(title="Prediction Probabilities")
-
-            fig_classes.show()
-            fig_intercept.show()
-            fig_coef.show()
-            fig_proba.show()
+        print_table(
+            np.concatenate((np.asarray(["True", "Prediction"]), classes.reshape(17, ))),
+            np.concatenate((
+                sample_column,
+                pred_column,
+                prob_column
+            )),
+            f"LR Predictions with class probabilities (split test, evaluation set, overall score: {score})",
+            mode
+        )
 
         print_confusion_matrix(
-            y1 = y_train,
-            y2 = predictions,
-            title = "Confusion matrix based on training set",
-            mode = mode
+            y1=y_train,
+            y2=predictions,
+            title="Confusion matrix based on training set",
+            mode=mode
         )
- 
+
+        # Test predictions set table
+        probabilities = model.predict_proba(x_test)
+        score = model.score(x_test, y_test)
+        predictions = model.predict(x_test)
+        pred_column = predictions.reshape((1, predictions.shape[0]))
+        prob_column = probabilities.transpose()
+
+        print_table(
+            np.concatenate((np.asarray(["Prediction"]), classes.reshape(17, ))),
+            np.concatenate((
+                pred_column,
+                prob_column
+            )),
+            f"LR Predictions with class probabilities (split test, evaluation set, overall score: {score})",
+            mode
+        )
+
     if isinstance(model, PLSR):
         y_pred = np.int8(np.abs(np.around(y_pred, decimals=0)))
+    else:
+        y_pred = model.predict(x_test)
 
     print_confusion_matrix(
-        y1 = y_test,
-        y2 = y_pred,
-        title = "Confusion matrix based on evaluation set",
-        mode = mode
+        y1=y_test,
+        y2=y_pred,
+        title="Confusion matrix based on evaluation set",
+        mode=mode
     )
+
 
 def print_confusion_matrix(y1, y2, title: str, mode: GraphMode = GraphMode.GRAPHIC):
     '''Function to simplify the plotting of confusion matrices'''
@@ -251,4 +233,3 @@ def print_confusion_matrix(y1, y2, title: str, mode: GraphMode = GraphMode.GRAPH
         "Classification Report",
         mode 
     )
- 
