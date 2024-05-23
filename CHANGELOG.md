@@ -1,9 +1,34 @@
 ## [1.1.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2024-05-23)
 
 
+### Features
+
+* beartype integration ([2f823ce](https://github.com/f-aguzzi/tesi/commit/2f823cebee0cb8006523d9e0d6aaa673484bd928)), closes [#7](https://github.com/f-aguzzi/tesi/issues/7)
+
+
 ### Bug Fixes
 
+
 * wrong training procedure in SVM ([74d1741](https://github.com/f-aguzzi/tesi/commit/74d1741743f53eea6cc2d9002005c6426bf4f0d0))
+
+* add missing checks to LLDFSettings ([3d57752](https://github.com/f-aguzzi/tesi/commit/3d577527eefd0b183a66c378d53cb1f1ee506343)), closes [#20](https://github.com/f-aguzzi/tesi/issues/20)
+
+
+### chore
+
+* **thesis:** set up build system (merge from [#22](https://github.com/f-aguzzi/tesi/issues/22)) ([0b13ed3](https://github.com/f-aguzzi/tesi/commit/0b13ed346448f0eeefecbc6fd051eb7c98919650))
+
+
+### Refactor
+
+* extract split tests and graphs (merge [#23](https://github.com/f-aguzzi/tesi/issues/23)) ([6865c88](https://github.com/f-aguzzi/tesi/commit/6865c88d70b650de5e8440807b0194022a15dc0e))
+
+
+### CI
+
+* **release:** 1.1.0-beta.1 [skip ci] ([2deffcc](https://github.com/f-aguzzi/tesi/commit/2deffcc4c8a29d09a4a644558e491d770f71f6dc)), closes [#7](https://github.com/f-aguzzi/tesi/issues/7)
+* **release:** 1.1.0-beta.2 [skip ci] ([25704dc](https://github.com/f-aguzzi/tesi/commit/25704dc4eb0cbc249bbf85611c5dfe257ebccc30)), closes [#20](https://github.com/f-aguzzi/tesi/issues/20) [#22](https://github.com/f-aguzzi/tesi/issues/22) [#23](https://github.com/f-aguzzi/tesi/issues/23)
+
 
 ## [1.1.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2024-05-20)
 
