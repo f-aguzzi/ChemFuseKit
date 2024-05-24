@@ -31,6 +31,7 @@ class SVM:
         self.settings = settings
         self.model: Optional[SVC] = None
 
+
     def svm(self):
         '''Performs Support Vector Machine analysis'''
 
@@ -67,6 +68,7 @@ class SVM:
                 model=SVC(kernel=self.settings.kernel),
                 mode=self.settings.output
             )
+
 
     def predict(self, x_data: pd.DataFrame):
         '''Performs SVM prediction once the model is trained'''
