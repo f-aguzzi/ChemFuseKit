@@ -9,6 +9,7 @@ from chemfusekit.lldf import LLDFModel
 from chemfusekit.__utils import GraphMode, run_split_test, print_confusion_matrix
 
 
+
 class SVMSettings:
     '''Holds the settings for the SVM object.'''
     def __init__(self, kernel: str = 'linear', output: GraphMode = GraphMode.NONE,
