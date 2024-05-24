@@ -33,7 +33,7 @@ pip install chemfusekit
 
 You can also try this demo:
 
-[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/pca_lda_example_notebook.ipynb)
+[![Try It In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/pca_lda_notebook.ipynb)
 
 and find instructions [here](https://f-aguzzi.github.io/tesi/docs/tutorial).
 
@@ -49,8 +49,8 @@ and find instructions [here](https://f-aguzzi.github.io/tesi/docs/tutorial).
 Here's a list of the currently available modules:
 - **LLDF**: *Low-Level Data Fusion*
 - **PCA**: *Principal Component Analysis*
-- **LDA**: *Linear Discriminant Analysis*
-- **SVM**: *Support Vector Machine*
-- **LR**: *Logistic Regression*
-- **KNN**: *k_Neighbors Analysis*
-- **PLSDA**: *Partial Least Squres Discriminant Analysis*
+- **LDA**: *Linear Discriminant Analysis* ([demo](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/pca_lda_notebook.ipynb))
+- **SVM**: *Support Vector Machine* ([demo](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/svm_notebook.ipynb))
+- **LR**: *Logistic Regression* ([demo](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/pca_lr_notebook.ipynb))
+- **KNN**: *k_Neighbors Analysis* ([demo](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/knn_notebook.ipynb))
+- **PLSDA**: *Partial Least Squres Discriminant Analysis* ([demo](https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/plsda_notebook.ipynb))
