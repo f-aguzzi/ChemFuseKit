@@ -9,7 +9,7 @@ Holds the settings for the [`LR`](./lr.md) object.
 ## Syntax
 
 ```python
-LRSettings(algorithm: str, output: bool)
+LRSettings(algorithm: str, output: GraphMode, test_split: bool)
 ```
 
 ## Fields and constructor parameters
@@ -21,7 +21,7 @@ LRSettings(algorithm: str, output: bool)
     - `newton-cholesky`
     - `sag`
     - `saga`
-- `output`: toggles graph output. Defaults to `False`.
+- `output`: toggles graph output. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
 - `test_split`: toggles split testing. Defaults to `False`.
 
 The constructor raises:
@@ -32,11 +32,11 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.lr import LRSettings
+from chemfusekit.lr import LRSettings, GraphMode
 
 settings = LRSettings(
     algorithm='newton-cg',
-    output=True,  # graphs will be printed
+    output=GraphMode.GRAPHIC,   # graphs will be printed
     test_split=True # split testing is enabled
 )
 ```

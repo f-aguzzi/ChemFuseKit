@@ -4,7 +4,7 @@ import unittest
 import pandas as pd
 import numpy as np
 
-from chemfusekit.knn import KNNSettings, KNN
+from chemfusekit.knn import KNNSettings, KNN, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel
 
 class TestKNN(unittest.TestCase):
@@ -53,7 +53,7 @@ class TestKNN(unittest.TestCase):
 
         # output parameter
         with self.assertRaises(TypeError):
-            KNNSettings(output=3)   # Wrong type (not a bool)
+            KNNSettings(output=3)   # Wrong type (not a GraphMode enum)
 
         # test_split parameter
         with self.assertRaises(TypeError):
@@ -61,7 +61,7 @@ class TestKNN(unittest.TestCase):
 
         # output and test_split incompatibilities
         with self.assertRaises(Warning):
-            KNNSettings(output=False, test_split=True)
+            KNNSettings(output=GraphMode.NONE, test_split=True)
 
     def test_knn_constructor(self):
         '''Test case against constructor errors.'''
@@ -105,8 +105,13 @@ class TestKNN(unittest.TestCase):
         knn = KNN(knn_settings, lldf.fused_data)
         knn.knn()
 
-        # With output
-        knn_settings = KNNSettings(output=True)
+        # With graph output
+        knn_settings = KNNSettings(output=GraphMode.GRAPHIC)
+        knn = KNN(knn_settings, lldf.fused_data)
+        knn.knn()
+
+        # With text output
+        knn_settings = KNNSettings(output=GraphMode.TEXT)
         knn = KNN(knn_settings, lldf.fused_data)
         knn.knn()
 

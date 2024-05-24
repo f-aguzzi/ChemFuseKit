@@ -6,7 +6,7 @@ import pandas as pd
 
 from chemfusekit.lldf import LLDFSettings, LLDF
 from chemfusekit.pca import PCASettings, PCA
-from chemfusekit.lr import LRSettings, LR
+from chemfusekit.lr import LRSettings, LR, GraphMode
 
 class TestLR(unittest.TestCase):
     '''Test suite for the LR module.'''
@@ -17,7 +17,7 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(ValueError):
             LRSettings(
                 algorithm='unknown',
-                output=True,
+                output=GraphMode.NONE,
                 test_split=True
             )
 
@@ -25,7 +25,7 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm=None,
-                output=True,
+                output=GraphMode.NONE,
                 test_split=True
             )
         with self.assertRaises(TypeError):
@@ -37,18 +37,18 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm='liblinear',
-                output=True,
+                output=GraphMode.NONE,
                 test_split=None
             )
         
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
-            LRSettings(output=False,test_split=True)
+            LRSettings(output=GraphMode.NONE, test_split=True)
 
         # Should not raise any exception when the input is correct
         LRSettings(
             algorithm='liblinear',
-            output=False
+            output=GraphMode.TEXT
         )
 
     def test_lr_constructor(self):
@@ -103,11 +103,26 @@ class TestLR(unittest.TestCase):
         lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
         lr.lr()
 
-        # With output and split tests
-        lr_settings = LRSettings(output=True, test_split=True)
+        # With text output
+        lr_settings = LRSettings(output=GraphMode.TEXT)
         lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
         lr.lr()
 
+        # With graph output
+        # With text output
+        lr_settings = LRSettings(output=GraphMode.GRAPHIC)
+        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr.lr()
+
+        # With text output and split tests
+        lr_settings = LRSettings(output=GraphMode.TEXT, test_split=True)
+        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr.lr()
+
+        # With graph output and split tests
+        lr_settings = LRSettings(output=GraphMode.GRAPHIC, test_split=True)
+        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr.lr()
 
     def test_lr_predict(self):
         '''Test case against prediction input errors.'''
