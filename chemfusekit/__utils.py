@@ -85,14 +85,11 @@ def print_table(header_values, cell_values, title: str, mode: GraphMode = GraphM
 
     # Text-based table printing
     else:
-        # Combine header and cells into a single table
-        table = [header_values] + list(zip(*cell_values))
-        
         # Print the title
         print(f"\n\n{title}:")
-        
+
         # Print the table using tabulate
-        print(tabulate(table, headers="firstrow", tablefmt="rounded_outline"))
+        print(tabulate(np.transpose(cell_values), headers=header_values, tablefmt="rounded_outline"))
 
 
 def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAPHIC):
@@ -173,10 +170,9 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
             mode
         )
 
+    y_pred = model.predict(x_test)
     if isinstance(model, PLSR):
         y_pred = np.int8(np.abs(np.around(y_pred, decimals=0)))
-    else:
-        y_pred = model.predict(x_test)
 
     print_confusion_matrix(
         y1=y_test,

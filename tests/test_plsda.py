@@ -4,8 +4,9 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from chemfusekit.plsda import PLSDASettings, PLSDA
+from chemfusekit.plsda import PLSDASettings, PLSDA, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel
+
 
 class TestPLSDA(unittest.TestCase):
     '''Test suite for the PLSDA module.'''
@@ -30,7 +31,7 @@ class TestPLSDA(unittest.TestCase):
 
         # output and test_split incompatibilities
         with self.assertRaises(Warning):
-            PLSDASettings(output=False, test_split=True)
+            PLSDASettings(output=GraphMode.NONE, test_split=True)
 
     def test_plsda_constructor(self):
         '''Test case against constructor errors.'''
@@ -74,8 +75,23 @@ class TestPLSDA(unittest.TestCase):
         plsda = PLSDA(plsda_settings, lldf.fused_data)
         plsda.plsda()
 
-        # Run with output and split testing
-        plsda_settings = PLSDASettings(output=True, test_split=True)
+        # Set up and run PLSDA with text output
+        plsda_settings = PLSDASettings(output=GraphMode.TEXT)
+        plsda = PLSDA(plsda_settings, lldf.fused_data)
+        plsda.plsda()
+
+        # Set up and run PLSDA with graphical output
+        plsda_settings = PLSDASettings(output=GraphMode.GRAPHIC)
+        plsda = PLSDA(plsda_settings, lldf.fused_data)
+        plsda.plsda()
+
+        # Run with text output and split testing
+        plsda_settings = PLSDASettings(output=GraphMode.TEXT, test_split=True)
+        plsda = PLSDA(plsda_settings, lldf.fused_data)
+        plsda.plsda()
+
+        # Run with graphical output and split testing
+        plsda_settings = PLSDASettings(output=GraphMode.GRAPHIC, test_split=True)
         plsda = PLSDA(plsda_settings, lldf.fused_data)
         plsda.plsda() 
     
