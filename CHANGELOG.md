@@ -1,3 +1,17 @@
+## [1.1.1](https://github.com/f-aguzzi/tesi/compare/v1.1.0...v1.1.1) (2024-05-24)
+
+
+### Bug Fixes
+
+* wrong training procedure in SVM ([74d1741](https://github.com/f-aguzzi/tesi/commit/74d1741743f53eea6cc2d9002005c6426bf4f0d0))
+* wrong training procedure in SVM ([#25](https://github.com/f-aguzzi/tesi/issues/25)) ([7f25487](https://github.com/f-aguzzi/tesi/commit/7f254876fcdbd2ba5c46278d31eb851a50659e8f))
+
+
+### CI
+
+* **release:** 1.1.0-beta.3 [skip ci] ([96988ac](https://github.com/f-aguzzi/tesi/commit/96988acbfd0f015c03385f74f14ea26e98a9b4b2))
+* **release:** 1.1.1-beta.1 [skip ci] ([a6e41a8](https://github.com/f-aguzzi/tesi/commit/a6e41a88456fc8224c0864de40eb2233c0c30329))
+
 ## [1.1.1-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.1.0...v1.1.1-beta.1) (2024-05-23)
 
 
