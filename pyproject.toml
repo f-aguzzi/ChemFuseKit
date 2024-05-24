@@ -15,6 +15,8 @@ dependencies = [
     "scikit-learn>=1.4.2",
     "plotly>=5.22.0",
     "beartype>=0.18.5",
+    "nbformat>=4.2.0",
+    "tabulate>=0.9.0",
 ]
 readme = "readme.md"
 repository = "https://github.com/f-aguzzi/tesi"
@@ -29,6 +31,7 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "pylint>=3.1.1",
+    "ipykernel>=6.29.4",
 ]
 
 [tool.rye.scripts]

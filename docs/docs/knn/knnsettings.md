@@ -14,7 +14,7 @@ KNNSettings(
   metric: str | Callable,
   weights: str | Callable,
   algorithm: str,
-  output: bool,
+  output: GraphMode,
   test_split: false
 )
 ```
@@ -36,7 +36,7 @@ KNNSettings(
     - `kd_tree`
     - `brute`
   or be a callable object.
-- `output`: toggles graph output. Defaults to `False`.
+- `output`: toggles graph output mode. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
 - `test_split`: toggles the training split test phase. Defaults to `False`. Requires `output` to be set to `True` to work.
 
 The constructor raises:
@@ -49,14 +49,14 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.knn import KNNSettings
+from chemfusekit.knn import KNNSettings, GraphMode
 
 settings = KNNSettings(
     n_neighbors=20,     # pick 20 neighbors
     metric='minkowski', # choose the metric
     weights='distance', # choose the weight metric
     algorithm='auto',   # the best algorithm gets chosen automatically
-    output=True,    # graph output is enabled
+    output=GraphMode.GRAPHIC, # graph output is enabled
     test_split=True # the model will be split-tested at the end of the training
 )
 ```

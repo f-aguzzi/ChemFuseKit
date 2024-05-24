@@ -13,11 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3 
       - name: Install the latest version of rye
-        uses: phi-friday/install-rye@v1.4
-        with:
-          rye_version: "latest"
-          python_version: 3.12
-          use_uv: true
+        uses: eifinger/setup-rye@v3
       - name: Install dependencies
         run: rye sync --no-lock
       - name: Run unit tests on the code

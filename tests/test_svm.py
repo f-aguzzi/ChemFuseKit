@@ -1,6 +1,6 @@
 '''This module contains the test cases for the SVM module.'''
 import unittest
-from chemfusekit.svm import SVMSettings, SVM
+from chemfusekit.svm import SVMSettings, SVM, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF
 
 class TestSVM(unittest.TestCase):
@@ -10,24 +10,23 @@ class TestSVM(unittest.TestCase):
         '''Test case against settings errors.'''
         # Test against null type
         with self.assertRaises(TypeError):
-            SVMSettings(None, False, False)
+            SVMSettings(None, GraphMode.NONE, False)
         # Test against null output selector
         with self.assertRaises(TypeError):
             SVMSettings('linear', None, False)
         # Test against null test_split selector
         with self.assertRaises(TypeError):
-            SVMSettings('linear', None, False)
+            SVMSettings('linear', GraphMode.NONE, None)
         # Test against non-existent kernels
-        with self.assertRaises(TypeError):
-            SVMSettings('linear', False, None)
+        with self.assertRaises(ValueError):
+            SVMSettings('non-existent', GraphMode.NONE, False)
 
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
-            SVMSettings(output=False,test_split=True)
+            SVMSettings(output=GraphMode.NONE, test_split=True)
 
         # Now call with proper values:
-        SVMSettings(kernel='gaussian', output=True, test_split=False)
-
+        SVMSettings(kernel='gaussian', output=GraphMode.GRAPHIC, test_split=False)
 
     def test_svm_constructor(self):
         '''Test case against constructor parameter issues.'''
@@ -74,14 +73,18 @@ class TestSVM(unittest.TestCase):
         lldf = LLDF(lldf_settings)
         lldf.lldf()
 
-        # Create an SVM object and train it, with true output
-        svm_settings = SVMSettings(output=True)
+        # Create an SVM object and train it, with no output
+        svm_settings = SVMSettings(output=GraphMode.NONE)
         svm = SVM(lldf.fused_data, svm_settings)
         svm.svm()
 
+        # Create an SVM object and train it, with graphical output
+        svm_settings = SVMSettings(output=GraphMode.GRAPHIC)
+        svm = SVM(lldf.fused_data, svm_settings)
+        svm.svm()
 
-        # Create an SVM object and train it, with false output
-        svm_settings = SVMSettings(output=True)
+        # Create an SVM object and train it, with text output
+        svm_settings = SVMSettings(output=GraphMode.TEXT)
         svm = SVM(lldf.fused_data, svm_settings)
         svm.svm()
 

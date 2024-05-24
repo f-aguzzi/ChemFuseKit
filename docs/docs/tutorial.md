@@ -62,7 +62,7 @@ pca_settings = PCASettings(
     target_variance=0.99,   # the minimum acceptable level of cumulative explained covariance
     confidence_level=0.05,  # the desired level of confidence
     initial_components=10,  # the initial amount of components for the iterative analysis
-    output=True # graphs will be printed
+    output=GraphMode.GRAPHIC    # graphs will be printed
 )
 
 # Initialize and run the PCA class
@@ -84,7 +84,8 @@ from chemfusekit.lda import LDASettings, LDA
 
 settings = LDASettings(
     components=(pca.components - 1),    # one less component than the number determined by PCA
-    output=True # graphs will be printed
+    output=GraphMode.GRAPHIC,   # graphs will be printed
+    test_split=True # Split testing is enabled
 )
 
 # Initialize and run the LDA class
