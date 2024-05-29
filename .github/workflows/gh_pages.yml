@@ -8,6 +8,13 @@ on:
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
     paths:
       - 'docs/**'
+      - '.github/workflows/gh_pages.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - '.github/workflows/gh_pages.yml'
 
 jobs:
   build:
@@ -22,11 +29,14 @@ jobs:
           node-version: 18
           cache: npm
           cache-dependency-path: docs
-
       - name: Install dependencies
+        if: github.event.name == 'release'
         run: |
           cd ${GITHUB_WORKSPACE}/docs
           npm install --frozen-lockfile
+      - name: Generate new version
+        run: |
+          npm run docusaurus docs:version
       - name: Build website
         run: |
           cd ${GITHUB_WORKSPACE}/docs
