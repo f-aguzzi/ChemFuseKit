@@ -1,3 +1,10 @@
+## [1.1.2-beta.3](https://github.com/f-aguzzi/tesi/compare/v1.1.2-beta.2...v1.1.2-beta.3) (2024-05-29)
+
+
+### Bug Fixes
+
+* gh pages workflow ([49c6bda](https://github.com/f-aguzzi/tesi/commit/49c6bdabf757073e87e0c7b0c98eb4d0ef843f78))
+
 ## [1.1.2-beta.2](https://github.com/f-aguzzi/tesi/compare/v1.1.2-beta.1...v1.1.2-beta.2) (2024-05-29)
 
 
