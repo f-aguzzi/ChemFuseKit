@@ -30,9 +30,13 @@ jobs:
           cache: npm
           cache-dependency-path: docs
       - name: Install dependencies
+        if: github.event.name == 'release'
         run: |
           cd ${GITHUB_WORKSPACE}/docs
           npm install --frozen-lockfile
+      - name: Generate new version
+        run: |
+          npm run docusaurus docs:version
       - name: Build website
         run: |
           cd ${GITHUB_WORKSPACE}/docs
