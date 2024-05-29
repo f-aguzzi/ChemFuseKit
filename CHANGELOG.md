@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/f-aguzzi/tesi/compare/v1.1.2...v1.1.3) (2024-05-29)
+
+
+### Bug Fixes
+
+* numpy dependency clash ([cab6371](https://github.com/f-aguzzi/tesi/commit/cab6371b993b4019cb2d223d1e20759ab642c30a))
+
 ## [1.1.2](https://github.com/f-aguzzi/tesi/compare/v1.1.1...v1.1.2) (2024-05-29)
 
 
