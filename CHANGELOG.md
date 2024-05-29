@@ -1,3 +1,10 @@
+## [1.1.1-beta.3](https://github.com/f-aguzzi/tesi/compare/v1.1.1-beta.2...v1.1.1-beta.3) (2024-05-29)
+
+
+### Bug Fixes
+
+* docs workflow, dependency clashes, demos ([6f72ec4](https://github.com/f-aguzzi/tesi/commit/6f72ec4a0c51902e05e468b6d6f79042a3bc73e5)), closes [#29](https://github.com/f-aguzzi/tesi/issues/29) [#28](https://github.com/f-aguzzi/tesi/issues/28)
+
 ## [1.1.1-beta.2](https://github.com/f-aguzzi/tesi/compare/v1.1.1-beta.1...v1.1.1-beta.2) (2024-05-24)
 
 
