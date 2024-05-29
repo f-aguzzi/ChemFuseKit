@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/f-aguzzi/tesi/compare/v1.1.1...v1.1.2) (2024-05-29)
+
+
+### Bug Fixes
+
+* updated paths and triggers in workflows ([6a5fd55](https://github.com/f-aguzzi/tesi/commit/6a5fd55592446e7fcbf99fc390562c0574771cb2))
+
 ## [1.1.2-beta.3](https://github.com/f-aguzzi/tesi/compare/v1.1.2-beta.2...v1.1.2-beta.3) (2024-05-29)
 
 
