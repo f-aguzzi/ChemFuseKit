@@ -2,7 +2,7 @@ name: Linting
 on:
   push:
       paths:
-        - 'colab_datafusion_analysis/**'
+        - 'chemfusekit/**'
         - '.github/workflows/pylint.yml'
 
 jobs:
