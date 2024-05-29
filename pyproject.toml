@@ -1,6 +1,6 @@
 [project]
 name = "chemfusekit"
-version = "1.1.1"
+version = "1.1.2b3"
 description = "A minimal Python / Jupyter Notebook / Colab library for data fusion and chemometrical analysis."
 authors = [
     { name = "Federico Aguzzi", email = "62149513+f-aguzzi@users.noreply.github.com" }
@@ -9,7 +9,7 @@ dependencies = [
     "numpy>=1.26.4",
     "scipy>=1.13.0",
     "matplotlib>=3.8.4",
-    "pandas>=2.2.2",
+    "pandas==2.0.3",
     "seaborn>=0.13.2",
     "openpyxl>=3.1.2",
     "scikit-learn>=1.4.2",

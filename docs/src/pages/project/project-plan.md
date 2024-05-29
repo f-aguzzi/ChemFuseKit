@@ -7,7 +7,7 @@ date: apr 18, 2024
 # Project Plan
 
 :::note
-This project plan was written on April 18th, 2024. The project priorities have changed since then. For a constantly updated document about the philosophy and goals of this project, check out [Project Philosophy](./project-philosophy.md).
+This project plan was written on April 18th, 2024. The project priorities have changed since then. For a constantly updated document about the philosophy and goals of this project, check out [Project Philosophy](./project-philosophy).
 :::
 
 A 14-point project plan, highlighting the strategies and techniques employed in

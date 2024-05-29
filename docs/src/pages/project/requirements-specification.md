@@ -7,7 +7,7 @@ date: apr 18, 2024
 # Requirements Specification
 
 :::note
-This requirements specification was written on April 18th, 2024. The project priorities have changed since then. For a constantly updated document about the philosophy and goals of this project, check out [Project Philosophy](./project-philosophy.md).
+This requirements specification was written on April 18th, 2024. The project priorities have changed since then. For a constantly updated document about the philosophy and goals of this project, check out [Project Philosophy](./project-philosophy).
 :::
 
 ## <u>Introduction</u>
@@ -25,15 +25,15 @@ project should be implemented in Python.
 
 The project is partly inspired from the
 [`Spectra`](https://www.spectrapp.unito.it/app/spectrapp) web app made by the
-Univeristy of Torino, but with a twist: it will be based on an innovative _data
+University of Torino, but with a twist: it will be based on an innovative _data
 fusion_ approach that will analyze and process data from multiple sensors of
-multiple tipes, all at once, to give the best possible chemometrical
+multiple types, all at once, to give the best possible chemometrical
 classification on the given data.
 
 ## <u>Input data</u>
 
-The chemiometric data comes from two types of sensors: a gas chromatographer
-and a gas spectrometer. The chromatographer outputs a single value for each
+The chemometric data comes from two types of sensors: a gas chromatograph
+and a gas spectrometer. The chromatograph outputs a single value for each
 sample, a retention time in milliseconds. The spectrometer outputs an array of
 spectrum responses for a set of infrared wavelength bands.
 
@@ -47,11 +47,11 @@ purpose of training the classification algorithms.
 The gas chromatography data requires rescaling. The spectrometry data can be
 normalized, smoothed with a Savitski-Golay filter, or both.
 
-## <u>Functions</u>
+## <u>Functionality</u>
 
-### Data Analisys
+### Data Analysis
 
-The data can be analyzed with a PCA (Principal Component Analisys) pass to
+The data can be analyzed with a PCA (Principal Component Analysis) pass to
 assess whether its dimensionality can be reduced before the classification
 process.
 
@@ -101,7 +101,7 @@ must destroy all data stored remotely as soon as the session expires.
 
 This application, being born as an undergraduate thesis project, will not be
 maintained by its original author. It is paramount, therefore, to make it as
-maintainable, well-strucutred and well-documented as possible.
+maintainable, well-structured and well-documented as possible.
 
 As an additional goal, it should be simple enough that non-programmers with a
 Python background will be able to add new classification algorithms.
@@ -109,7 +109,7 @@ Python background will be able to add new classification algorithms.
 ## <u>Extensions</u>
 
 The first part of the project is the extraction of a library. The second is to
-make a GUI app. Both will be extensible, but the _must have_ goal is to make
+make a GUI app. Both will be extensible, but the _must-have_ goal is to make
 the library in particular as usable (and reusable) as possible.
 
 ## <u>Required Documents</u>
@@ -117,7 +117,7 @@ the library in particular as usable (and reusable) as possible.
 Usage instructions must be provided.
 
 Ample and extensive documentation on the source code, the project structure and
-the chemiometric algorithms used must be also provided, to aid future updates
+the chemometric algorithms used must be also provided, to aid future updates
 and adjustments to the software.
 
 ## <u>Performance Requirements</u>
@@ -130,5 +130,5 @@ in the processing speed.
 
 Extracting the library is completely feasible. Making an application,
 especially one that can be easily expanded and maintained, is a much more
-complex task. In case the second will prove to be unachieavable, a good enough
+complex task. In case the second will prove to be unachievable, a good enough
 library will be acceptable on its own.
