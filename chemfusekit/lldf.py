@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 from scipy.signal import savgol_filter
 
+import matplotlib
+import matplotlib.pyplot as plt
+
 from .__utils import GraphMode
 
 
@@ -90,6 +93,18 @@ class LLDF:
                 raise SyntaxError(
                     f"LLDF: this type of preprocessing does not exist ({table.preprocessing=})"
                 )
+
+            if self.settings.output is GraphMode.GRAPHIC:
+                numbers_string = x.columns
+                # Replace commas with points and join the numbers with a space
+                wl = np.array(list(map(lambda z: float(z.replace(',', '.')), numbers_string.split())))
+                # Let's plot the different datasets we preprocessed
+                fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, figsize=(15, 15))
+                # fig, axs = plt.subplots(2, 2, figsize=(15,15))
+                ax1.plot(wl, x.T)
+                ax1.set_title(f'Original data ({table.file_path})')
+                ax2.plot(wl, preprocessed_x.T)
+                ax2.set_title(f'Processed table ({table.preprocessing})')
 
             # Create a new DataFrame with the processed numerical attributes
             processed_dataframe_x = pd.DataFrame(
