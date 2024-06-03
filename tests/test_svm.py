@@ -1,7 +1,7 @@
 '''This module contains the test cases for the SVM module.'''
 import unittest
 from chemfusekit.svm import SVMSettings, SVM, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF
+from chemfusekit.lldf import LLDFSettings, LLDF, Table
 
 class TestSVM(unittest.TestCase):
     '''Test suite for the LDA module.'''
@@ -31,15 +31,19 @@ class TestSVM(unittest.TestCase):
     def test_svm_constructor(self):
         '''Test case against constructor parameter issues.'''
 
-        # Create an LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         svm_settings = SVMSettings()
@@ -62,15 +66,19 @@ class TestSVM(unittest.TestCase):
     def test_svm(self):
         '''Integration test case.'''
 
-        # Create an LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # Create an SVM object and train it, with no output
@@ -89,17 +97,21 @@ class TestSVM(unittest.TestCase):
         svm.svm()
 
     def test_svm_predict(self):
-        '''Test case against prediction parameter issues.'''        
+        '''Test case against prediction parameter issues.'''
 
-        # Create an LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # Create an SVM object without training it

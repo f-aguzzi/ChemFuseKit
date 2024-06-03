@@ -1,7 +1,7 @@
 '''This module contains the test cases for the LDA module.'''
 import unittest
 from chemfusekit.lda import LDASettings, LDA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF
+from chemfusekit.lldf import LLDFSettings, LLDF, Table
 
 class TestLDA(unittest.TestCase):
     '''Test suite for the LDA module.'''
@@ -18,15 +18,19 @@ class TestLDA(unittest.TestCase):
     def test_lda_constructor(self):
         '''Test case against constructor parameter issues.'''
 
-        # Create an LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         lda_settings = LDASettings()
@@ -47,16 +51,20 @@ class TestLDA(unittest.TestCase):
         LDA(lldf.fused_data, lda_settings)
     
     def test_lda(self):
-        '''Integration test case.''' 
-        # Create an LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        '''Integration test case.'''
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # Create an LDA object and train it, with graphical output
@@ -80,17 +88,21 @@ class TestLDA(unittest.TestCase):
         lda.lda()
 
     def test_lda_predict(self):
-        '''Test case against prediction parameter issues.'''        
+        '''Test case against prediction parameter issues.'''
 
-        # Create an LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # Create an LDA object without training it

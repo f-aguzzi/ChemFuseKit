@@ -9,10 +9,14 @@ The `LLDF` class is used for _low-level data fusion_.
 ## Syntax
 
 ```python
-LLDF(lldf_settings: LLDFSettings)
+LLDF(tables: List[Table], lldf_settings: LLDFSettings)
 ```
 
 ## Constructor parameters
+
+- `tables`: `List[`[`Table`](./table.md)`]`
+
+  A list of `Table` objects containing info about the files to import
 
 - `lldf_settings`: [`LLDFSettings`](./lldfsettings)
   
@@ -24,13 +28,17 @@ LLDF(lldf_settings: LLDFSettings)
   
   The settings for the LLDF object.
 
+- `tables`: `List[`[`Table`](./table.md)`]`
+
+  A list of `Table` objects containing info about the files to import
+
 - `fused_data`: [`LLDFModel`](./lldfmodel.md) 
 
   The resulting model containing the data fusion artifacts.
 
 ## Methods
 
-- `_snv(self, input_data)`: private method to rescale input arrays
+- `_snv(self, input_data)`: static method to rescale input arrays
 - `lldf(self)`: performs low-level data fusion on the data passed in the settings
   - *raises*:
     - `FileNotFoundError("Error opening the selected files.")`
@@ -51,7 +59,7 @@ LLDF(lldf_settings: LLDFSettings)
 from chemfusekit.lldf import LLDF
 
 # Initialize and run low-level data fusion
-lldf = LLDF(lldf_settings)
+lldf = LLDF(tables, lldf_settings)
 lldf.lldf()
 
 # Export the LLDF data to an Excel file
