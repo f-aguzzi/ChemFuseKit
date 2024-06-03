@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from chemfusekit.plsda import PLSDASettings, PLSDA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel
+from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel, Table
 
 
 class TestPLSDA(unittest.TestCase):
@@ -36,14 +36,18 @@ class TestPLSDA(unittest.TestCase):
     def test_plsda_constructor(self):
         '''Test case against constructor errors.'''
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # settings parameter
@@ -60,14 +64,18 @@ class TestPLSDA(unittest.TestCase):
     def test_plsda(self):
         '''Integration test case for the training function.'''
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # Set up and run PLSDA (no output)
@@ -98,14 +106,18 @@ class TestPLSDA(unittest.TestCase):
     def test_prediction(self):
         '''Test case against prediction parameter issues.'''
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # Set up KNN without training it

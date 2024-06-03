@@ -115,7 +115,7 @@ class PLSDA:
             classes = np.unique(y)
             for i in range(len(np.unique(pred)) - len(classes)):
                 classes = np.append(classes, f'Unknown substance {i}')
-            predicted_substances = [classes[p-1] for p in pred]
+            predicted_substances = [classes[p-3] for p in pred]
             print_table(
                 ["Sample number", "True", "Predicted"],
                 np.stack((

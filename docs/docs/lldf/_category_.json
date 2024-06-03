@@ -1,9 +1,8 @@
 {
   "label": "LLDF Module",
-  "position": 2
-  ,
+  "position": 2,
   "link": {
-    "type": "generated-index",
-    "description": "A module for low-level data fusion."
+    "type": "doc",
+    "id": "index"
   }
 }

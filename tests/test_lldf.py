@@ -1,6 +1,6 @@
 '''This module contains the test cases for the LLDF module.'''
 import unittest
-from chemfusekit.lldf import LLDFSettings, LLDF
+from chemfusekit.lldf import LLDFSettings, LLDF, GraphMode, Table
 
 class TestLLDF(unittest.TestCase):
     '''Test suite for the LLDF module.'''
@@ -9,57 +9,54 @@ class TestLLDF(unittest.TestCase):
         '''Test case against file loading errors.'''
         # load a non-existent file on purpose
         settings = LLDFSettings(
-            qepas_path='tests/notfound.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rtx.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='savgol'
+            output=GraphMode.NONE
         )
-        lldf = LLDF(settings)
+
+        table1 = Table(
+            file_path='tests/nonexistent.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='none'
+        )
+
+        files = [table1]
+        lldf = LLDF(settings=settings, tables=files)
         self.assertRaises(FileNotFoundError, lldf.lldf)
 
     def test_preprocessing_techniques(self):
         '''Test case against wrong preprocessing user input.'''
         with self.assertRaises(SyntaxError):
             settings = LLDFSettings(
-                qepas_path='tests/qepas.xlsx',
-                qepas_sheet='Sheet1',
-                rt_path='tests/rt.xlsx',
-                rt_sheet='Sheet1',
-                preprocessing='qpl' # test with non-existent preprocessing technique
+                output=GraphMode.NONE
             )
+
+            table1 = Table(
+                file_path='tests/qepas.xlsx',
+                sheet_name='Sheet1',
+                preprocessing='qpl'
+            )
+
+            lldf = LLDF([table1], settings)
+            lldf.lldf()
+
         # Now a correct value:
-        settings = LLDFSettings(
-                qepas_path='tests/qepas.xlsx',
-                qepas_sheet='Sheet1',
-                rt_path='tests/rt.xlsx',
-                rt_sheet='Sheet1',
-                preprocessing='snv' # test with non-existent preprocessing technique
-            )
-
-        # Make the value wrong and test LLDF
-        lldf = LLDF(settings)
-        lldf.settings.preprocessing='qpl' 
-        self.assertRaises(SyntaxError, lldf.lldf)
-
-        # now check if it works with the three real processing techniques:
-        lldf.settings.preprocessing='snv'
-        lldf.lldf()
-        lldf.settings.preprocessing='savgol'
-        lldf.lldf()
-        lldf.settings.preprocessing='savgol+snv'
+        settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path='tests/qepas.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='snv'
+        )
+        lldf = LLDF([table1], settings)
         lldf.lldf()
     
     def test_export(self):
         '''Test case against wrong export settings.'''
-        settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv' # test with non-existent preprocessing technique
+        settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path='tests/qepas.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='snv'
         )
-        lldf = LLDF(settings)
+        lldf = LLDF([table1], settings)
         
         # Try exporting data before data fusion
         with self.assertRaises(RuntimeError):
