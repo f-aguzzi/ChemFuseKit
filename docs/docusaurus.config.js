@@ -9,6 +9,11 @@ const simplePlantUML = require("@akebifiky/remark-simple-plantuml");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   title: 'ChemFuseKit: Colab Data Fusion and Analysis',
   tagline: 'Chemometrics on the go',
   favicon: 'img/favicon.ico',

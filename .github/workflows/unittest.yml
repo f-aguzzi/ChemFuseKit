@@ -2,7 +2,7 @@ name: Unit Tests
 on:
   push:
       paths:
-        - 'colab_datafusion_analysis/**'
+        - 'chemfusekit/**'
         - 'tests/**'
         - '.github/workflows/unittest.yml'
 

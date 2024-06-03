@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from chemfusekit.lldf import LLDFSettings, LLDF
+from chemfusekit.lldf import LLDFSettings, LLDF, Table
 from chemfusekit.pca import PCASettings, PCA
 from chemfusekit.lr import LRSettings, LR, GraphMode
 
@@ -82,15 +82,19 @@ class TestLR(unittest.TestCase):
 
     def test_lr(self):
         '''Integration test case for LR training.'''
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         pca_settings = PCASettings()
