@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # LLDFSettings class
 
-Holds the settings for the [`LLDF`](./lldf.md) object.
+Holds the settings for the [`LLDF`](./lldf-class.md) object.
 
 ## Syntax
 

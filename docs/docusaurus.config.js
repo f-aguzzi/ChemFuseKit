@@ -89,6 +89,11 @@ const config = {
             position: 'left',
           },
           {
+            to: 'blog',
+            label: 'Blog',
+            position: 'right'
+          },
+          {
             href: 'https://github.com/f-aguzzi/tesi',
             label: 'GitHub',
             position: 'right',

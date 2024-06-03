@@ -14,13 +14,13 @@ PCA(fused_data: LLDFModel, settings: PCASettings)
 
 ## Constructor parameters
 
-- `fused_data`: object of type [`LLDFModel`](../lldf/lldf.md). Contains the data to be analyzed.
+- `fused_data`: object of type [`LLDFModel`](../lldf/lldf-class.md). Contains the data to be analyzed.
 - `settings`: object of type [`PCASettings`](./pcasettings.md). Contains the settings for
   the `PCA` object.
 
 ## Fields
 
-- `fused_data`: object of type [`LLDF`](../lldf/lldf.md). Contains the data to be analyzed.
+- `fused_data`: object of type [`LLDF`](../lldf/lldf-class.md). Contains the data to be analyzed.
 - `components`: Number of components for the PCA analysis. Defaults to 0.
 - `pca_model`: A `PCA` model from `scikit-learn`. Defaults to `None`.
 - `settings`: object of type [`PCASettings`](./pcasettings.md). Contains the settings for

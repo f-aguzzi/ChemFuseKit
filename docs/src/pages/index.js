@@ -27,7 +27,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/src/notebook.ipynb">
+            to="https://colab.research.google.com/github/f-aguzzi/tesi/blob/main/examples/pca_lda_notebook.ipynb">
             Try it on Colab 🔗
           </Link>
         </div>

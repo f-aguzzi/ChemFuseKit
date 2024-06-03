@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # LLDFModel class
 
-This class models the output data from the LLDF operation.
+This class models the output data from the [`LLDF`](./lldf-class.md) operation.
 
 ## Syntax
 
