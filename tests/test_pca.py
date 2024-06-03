@@ -2,7 +2,7 @@
 import unittest
 import copy
 from chemfusekit.pca import PCASettings, PCA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF
+from chemfusekit.lldf import LLDFSettings, LLDF, Table
 
 class TestPCA(unittest.TestCase):
     '''Test suite for the PCA module.'''
@@ -32,15 +32,19 @@ class TestPCA(unittest.TestCase):
     def test_pca_constructor(self):
         '''Test case against constructor parameter issues.'''
 
-        # Create a LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         lda_settings = PCASettings()
@@ -65,15 +69,19 @@ class TestPCA(unittest.TestCase):
         Integration test case to verify that the output does not change based on
         whether the output is set to true or false
         '''
-        # Create a LLDF model and initialize it
-        lldf_settings = LLDFSettings(
-            qepas_path='tests/qepas.xlsx',
-            qepas_sheet='Sheet1',
-            rt_path='tests/rt.xlsx',
-            rt_sheet='Sheet1',
-            preprocessing='snv'
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
         )
-        lldf = LLDF(lldf_settings)
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF([table1, table2], lldf_settings)
         lldf.lldf()
 
         # Set up and execute PCA (graph output)
