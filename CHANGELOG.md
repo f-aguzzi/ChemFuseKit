@@ -1,3 +1,27 @@
+## [1.1.4-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.1.3...v1.1.4-beta.1) (2024-06-03)
+
+
+### Bug Fixes
+
+* docs workflow, dependency clashes, demos ([a994940](https://github.com/f-aguzzi/tesi/commit/a994940a6bf115ea02054754fb3b237977a4e3aa)), closes [#29](https://github.com/f-aguzzi/tesi/issues/29) [#28](https://github.com/f-aguzzi/tesi/issues/28)
+* docs workflow, dependency clashes, demos ([6f72ec4](https://github.com/f-aguzzi/tesi/commit/6f72ec4a0c51902e05e468b6d6f79042a3bc73e5)), closes [#29](https://github.com/f-aguzzi/tesi/issues/29) [#28](https://github.com/f-aguzzi/tesi/issues/28)
+* gh pages workflow ([49c6bda](https://github.com/f-aguzzi/tesi/commit/49c6bdabf757073e87e0c7b0c98eb4d0ef843f78))
+
+
+### Docs
+
+* add documentation versioning [skip ci] ([ee0b7ab](https://github.com/f-aguzzi/tesi/commit/ee0b7ab915501d30d12ed6542535434265f0bd61))
+* added version 1.2 ([3fcd0cc](https://github.com/f-aguzzi/tesi/commit/3fcd0cc7abdb5daa201c74ba959340711506e1f0))
+
+
+### CI
+
+* **release:** 1.1.1-beta.2 [skip ci] ([a0519e7](https://github.com/f-aguzzi/tesi/commit/a0519e71d2bc75830ce027bdb11589a0762905a8)), closes [#25](https://github.com/f-aguzzi/tesi/issues/25)
+* **release:** 1.1.1-beta.3 [skip ci] ([4dc43c6](https://github.com/f-aguzzi/tesi/commit/4dc43c6f2e7ec6e34e6adfb5ad1b2aacaa3731e2)), closes [#29](https://github.com/f-aguzzi/tesi/issues/29) [#28](https://github.com/f-aguzzi/tesi/issues/28)
+* **release:** 1.1.2-beta.1 [skip ci] ([a903084](https://github.com/f-aguzzi/tesi/commit/a9030846e88a15dfd9ec8a9418e59098ef4e439c)), closes [#29](https://github.com/f-aguzzi/tesi/issues/29) [#28](https://github.com/f-aguzzi/tesi/issues/28) [#25](https://github.com/f-aguzzi/tesi/issues/25) [#29](https://github.com/f-aguzzi/tesi/issues/29) [#28](https://github.com/f-aguzzi/tesi/issues/28)
+* **release:** 1.1.2-beta.2 [skip ci] ([c23bcb0](https://github.com/f-aguzzi/tesi/commit/c23bcb0e833ed10ff7665f56edd82c0617152156)), closes [#29](https://github.com/f-aguzzi/tesi/issues/29) [#28](https://github.com/f-aguzzi/tesi/issues/28)
+* **release:** 1.1.2-beta.3 [skip ci] ([0bcdf85](https://github.com/f-aguzzi/tesi/commit/0bcdf851d60b16c3e4ced0f562149490d6bcbcbe))
+
 ## [1.1.3](https://github.com/f-aguzzi/tesi/compare/v1.1.2...v1.1.3) (2024-05-29)
 
 
