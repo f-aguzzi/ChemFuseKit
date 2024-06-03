@@ -1,3 +1,10 @@
+## [1.2.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.1.4-beta.1...v1.2.0-beta.1) (2024-06-03)
+
+
+### Features
+
+* graphing and multi-table in LLDF ([c450767](https://github.com/f-aguzzi/tesi/commit/c4507672fb502dfd5d9b0994ff461387ff5a3acc))
+
 ## [1.1.4-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.1.3...v1.1.4-beta.1) (2024-06-03)
 
 
