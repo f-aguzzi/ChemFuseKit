@@ -65,6 +65,19 @@ const config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'cookbook',
+        path: 'cookbook',
+        routeBasePath: 'cookbook',
+        sidebarPath: './sidebarsCookbook.js',
+        // ... other options
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -92,6 +105,13 @@ const config = {
             to: 'blog',
             label: 'Blog',
             position: 'right'
+          },
+          {
+            type: 'docSidebar',
+            docsPluginId: 'cookbook',
+            sidebarId: 'tutorialSidebar',
+            position: 'left',
+            label: 'Cookbook',
           },
           {
             href: 'https://github.com/f-aguzzi/tesi',
