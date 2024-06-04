@@ -1,3 +1,22 @@
+## [2.0.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2024-06-04)
+
+
+### Features
+
+* **LDA:** autodetect components from PCADataModel ([a59cd54](https://github.com/f-aguzzi/tesi/commit/a59cd545e9926de94117f2a46be5801c24271ba8))
+
+
+### Docs
+
+* fix wrong version number ([a0eb4e6](https://github.com/f-aguzzi/tesi/commit/a0eb4e6110dc25a5a8a4e6e72ff7ba02c05f6a14))
+* update examples ([c919596](https://github.com/f-aguzzi/tesi/commit/c919596c94a7fd0c54548027d05c857c758054c9))
+
+
+### Refactor
+
+* moved prediction into base class ([57a3497](https://github.com/f-aguzzi/tesi/commit/57a349743964db553aa6cea425631022c37920b3))
+* **lldf:** switch arguments in constructor call ([fcf7471](https://github.com/f-aguzzi/tesi/commit/fcf7471ba519ceed7747f48895421e932506b835))
+
 ## [2.0.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2024-06-04)
 
 
