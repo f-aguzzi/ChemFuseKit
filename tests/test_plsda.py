@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from chemfusekit.plsda import PLSDASettings, PLSDA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel, Table
+from chemfusekit.lldf import LLDFSettings, LLDF, LLDFDataModel, Table
 
 
 class TestPLSDA(unittest.TestCase):
@@ -51,7 +51,7 @@ class TestPLSDA(unittest.TestCase):
         lldf.lldf()
 
         # settings parameter
-        wrong_settings = LLDFModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
+        wrong_settings = LLDFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
         with self.assertRaises(TypeError):
             PLSDA(wrong_settings, lldf.fused_data)  # pass an object of the wrong class as settings
 

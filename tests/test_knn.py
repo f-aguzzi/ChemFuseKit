@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 from chemfusekit.knn import KNNSettings, KNN, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel, Table
+from chemfusekit.lldf import LLDFSettings, LLDF, LLDFDataModel, Table
 
 
 class TestKNN(unittest.TestCase):
@@ -82,7 +82,7 @@ class TestKNN(unittest.TestCase):
         lldf.lldf()
 
         # settings parameter
-        wrong_settings = LLDFModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
+        wrong_settings = LLDFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
         with self.assertRaises(TypeError):
             KNN(wrong_settings, lldf.fused_data)  # pass an object of the wrong class as settings
 

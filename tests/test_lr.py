@@ -18,7 +18,7 @@ class TestLR(unittest.TestCase):
             LRSettings(
                 algorithm='unknown',
                 output=GraphMode.NONE,
-                test_split=True
+                test_split=False
             )
 
         # Should raise an exception when any of the inputs is a null value
@@ -32,7 +32,7 @@ class TestLR(unittest.TestCase):
             LRSettings(
                 algorithm='liblinear',
                 output=None,
-                test_split=True
+                test_split=False
             ) 
         with self.assertRaises(TypeError):
             LRSettings(

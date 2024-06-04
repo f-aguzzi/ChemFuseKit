@@ -6,32 +6,29 @@ import pandas as pd
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 
-from chemfusekit.lldf import LLDFModel
+from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import graph_output, run_split_test
 from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
+from .__base import BaseDataModel, BaseClassifier, BaseSettings
 
-class LDASettings:
+
+class LDASettings(BaseSettings):
     '''Holds the settings for the LDA object.'''
-    def __init__(self, components: int = 3, output: GraphMode = GraphMode.NONE,
-                 test_split: bool = False):
+    def __init__(self, components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+        super().__init__(output, test_split)
         if components <= 2:
             raise ValueError("Invalid component number: must be a > 1 integer.")
-        if test_split is True and output is GraphMode.NONE:
-            raise Warning(
-                "You selected test_split but it won't run because you disabled the output."
-            )
         self.components = components
-        self.output = output
-        self.test_split = test_split
 
-class LDA:
+
+class LDA(BaseClassifier):
     '''Class to store the data, methods and artifacts for Linear Discriminant Analysis'''
-    def __init__(self, lldf_model: LLDFModel, settings: LDASettings):
+    def __init__(self, settings: LDASettings, data_model: BaseDataModel):
+        super().__init__(settings, data_model)
         self.settings = settings
-        self.x_data = lldf_model.x_data
-        self.x_train = lldf_model.x_train
-        self.y = lldf_model.y
-        self.model: Optional[LD] = None
+        self.x_data = data_model.x_data
+        self.x_train = data_model.x_train
+        self.y = data_model.y
 
     def lda(self):
         '''Performs Linear Discriminant Analysis'''

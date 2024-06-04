@@ -37,18 +37,18 @@ class TestLDA(unittest.TestCase):
 
         # First, construct the object with null model:
         with self.assertRaises(TypeError):
-            LDA(None, lda_settings)
+            LDA(lda_settings, None)
 
         # Then, construct the object with null settings:
         with self.assertRaises(TypeError):
-            LDA(lldf.fused_data, None)
+            LDA(None, lldf.fused_data)
 
         # Now, with both null:
         with self.assertRaises(TypeError):
             LDA(None, None)
 
         # Finally, with proper values:
-        LDA(lldf.fused_data, lda_settings)
+        LDA(lda_settings, lldf.fused_data)
     
     def test_lda(self):
         '''Integration test case.'''
@@ -69,22 +69,22 @@ class TestLDA(unittest.TestCase):
 
         # Create an LDA object and train it, with graphical output
         lda_settings = LDASettings(output=GraphMode.GRAPHIC)
-        lda = LDA(lldf.fused_data, lda_settings)
+        lda = LDA(lda_settings, lldf.fused_data)
         lda.lda()
 
         # Create an LDA object and train it, with text output
         lda_settings = LDASettings(output=GraphMode.TEXT)
-        lda = LDA(lldf.fused_data, lda_settings)
+        lda = LDA(lda_settings, lldf.fused_data)
         lda.lda()
 
         # Create an LDA object and train it, with no output
         lda_settings = LDASettings(output=GraphMode.NONE)
-        lda = LDA(lldf.fused_data, lda_settings)
+        lda = LDA(lda_settings, lldf.fused_data)
         lda.lda()
 
         # Create an LDA object and train it, with true output and split tests
         lda_settings = LDASettings(output=GraphMode.TEXT, test_split=True)
-        lda = LDA(lldf.fused_data, lda_settings)
+        lda = LDA(lda_settings, lldf.fused_data)
         lda.lda()
 
     def test_lda_predict(self):
@@ -107,7 +107,7 @@ class TestLDA(unittest.TestCase):
 
         # Create an LDA object without training it
         lda_settings = LDASettings()
-        lda = LDA(lldf.fused_data, lda_settings)
+        lda = LDA(lda_settings, lldf.fused_data)
 
         # Pick a random sample for prediction
         x_data_sample = lldf.fused_data.x_train.iloc[119] # should be DMMP

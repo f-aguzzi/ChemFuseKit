@@ -10,8 +10,9 @@ from sklearn.decomposition import PCA as PC
 
 import scipy.stats
 
-from chemfusekit.lldf import LLDFModel
 from chemfusekit.__utils import print_table, GraphMode
+from .__base import BaseDataModel
+
 
 class PCASettings:
     '''Holds the settings for the PCA object.'''
@@ -32,8 +33,8 @@ class PCASettings:
 
 class PCA:
     '''A class to store the data, methods and artifacts for Principal Component Analysis'''
-    def __init__(self, fused_data: LLDFModel, settings: PCASettings):
-        self.fused_data = fused_data
+    def __init__(self, settings: PCASettings, data: BaseDataModel):
+        self.data = data
         self.components = 0
         self.pca_model: Optional[PC] = None
         self.settings = settings
@@ -41,8 +42,9 @@ class PCA:
 
     def pca(self):
         '''Performs Principal Component Analysis.'''
-        # Read from the data fusion object
-        x_data = self.fused_data.x_data
+
+        # Read from the data fusion object
+        x_data = self.data.x_data
 
         # Run PCA producing the reduced variable Xreg and select the first 10 components
         pca = PC(self.settings.initial_components)
@@ -100,11 +102,10 @@ class PCA:
         self.pca_model = pca
         self.pca_model.fit_transform(x_data)
 
-
     def pca_stats(self):
         '''Produces PCA-related statistics.'''
-        x_data = self.fused_data.x_data
-        x_train = self.fused_data.x_train
+        x_data = self.data.x_data
+        x_train = self.data.x_train
 
         # Prepare the Scores dataframe (and concatenate the original 'Region' variable)
         pc_cols = [f"PC{i+1}" for i in range(self.components)]
@@ -245,7 +246,6 @@ class PCA:
                 title_text="Normalized Hotelling's T2 vs Q-residuals"
             )
             fig_normalized.show()
-
 
         # Assuming 'scores' is your DataFrame with the 'class' column
         # Drop the 'class' column before converting to NumPy array

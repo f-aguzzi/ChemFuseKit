@@ -5,33 +5,24 @@ import pandas as pd
 
 from sklearn.svm import SVC
 
-from chemfusekit.lldf import LLDFModel
+from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import GraphMode, run_split_test, print_confusion_matrix
+from .__base import BaseSettings, BaseClassifier, BaseDataModel
 
 
-
-class SVMSettings:
+class SVMSettings(BaseSettings):
     '''Holds the settings for the SVM object.'''
-    def __init__(self, kernel: str = 'linear', output: GraphMode = GraphMode.NONE,
-                 test_split: bool = False):
+    def __init__(self, kernel: str = 'linear', output: GraphMode = GraphMode.NONE, test_split: bool = False):
+        super().__init__(output, test_split)
         if kernel not in ['linear', 'poly', 'gaussian', 'sigmoid']:
             raise ValueError("Invalid type: must be linear, poly, gaussian or sigmoid")
-        if test_split is True and output is GraphMode.NONE:
-            raise Warning(
-                "You selected test_split but it won't run because you disabled the output."
-            )
         self.kernel = kernel
-        self.output = output
-        self.test_split = test_split
 
 
-class SVM:
+class SVM(BaseClassifier):
     '''Class for Support Vector Machine analysis of the data'''
-    def __init__(self, fused_data: LLDFModel, settings: SVMSettings):
-        self.fused_data = fused_data
-        self.settings = settings
-        self.model: Optional[SVC] = None
-
+    def __init__(self, settings: SVMSettings, data: BaseDataModel):
+        super().__init__(settings, data)
 
     def svm(self):
         '''Performs Support Vector Machine analysis'''
@@ -51,12 +42,12 @@ class SVM:
         else:
             raise ValueError(f"SVM: this type of kernel does not exist ({self.settings.kernel=})")
 
-        svm_model.fit(self.fused_data.x_data, self.fused_data.y)
+        svm_model.fit(self.data.x_data, self.data.y)
         self.model = svm_model
 
-        predictions = svm_model.predict(self.fused_data.x_data)
+        predictions = svm_model.predict(self.data.x_data)
         print_confusion_matrix(
-            self.fused_data.y,
+            self.data.y,
             predictions,
             "Confusion matrix based on the whole data set",
             mode=self.settings.output
@@ -64,12 +55,11 @@ class SVM:
 
         if self.settings.test_split:
             run_split_test(
-                x=self.fused_data.x_data,
-                y=self.fused_data.y,
+                x=self.data.x_data,
+                y=self.data.y,
                 model=SVC(kernel=self.settings.kernel),
                 mode=self.settings.output
             )
-
 
     def predict(self, x_data: pd.DataFrame):
         '''Performs SVM prediction once the model is trained'''

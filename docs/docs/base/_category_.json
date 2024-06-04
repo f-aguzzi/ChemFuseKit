@@ -1,0 +1,8 @@
+{
+  "label": "Base module",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "A module containing base classes for all the other modules."
+  }
+}
