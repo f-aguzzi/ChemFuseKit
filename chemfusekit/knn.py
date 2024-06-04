@@ -79,13 +79,3 @@ class KNN(BaseClassifier):
                 algorithm=self.settings.algorithm
             )
             run_split_test(self.data.x_data, self.data.y, knn_split)
-
-    def predict(self, x_data: pd.DataFrame):
-        '''Performs kNN prediction once the model is trained.'''
-        if x_data is None:
-            raise TypeError("X data for kNN prediction must be non-empty.")
-        if self.model is None:
-            raise RuntimeError("The kNN model is not trained yet!")
-
-        y_pred = self.model.predict(x_data)
-        return y_pred

@@ -60,12 +60,3 @@ class SVM(BaseClassifier):
                 model=SVC(kernel=self.settings.kernel),
                 mode=self.settings.output
             )
-
-    def predict(self, x_data: pd.DataFrame):
-        '''Performs SVM prediction once the model is trained'''
-        if self.model is None:
-            raise RuntimeError("The model hasn't been trained yet!")
-        if x_data is None:
-            raise TypeError("X data for prediction cannot be empty.")
-
-        return self.model.predict(x_data)

@@ -101,18 +101,8 @@ class LDA(BaseClassifier):
         # Run split tests if required by the user
         if self.settings.test_split:
             run_split_test(
-                (scores.drop('Substance', axis=1).values),
+                scores.drop('Substance', axis=1).values,
                 self.y,
                 LD(n_components=self.settings.components),
                 mode=self.settings.output
             )
-
-    def predict(self, x_data: pd.DataFrame):
-        '''Performs LDA prediction once the model is trained.'''
-        if x_data is None:
-            raise TypeError("X data for LDA prediction must be non-empty.")
-        if self.model is None:
-            raise RuntimeError("The LDA model is not trained yet!")
-
-        y_pred = self.model.predict(x_data)
-        return y_pred

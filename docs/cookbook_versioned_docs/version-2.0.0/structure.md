@@ -98,6 +98,7 @@ classDiagram
         __init__(settings, data)
         import_model(import_path: str)
         export_model(export_path: str)
+        predict(x_data: pd.DataFrame)
     }
 
     class KNN {

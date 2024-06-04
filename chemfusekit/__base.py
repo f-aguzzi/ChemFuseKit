@@ -41,3 +41,12 @@ class BaseClassifier:
         else:
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
 
+    def predict(self, x_data: pd.DataFrame):
+        '''Performs prediction once the model is trained.'''
+        if x_data is None:
+            raise TypeError(f"X data for {self.__class__.__name__} prediction must be non-empty.")
+        if self.model is None:
+            raise RuntimeError(f"The {self.__class__.__name__} model is not trained yet!")
+
+        y_pred = self.model.predict(x_data)
+        return y_pred

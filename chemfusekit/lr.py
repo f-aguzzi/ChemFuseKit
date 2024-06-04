@@ -115,10 +115,7 @@ class LR(BaseClassifier):
 
     def predict(self, x_sample: pd.DataFrame):
         '''Performs LR prediction once the model is trained.'''
-        if self.model is None:
-            raise RuntimeError("The LR model is not trained yet!")
-
-        prediction = self.model.predict(x_sample)
+        prediction = super().predict(x_sample)
         probabilities = self.model.predict_proba(x_sample)
 
         classes = self.model.classes_.reshape((self.model.classes_.shape[0], ))

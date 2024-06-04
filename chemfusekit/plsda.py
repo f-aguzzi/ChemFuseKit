@@ -133,13 +133,3 @@ class PLSDA(BaseClassifier):
             x = self.data.x_data
             y = self.data.x_train.Substance.astype('category').cat.codes
             run_split_test(x, y, PLSR(self.settings.n_components), mode=self.settings.output)
-
-    def predict(self, x_data: pd.DataFrame):
-        '''Performs PLSDA prediction once the model is trained.'''
-        if x_data is None:
-            raise TypeError("X data for PLSDA prediction must be non-empty.")
-        if self.model is None:
-            raise RuntimeError("The PLSDA model is not trained yet!")
-
-        y_pred = self.model.predict(x_data)
-        return y_pred
