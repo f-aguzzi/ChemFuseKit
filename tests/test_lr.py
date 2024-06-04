@@ -57,7 +57,8 @@ class TestLR(unittest.TestCase):
             x_data=pd.DataFrame(),
             x_train=pd.DataFrame(),
             y=np.asarray([7.854, 1.543, 93.55]),
-            array_scores=np.asarray([21.0, 3.44, 7.65])
+            array_scores=np.asarray([21.0, 3.44, 7.65]),
+            components=5
         )
         # Should raise an exception when the inputs are null
         with self.assertRaises(TypeError):
@@ -140,7 +141,8 @@ class TestLR(unittest.TestCase):
             x_data=pd.DataFrame(),
             x_train=pd.DataFrame(),
             y=np.asarray([7.02, 8.11]),
-            array_scores=np.asarray([43.1, 0.06])
+            array_scores=np.asarray([43.1, 0.06]),
+            components=4
         )
         lr = LR(lr_settings, pca_data)
 

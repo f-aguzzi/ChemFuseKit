@@ -36,7 +36,7 @@ class LDA(BaseClassifier):
         '''Performs Linear Discriminant Analysis'''
 
         lda = LD(n_components=self.settings.components) # N-1 where N are the classes
-        scores_lda = lda.fit(self.data.x_data, self.y).transform(self.data.x_data)
+        scores_lda = lda.fit(self.data.x_data, self.data.y).transform(self.data.x_data)
         pred = lda.predict(self.data.x_data)
 
         print_table(
@@ -76,7 +76,7 @@ class LDA(BaseClassifier):
 
         pred = lda.predict(self.data.x_data)
         print_confusion_matrix(
-            y1=self.y,
+            y1=self.data.y,
             y2=pred,
             title="LDA Training Confusion Matrix",
             mode=self.settings.output
@@ -85,7 +85,7 @@ class LDA(BaseClassifier):
         lv_cols = [f'LV{i+1}' for i in range(self.settings.components)]
         scores = pd.DataFrame(data=scores_lda, columns=lv_cols)     # latent variables
         scores.index = self.data.x_data.index
-        y_dataframe = pd.DataFrame(self.y, columns=['Substance'])
+        y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
 
         scores = pd.concat([scores, y_dataframe], axis = 1)
 
