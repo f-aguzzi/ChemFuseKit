@@ -1,3 +1,15 @@
+## [2.0.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2024-06-04)
+
+
+### Bug Fixes
+
+* lda and lr_tests missing arguments ([280159d](https://github.com/f-aguzzi/tesi/commit/280159d8208f46a2a843e9eeae60d82114e15261))
+
+
+### Docs
+
+* new blog post ([afed9f7](https://github.com/f-aguzzi/tesi/commit/afed9f7620d06559892a517daef4f78192d3f3e2))
+
 ## [2.0.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2024-06-04)
 
 
