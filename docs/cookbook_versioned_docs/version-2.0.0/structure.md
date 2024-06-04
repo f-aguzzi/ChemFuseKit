@@ -86,7 +86,7 @@ classDiagram
 
 \
 \
-The classifiers themselves, except `LR`, all inherit from a base class called [`BaseClassifier`](/docs/base/baseclassifier) in the `base` module:
+The classifiers themselves all inherit from a base class called [`BaseClassifier`](/docs/base/baseclassifier) in the `base` module:
 
 ```mermaid
 classDiagram
@@ -105,6 +105,10 @@ classDiagram
     }
 
     class LDA {
+        ...
+    }
+
+    class LR {
         ...
     }
 
@@ -141,7 +145,13 @@ classDiagram
         __init__(...)
     }
 
+    class PCADataModel {
+        +array_scores: ndarray
+        __init__(..., array_scores)
+    }
+
     BaseDataModel *-- LLDFDataModel
+    BaseDataModel *-- PCADataModel
 ```
 
-This allows all the classifiers to use the `LLDF` data, or any other type of data as long as it follows the `BaseDataModel` template.
+This allows all the classifiers to use the `LLDF` data, dimension-reduced `PCA` data, or any other type of data as long as it follows the `BaseDataModel` template.
