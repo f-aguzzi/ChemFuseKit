@@ -44,7 +44,7 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         lda_settings = PCASettings()
@@ -81,7 +81,7 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Set up and execute PCA (graph output)

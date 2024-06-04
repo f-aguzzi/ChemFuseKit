@@ -35,7 +35,7 @@ class TestLLDF(unittest.TestCase):
                 preprocessing='qpl'
             )
 
-            lldf = LLDF([table1], settings)
+            lldf = LLDF(settings, [table1])
             lldf.lldf()
 
         # Now a correct value:
@@ -45,7 +45,7 @@ class TestLLDF(unittest.TestCase):
             sheet_name='Sheet1',
             preprocessing='snv'
         )
-        lldf = LLDF([table1], settings)
+        lldf = LLDF(settings, [table1])
         lldf.lldf()
     
     def test_export(self):
@@ -56,7 +56,7 @@ class TestLLDF(unittest.TestCase):
             sheet_name='Sheet1',
             preprocessing='snv'
         )
-        lldf = LLDF([table1], settings)
+        lldf = LLDF(settings, [table1])
         
         # Try exporting data before data fusion
         with self.assertRaises(RuntimeError):

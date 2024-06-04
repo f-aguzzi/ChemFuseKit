@@ -47,7 +47,7 @@ def _snv(input_data: np.ndarray):
 
 class LLDF:
     '''Holds together all the data, methods and artifacts of the LLDF operation'''
-    def __init__(self, tables: List[Table], settings: LLDFSettings):
+    def __init__(self, settings: LLDFSettings, tables: List[Table]):
         self.settings = settings
         self.tables = tables
         self.fused_data: Optional[LLDFDataModel] = None

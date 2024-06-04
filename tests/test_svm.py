@@ -43,7 +43,7 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         svm_settings = SVMSettings()
@@ -78,7 +78,7 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Create an SVM object and train it, with no output
@@ -111,7 +111,7 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Create an SVM object without training it
