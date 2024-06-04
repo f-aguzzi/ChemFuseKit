@@ -1,3 +1,46 @@
+## [2.0.0](https://github.com/f-aguzzi/tesi/compare/v1.2.0...v2.0.0) (2024-06-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* added base class for classifiers, models, settings
+
+### Features
+
+* added base class for classifiers, models, settings ([4af5d47](https://github.com/f-aguzzi/tesi/commit/4af5d4778d28021dcd2e23f00fc5810ae178769d))
+* **LDA:** autodetect components from PCADataModel ([a59cd54](https://github.com/f-aguzzi/tesi/commit/a59cd545e9926de94117f2a46be5801c24271ba8))
+* made LR inherit from BaseClassifier ([d06a7db](https://github.com/f-aguzzi/tesi/commit/d06a7db270a99517a6445c94bdfacc1901e90121))
+
+
+### Bug Fixes
+
+* lda and lr_tests missing arguments ([280159d](https://github.com/f-aguzzi/tesi/commit/280159d8208f46a2a843e9eeae60d82114e15261))
+
+
+### Docs
+
+* fix broken github pages build ([862ddf6](https://github.com/f-aguzzi/tesi/commit/862ddf6557973229ec9b85830b677822db0f9da7))
+* fix wrong version number ([a0eb4e6](https://github.com/f-aguzzi/tesi/commit/a0eb4e6110dc25a5a8a4e6e72ff7ba02c05f6a14))
+* new blog post ([afed9f7](https://github.com/f-aguzzi/tesi/commit/afed9f7620d06559892a517daef4f78192d3f3e2))
+* new cookbook section ([fd9a243](https://github.com/f-aguzzi/tesi/commit/fd9a2435469bdcf0457909ec3424ce1af5b118a9))
+* new version ([7c96050](https://github.com/f-aguzzi/tesi/commit/7c96050e20382fdd2312584dd0cf8ee091329181))
+* update examples ([c919596](https://github.com/f-aguzzi/tesi/commit/c919596c94a7fd0c54548027d05c857c758054c9))
+* updated docusaurus with versioning ([0b6d5c4](https://github.com/f-aguzzi/tesi/commit/0b6d5c4319f371a757ad0fc3a142e2eb1d959137)), closes [#33](https://github.com/f-aguzzi/tesi/issues/33)
+
+
+### Refactor
+
+* moved prediction into base class ([57a3497](https://github.com/f-aguzzi/tesi/commit/57a349743964db553aa6cea425631022c37920b3))
+* **lldf:** switch arguments in constructor call ([fcf7471](https://github.com/f-aguzzi/tesi/commit/fcf7471ba519ceed7747f48895421e932506b835))
+
+
+### CI
+
+* **release:** 2.0.0-beta.1 [skip ci] ([6c4af27](https://github.com/f-aguzzi/tesi/commit/6c4af27e2d24a62ea91d4701bd1100ad2ea51801)), closes [#33](https://github.com/f-aguzzi/tesi/issues/33)
+* **release:** 2.0.0-beta.2 [skip ci] ([c6892a9](https://github.com/f-aguzzi/tesi/commit/c6892a9d4f8e6e0cece469139c6c834e60d1f7bf))
+* **release:** 2.0.0-beta.3 [skip ci] ([b9bd5e0](https://github.com/f-aguzzi/tesi/commit/b9bd5e0be28eeb3b9ea53a6ddb871a4532685184))
+* **release:** 2.0.0-beta.4 [skip ci] ([330ad59](https://github.com/f-aguzzi/tesi/commit/330ad59b45e2ca435f0159c7a2ff656ca2e78570))
+
 ## [2.0.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2024-06-04)
 
 
