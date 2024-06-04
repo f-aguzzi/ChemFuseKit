@@ -10,6 +10,7 @@ from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import graph_output, run_split_test
 from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
 from .__base import BaseDataModel, BaseClassifier, BaseSettings
+from .pca import PCADataModel
 
 
 class LDASettings(BaseSettings):
@@ -23,19 +24,20 @@ class LDASettings(BaseSettings):
 
 class LDA(BaseClassifier):
     '''Class to store the data, methods and artifacts for Linear Discriminant Analysis'''
-    def __init__(self, settings: LDASettings, data_model: BaseDataModel):
-        super().__init__(settings, data_model)
+    def __init__(self, settings: LDASettings, data: BaseDataModel):
+        super().__init__(settings, data)
         self.settings = settings
-        self.x_data = data_model.x_data
-        self.x_train = data_model.x_train
-        self.y = data_model.y
+        self.data = data
+        # Self-detect components if the data is from PCA
+        if isinstance(data, PCADataModel):
+            self.settings.components = data.components - 1
 
     def lda(self):
         '''Performs Linear Discriminant Analysis'''
 
         lda = LD(n_components=self.settings.components) # N-1 where N are the classes
-        scores_lda = lda.fit(self.x_data, self.y).transform(self.x_data)
-        pred = lda.predict(self.x_data)
+        scores_lda = lda.fit(self.data.x_data, self.y).transform(self.data.x_data)
+        pred = lda.predict(self.data.x_data)
 
         print_table(
             [f"LV{i+1}" for i in range(scores_lda.shape[1])],
@@ -72,7 +74,7 @@ class LDA(BaseClassifier):
             self.settings.output
         )
 
-        pred = lda.predict(self.x_data)
+        pred = lda.predict(self.data.x_data)
         print_confusion_matrix(
             y1=self.y,
             y2=pred,
@@ -81,13 +83,13 @@ class LDA(BaseClassifier):
         )
 
         lv_cols = [f'LV{i+1}' for i in range(self.settings.components)]
-        scores = pd.DataFrame(data = scores_lda, columns = lv_cols) # latent variables
-        scores.index = self.x_data.index
+        scores = pd.DataFrame(data=scores_lda, columns=lv_cols)     # latent variables
+        scores.index = self.data.x_data.index
         y_dataframe = pd.DataFrame(self.y, columns=['Substance'])
 
         scores = pd.concat([scores, y_dataframe], axis = 1)
 
-        # Store the traiend model
+        # Store the trained model
         self.model = lda
 
         # Show graphs if required by the user
@@ -102,7 +104,7 @@ class LDA(BaseClassifier):
         if self.settings.test_split:
             run_split_test(
                 scores.drop('Substance', axis=1).values,
-                self.y,
+                self.data.y,
                 LD(n_components=self.settings.components),
                 mode=self.settings.output
             )

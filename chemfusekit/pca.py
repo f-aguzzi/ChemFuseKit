@@ -16,9 +16,11 @@ from .__base import BaseDataModel
 
 class PCADataModel(BaseDataModel):
     '''Data model for the PCA outputs.'''
-    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray):
+    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray,
+                 components: int):
         super().__init__(x_data, x_train, y)
         self.array_scores = array_scores
+        self.components = components
 
 
 class PCASettings:
@@ -276,5 +278,6 @@ class PCA:
             self.data.x_data,
             self.data.x_train,
             self.data.y,
-            self.array_scores
+            self.array_scores,
+            self.components
         )
