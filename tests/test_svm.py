@@ -43,25 +43,25 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         svm_settings = SVMSettings()
 
         # First, construct the object with null model:
         with self.assertRaises(TypeError):
-            SVM(None, svm_settings)
+            SVM(svm_settings, None)
 
         # Then, construct the object with null settings:
         with self.assertRaises(TypeError):
-            SVM(lldf.fused_data, None)
+            SVM(None, lldf.fused_data)
 
         # Now, with both null:
         with self.assertRaises(TypeError):
             SVM(None, None)
 
         # Finally, with proper values:
-        SVM(lldf.fused_data, svm_settings)
+        svm = SVM(svm_settings, lldf.fused_data)
     
     def test_svm(self):
         '''Integration test case.'''
@@ -78,22 +78,22 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Create an SVM object and train it, with no output
         svm_settings = SVMSettings(output=GraphMode.NONE)
-        svm = SVM(lldf.fused_data, svm_settings)
+        svm = SVM(svm_settings, lldf.fused_data)
         svm.svm()
 
         # Create an SVM object and train it, with graphical output
         svm_settings = SVMSettings(output=GraphMode.GRAPHIC)
-        svm = SVM(lldf.fused_data, svm_settings)
+        svm = SVM(svm_settings, lldf.fused_data)
         svm.svm()
 
         # Create an SVM object and train it, with text output
         svm_settings = SVMSettings(output=GraphMode.TEXT)
-        svm = SVM(lldf.fused_data, svm_settings)
+        svm = SVM(svm_settings, lldf.fused_data)
         svm.svm()
 
     def test_svm_predict(self):
@@ -111,12 +111,12 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Create an SVM object without training it
         svm_settings = SVMSettings()
-        svm = SVM(lldf.fused_data, svm_settings)
+        svm = SVM(svm_settings, lldf.fused_data)
 
         # Pick a random sample for prediction
         x_data_sample = lldf.fused_data.x_train.iloc[119] # should be DMMP

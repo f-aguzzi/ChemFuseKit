@@ -10,8 +10,18 @@ from sklearn.decomposition import PCA as PC
 
 import scipy.stats
 
-from chemfusekit.lldf import LLDFModel
 from chemfusekit.__utils import print_table, GraphMode
+from .__base import BaseDataModel
+
+
+class PCADataModel(BaseDataModel):
+    '''Data model for the PCA outputs.'''
+    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray,
+                 components: int):
+        super().__init__(x_data, x_train, y)
+        self.array_scores = array_scores
+        self.components = components
+
 
 class PCASettings:
     '''Holds the settings for the PCA object.'''
@@ -32,8 +42,8 @@ class PCASettings:
 
 class PCA:
     '''A class to store the data, methods and artifacts for Principal Component Analysis'''
-    def __init__(self, fused_data: LLDFModel, settings: PCASettings):
-        self.fused_data = fused_data
+    def __init__(self, settings: PCASettings, data: BaseDataModel):
+        self.data = data
         self.components = 0
         self.pca_model: Optional[PC] = None
         self.settings = settings
@@ -41,8 +51,9 @@ class PCA:
 
     def pca(self):
         '''Performs Principal Component Analysis.'''
-        # Read from the data fusion object
-        x_data = self.fused_data.x_data
+
+        # Read from the data fusion object
+        x_data = self.data.x_data
 
         # Run PCA producing the reduced variable Xreg and select the first 10 components
         pca = PC(self.settings.initial_components)
@@ -100,11 +111,10 @@ class PCA:
         self.pca_model = pca
         self.pca_model.fit_transform(x_data)
 
-
     def pca_stats(self):
         '''Produces PCA-related statistics.'''
-        x_data = self.fused_data.x_data
-        x_train = self.fused_data.x_train
+        x_data = self.data.x_data
+        x_train = self.data.x_train
 
         # Prepare the Scores dataframe (and concatenate the original 'Region' variable)
         pc_cols = [f"PC{i+1}" for i in range(self.components)]
@@ -246,7 +256,6 @@ class PCA:
             )
             fig_normalized.show()
 
-
         # Assuming 'scores' is your DataFrame with the 'class' column
         # Drop the 'class' column before converting to NumPy array
         array_scores = scores.drop('Substance', axis=1).values
@@ -259,3 +268,16 @@ class PCA:
         )
 
         self.array_scores = array_scores
+
+    def export_data(self) -> PCADataModel:
+        '''Export data artifacts.'''
+        if self.pca_model is None or self.array_scores is None:
+            raise RuntimeError("Run both pca() and pca_stats() methods before exporting data!")
+
+        return PCADataModel(
+            self.data.x_data,
+            self.data.x_train,
+            self.data.y,
+            self.array_scores,
+            self.components
+        )

@@ -8,7 +8,7 @@ from scipy.signal import savgol_filter
 import matplotlib
 import matplotlib.pyplot as plt
 
-from .__utils import GraphMode
+from .__base import GraphMode, BaseDataModel
 
 
 class Table:
@@ -19,12 +19,10 @@ class Table:
         self.preprocessing = preprocessing
 
 
-class LLDFModel:
+class LLDFDataModel(BaseDataModel):
     '''Models the output data from the LLDF operation'''
     def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray):
-        self.x_data = x_data
-        self.x_train = x_train
-        self.y = y
+        super().__init__(x_data, x_train, y)
 
 
 class LLDFSettings:
@@ -40,8 +38,8 @@ def _snv(input_data: np.ndarray):
     for i in range(input_data.shape[0]):
 
         # Apply correction
-        output_data[i,:] = (
-            (input_data[i,:] - np.mean(input_data[i,:])) / np.std(input_data[i,:])
+        output_data[i, :] = (
+            (input_data[i, :] - np.mean(input_data[i,:])) / np.std(input_data[i, :])
         )
 
     return output_data
@@ -49,10 +47,10 @@ def _snv(input_data: np.ndarray):
 
 class LLDF:
     '''Holds together all the data, methods and artifacts of the LLDF operation'''
-    def __init__(self, tables: List[Table], settings: LLDFSettings):
+    def __init__(self, settings: LLDFSettings, tables: List[Table]):
         self.settings = settings
         self.tables = tables
-        self.fused_data: Optional[LLDFModel] = None
+        self.fused_data: Optional[LLDFDataModel] = None
 
     def lldf(self):
         '''Performs low-level data fusion'''
@@ -139,7 +137,7 @@ class LLDF:
             axis=1
         )
 
-        self.fused_data = LLDFModel(x_data, x_train, y)
+        self.fused_data = LLDFDataModel(x_data, x_train, y)
 
     def export_data(self, export_path: str):
         '''Exports the data fusion artifacts to a file'''

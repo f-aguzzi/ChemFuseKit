@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from chemfusekit.plsda import PLSDASettings, PLSDA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, LLDFModel, Table
+from chemfusekit.lldf import LLDFSettings, LLDF, LLDFDataModel, Table
 
 
 class TestPLSDA(unittest.TestCase):
@@ -47,11 +47,11 @@ class TestPLSDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # settings parameter
-        wrong_settings = LLDFModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
+        wrong_settings = LLDFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
         with self.assertRaises(TypeError):
             PLSDA(wrong_settings, lldf.fused_data)  # pass an object of the wrong class as settings
 
@@ -75,7 +75,7 @@ class TestPLSDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Set up and run PLSDA (no output)
@@ -117,7 +117,7 @@ class TestPLSDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Set up KNN without training it

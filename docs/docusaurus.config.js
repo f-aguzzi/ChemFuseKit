@@ -65,6 +65,19 @@ const config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'cookbook',
+        path: 'cookbook',
+        routeBasePath: 'cookbook',
+        sidebarPath: './sidebarsCookbook.js',
+        // ... other options
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -87,6 +100,18 @@ const config = {
             to: '/project/',
             label: 'Project',
             position: 'left',
+          },
+          {
+            type: 'docSidebar',
+            docsPluginId: 'cookbook',
+            sidebarId: 'tutorialSidebar',
+            position: 'left',
+            label: 'Cookbook',
+          },
+          {
+            type: 'docsVersionDropdown',
+            label: 'Docs version',
+            position: 'right'
           },
           {
             to: 'blog',

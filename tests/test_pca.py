@@ -44,25 +44,25 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         lda_settings = PCASettings()
 
         # First, construct the object with null model:
         with self.assertRaises(TypeError):
-            PCA(None, lda_settings)
+            PCA(lda_settings, None)
 
         # Then, construct the object with null settings:
         with self.assertRaises(TypeError):
-            PCA(lldf.fused_data, None)
+            PCA(None, lldf.fused_data)
 
         # Now, with both null:
         with self.assertRaises(TypeError):
             PCA(None, None)
 
         # Finally, with proper values:
-        PCA(lldf.fused_data, lda_settings)
+        PCA(lda_settings, lldf.fused_data)
     
     def test_pca(self):
         '''
@@ -81,12 +81,12 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF([table1, table2], lldf_settings)
+        lldf = LLDF(lldf_settings, [table1, table2])
         lldf.lldf()
 
         # Set up and execute PCA (graph output)
         pca_settings = PCASettings(output=GraphMode.GRAPHIC)
-        pca = PCA(lldf.fused_data, pca_settings)
+        pca = PCA(pca_settings, lldf.fused_data)
         pca.pca()
 
         # Save the results
@@ -95,20 +95,19 @@ class TestPCA(unittest.TestCase):
 
         # Set up and execute PCA (again)
         pca_settings = PCASettings(output=GraphMode.NONE)
-        pca = PCA(lldf.fused_data, pca_settings)
+        pca = PCA(pca_settings, lldf.fused_data)
         pca.pca()
 
-       # Save the results
+        # Save the results
         result_false_components = pca.components
         result_false_array_scores = pca.array_scores
 
         self.assertEqual(result_true_components, result_false_components)
         self.assertEqual(result_true_array_scores, result_false_array_scores)
 
-
         # Set up and execute PCA (text output)
         pca_settings = PCASettings(output=GraphMode.GRAPHIC)
-        pca = PCA(lldf.fused_data, pca_settings)
+        pca = PCA(pca_settings, lldf.fused_data)
         pca.pca()
 
         # Save the results
@@ -117,10 +116,10 @@ class TestPCA(unittest.TestCase):
 
         # Set up and execute PCA (again)
         pca_settings = PCASettings(output=GraphMode.NONE)
-        pca = PCA(lldf.fused_data, pca_settings)
+        pca = PCA(pca_settings, lldf.fused_data)
         pca.pca()
 
-       # Save the results
+        # Save the results
         result_false_components = pca.components
         result_false_array_scores = pca.array_scores
 

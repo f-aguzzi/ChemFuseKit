@@ -9,39 +9,32 @@ import plotly.express as px
 
 from sklearn.cross_decomposition import PLSRegression as PLSR
 
-from chemfusekit.lldf import LLDFModel
+from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import GraphMode, print_table, print_confusion_matrix, run_split_test
+from .__base import BaseSettings, BaseDataModel, BaseClassifier
 
 
-class PLSDASettings:
+class PLSDASettings(BaseSettings):
     '''Holds the settings for the PLSDA object.'''
-    def __init__(self, n_components: int = 3, output: GraphMode = GraphMode.NONE,
-                 test_split: bool = False):
+    def __init__(self, n_components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+        super().__init__(output, test_split)
         if n_components < 1:
             raise ValueError("Invalid n_components number: should be a positive integer.")
-        if test_split is True and output is GraphMode.NONE:
-            raise Warning(
-                "You selected test_split but it won't run because you disabled the output."
-            )
         self.n_components = n_components
-        self.output = output
-        self.test_split = test_split
 
 
-class PLSDA:
+class PLSDA(BaseClassifier):
     '''
     Class to store the data, methods and artifacts for Partial Least Squares
     Discriminant Analysis
     '''
-    def __init__(self, settings: PLSDASettings, fused_data: LLDFModel):
-        self.settings = settings
-        self.fused_data = fused_data
-        self.model: Optional[PLSR] = None
+    def __init__(self, settings: PLSDASettings, data: BaseDataModel):
+        super().__init__(settings, data)
 
     def plsda(self):
         '''Performs Partial Least Squares Discriminant Analysis'''
-        x = self.fused_data.x_data
-        y = self.fused_data.x_train.Substance.astype('category').cat.codes
+        x = self.data.x_data
+        y = self.data.x_train.Substance.astype('category').cat.codes
 
         regr_pls = PLSR(n_components=self.settings.n_components)
         regr_pls.fit_transform(x, y)
@@ -56,8 +49,8 @@ class PLSDA:
         # Scores and loadings
         lv_cols = [f"LV{i + 1}" for i in range(self.settings.n_components)]
         scores = pd.DataFrame(regr_pls_2.x_scores_, columns=lv_cols)
-        scores.index = self.fused_data.x_train.index
-        y = self.fused_data.x_train.Substance
+        scores.index = self.data.x_train.index
+        y = self.data.x_train.Substance
         scores = pd.concat([scores, y], axis=1)
 
         print_table(
@@ -69,7 +62,7 @@ class PLSDA:
 
         # Loadings
         loadings = pd.DataFrame(regr_pls.x_loadings_, columns=lv_cols)
-        loadings["Attributes"] = self.fused_data.x_train.iloc[:, 1:].columns
+        loadings["Attributes"] = self.data.x_train.iloc[:, 1:].columns
         print_table(
             loadings.columns,
             loadings.transpose(),
@@ -128,7 +121,7 @@ class PLSDA:
             )
 
             # Print confusion matrix
-            y = self.fused_data.x_train.Substance.astype('category').cat.codes 
+            y = self.data.x_train.Substance.astype('category').cat.codes
             print_confusion_matrix(
                 y,
                 pred,
@@ -137,16 +130,6 @@ class PLSDA:
             )
 
         if self.settings.output and self.settings.test_split:
-            x = self.fused_data.x_data
-            y = self.fused_data.x_train.Substance.astype('category').cat.codes
+            x = self.data.x_data
+            y = self.data.x_train.Substance.astype('category').cat.codes
             run_split_test(x, y, PLSR(self.settings.n_components), mode=self.settings.output)
-
-    def predict(self, x_data: pd.DataFrame):
-        '''Performs PLSDA prediction once the model is trained.'''
-        if x_data is None:
-            raise TypeError("X data for PLSDA prediction must be non-empty.")
-        if self.model is None:
-            raise RuntimeError("The PLSDA model is not trained yet!")
-
-        y_pred = self.model.predict(x_data)
-        return y_pred

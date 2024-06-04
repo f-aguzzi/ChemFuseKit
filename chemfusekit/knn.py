@@ -6,20 +6,18 @@ from sklearn.neighbors import KNeighborsClassifier
 
 import pandas as pd
 
-from chemfusekit.lldf import LLDFModel
+from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
+from .__base import BaseSettings, BaseClassifier
 
-class KNNSettings:
+
+class KNNSettings(BaseSettings):
     '''Holds the settings for the kNN object.'''
-    def __init__(
-            self,
-            n_neighbors: int = 15,
-            metric: str | Callable = 'euclidean',
-            weights: str | Callable = 'uniform',
-            algorithm: str = 'auto',
-            output: GraphMode = GraphMode.NONE,
-            test_split: bool = False
-        ):
+    def __init__(self, n_neighbors: int = 15, metric: str | Callable = 'euclidean', weights: str | Callable = 'uniform',
+                 algorithm: str = 'auto', output: GraphMode = GraphMode.NONE, test_split: bool = False):
+
+        super().__init__(output, test_split)
+
         if n_neighbors < 1:
             raise ValueError("Invalid n_neighbors number: should be a positive integer.")
         if metric not in ['minkwoski', 'precomputed', 'euclidean'] and not callable(metric):
@@ -32,23 +30,16 @@ class KNNSettings:
             raise  ValueError(
                 "Invalid algorithm: should be 'auto', 'ball_tree', 'kd_tree' or 'brute'."
             )
-        if test_split is True and output is GraphMode.NONE:
-            raise Warning(
-                "You selected test_split but it won't run because you disabled the output."
-            )
         self.n_neighbors = n_neighbors
         self.metric = metric
         self.weights = weights
         self.algorithm = algorithm
-        self.output = output
-        self.test_split = test_split
 
-class KNN:
+
+class KNN(BaseClassifier):
     '''Class to store the data, methods and artifacts for k-Nearest Neighbors Analysis'''
-    def __init__(self, settings: KNNSettings, fused_data: LLDFModel):
-        self.settings = settings
-        self.fused_data = fused_data
-        self.model: Optional[KNeighborsClassifier] = None
+    def __init__(self, settings: KNNSettings, fused_data: LLDFDataModel):
+        super().__init__(settings, fused_data)
 
     def knn(self):
         '''Performs k-Nearest Neighbors Analysis'''
@@ -59,13 +50,13 @@ class KNN:
             weights=self.settings.weights,
             algorithm=self.settings.algorithm
         )
-        knn.fit(self.fused_data.x_data, self.fused_data.y)
+        knn.fit(self.data.x_data, self.data.y)
 
         # Save the trained model
         self.model = knn
 
         # View the prediction on the test data
-        y_pred = knn.predict(self.fused_data.x_data)
+        y_pred = knn.predict(self.data.x_data)
         print_table(
             ["Predictions"],
             y_pred.reshape(1,len(y_pred)),
@@ -74,7 +65,7 @@ class KNN:
         )
 
         print_confusion_matrix(
-            self.fused_data.y,
+            self.data.y,
             y_pred,
             "Confusion Matrix based on the whole data set",
             self.settings.output
@@ -87,15 +78,4 @@ class KNN:
                 weights=self.settings.weights,
                 algorithm=self.settings.algorithm
             )
-            run_split_test(self.fused_data.x_data, self.fused_data.y, knn_split)
-
-
-    def predict(self, x_data: pd.DataFrame):
-        '''Performs kNN prediction once the model is trained.'''
-        if x_data is None:
-            raise TypeError("X data for kNN prediction must be non-empty.")
-        if self.model is None:
-            raise RuntimeError("The kNN model is not trained yet!")
-
-        y_pred = self.model.predict(x_data)
-        return y_pred
+            run_split_test(self.data.x_data, self.data.y, knn_split)
