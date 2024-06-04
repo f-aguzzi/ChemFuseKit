@@ -7,7 +7,9 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
-from .__base import BaseSettings
+from .__base import BaseSettings, BaseDataModel, BaseClassifier
+from .pca import PCADataModel
+
 
 class LRSettings(BaseSettings):
     '''Holds the settings for the LR object.'''
@@ -25,13 +27,14 @@ class LRSettings(BaseSettings):
         self.algorithm = algorithm
 
 
-class LR:
+class LR(BaseClassifier):
     '''Class to store the data, methods and artifacts for Logistic Regression'''
-    def __init__(self, settings: LRSettings, array_scores: np.ndarray, y: np.ndarray):
-        self.settings = settings
-        self.array_scores = array_scores
-        self.y = y
-        self.model: Optional[LogisticRegression] = None
+    def __init__(self, settings: LRSettings, data: BaseDataModel):
+        super().__init__(settings, data)
+        if isinstance(data, PCADataModel):
+            self.array_scores = data.array_scores
+        else:
+            self.array_scores = data.x_train.drop('Substance', axis=1).values
 
     def lr(self):
         '''Performs Logistic Regression'''
@@ -42,10 +45,10 @@ class LR:
             random_state=0,
             class_weight='balanced',
             max_iter=10000
-        ).fit(self.array_scores, self.y)
+        ).fit(self.array_scores, self.data.y)
 
         # See the classes the model used
-        classes = np.unique(self.y)
+        classes = np.unique(self.data.y)
         classes = classes.reshape((1, len(classes)))
         coefficients = model.coef_.transpose()
         intercepts = model.intercept_.reshape((1, len(model.intercept_)))
@@ -67,12 +70,12 @@ class LR:
         predictions = model.predict(self.array_scores)
 
         # This tells us the accuracy of our model in calibration
-        scores = model.score(self.array_scores, self.y)
+        scores = model.score(self.array_scores, self.data.y)
 
         # Save the trained model
         self.model = model
 
-        sample_column = self.y.reshape((1, self.y.shape[0]))
+        sample_column = self.data.y.reshape((1, self.data.y.shape[0]))
         pred_column = predictions.reshape((1, predictions.shape[0]))
         prob_column = probabilities.transpose()
 
@@ -88,7 +91,7 @@ class LR:
         )
 
         print_confusion_matrix(
-            self.y,
+            self.data.y,
             predictions,
             "Confusion Matrix based on whole data set",
             self.settings.output
@@ -104,7 +107,7 @@ class LR:
 
             run_split_test(
                 self.array_scores,
-                self.y,
+                self.data.y,
                 split_model,
                 extended=True,
                 mode=self.settings.output

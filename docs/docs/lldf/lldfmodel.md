@@ -11,7 +11,7 @@ It inherits from the [`BaseDataModel`](../base/basedatamodel.md).
 ## Syntax
 
 ```python
-LLDFModel(x_data: pd.DataFrame, x_train: pd.DataFrame, y: pd.DataFrame)
+LLDFModel(x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray)
 ```
 
 ## Fields and constructor parameters

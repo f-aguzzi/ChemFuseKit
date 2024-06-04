@@ -27,14 +27,14 @@ classDiagram
     class LLDF {
         +LLDFSettings settings
         +Table[] tables
-        +LLDFModel | None fused_data
+        +LLDFDataModel | None fused_data
         lldf()
         -_snv()
         +export_data(export_path: str)
         __init__(settings, tables[])
     }
 
-    class LLDFModel {
+    class LLDFDataModel {
         +x_data: pd.DataFrame
         +x_train: pd.DataFrame
         +y: np.ndarray

@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from chemfusekit.lldf import LLDFSettings, LLDF, Table
-from chemfusekit.pca import PCASettings, PCA
+from chemfusekit.pca import PCASettings, PCA, PCADataModel
 from chemfusekit.lr import LRSettings, LR, GraphMode
 
 class TestLR(unittest.TestCase):
@@ -53,31 +53,28 @@ class TestLR(unittest.TestCase):
 
     def test_lr_constructor(self):
         '''Test case against constructor input errors.'''
+        data_model = PCADataModel(
+            x_data=pd.DataFrame(),
+            x_train=pd.DataFrame(),
+            y=np.asarray([7.854, 1.543, 93.55]),
+            array_scores=np.asarray([21.0, 3.44, 7.65])
+        )
         # Should raise an exception when the inputs are null
         with self.assertRaises(TypeError):
             LR(
                 settings=None,
-                array_scores=np.asarray([21.0, 3.44, 7.65]),
-                y=np.asarray([7.854, 1.543, 93.55])
+                data=data_model
             )
         with self.assertRaises(TypeError):
             LR(
                 settings=LRSettings(),
-                array_scores=None,
-                y=np.asarray([7.854, 1.543, 93.55])
-            )
-        with self.assertRaises(TypeError):
-            LR(
-                settings=LRSettings(),
-                array_scores=np.asarray([21.0, 3.44, 7.65]),
-                y=None
+                data=None
             )
 
         # Should not raise any exception when all inputs are valid
         LR(
             settings=LRSettings(),
-            array_scores=np.asarray([21.0, 3.44, 7.65]),
-            y=np.asarray([7.854, 1.543, 93.55])
+            data=data_model
         )
 
     def test_lr(self):
@@ -98,41 +95,54 @@ class TestLR(unittest.TestCase):
         lldf.lldf()
 
         pca_settings = PCASettings()
-        pca = PCA(lldf.fused_data, pca_settings)
+        pca = PCA(pca_settings, lldf.fused_data)
         pca.pca()
         pca.pca_stats()
 
+        pca_data = pca.export_data()
+
         # With no output
         lr_settings = LRSettings()
-        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr = LR(lr_settings, pca_data)
         lr.lr()
 
         # With text output
         lr_settings = LRSettings(output=GraphMode.TEXT)
-        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr = LR(lr_settings, pca_data)
         lr.lr()
 
         # With graph output
         # With text output
         lr_settings = LRSettings(output=GraphMode.GRAPHIC)
-        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr = LR(lr_settings, pca_data)
         lr.lr()
 
         # With text output and split tests
         lr_settings = LRSettings(output=GraphMode.TEXT, test_split=True)
-        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr = LR(lr_settings, pca_data)
         lr.lr()
 
         # With graph output and split tests
         lr_settings = LRSettings(output=GraphMode.GRAPHIC, test_split=True)
-        lr = LR(lr_settings, pca.array_scores, lldf.fused_data.y)
+        lr = LR(lr_settings, pca_data)
+        lr.lr()
+
+        # A final test with just the LLDF data:
+        lr_settings = LRSettings()
+        lr = LR(lr_settings, lldf.fused_data)
         lr.lr()
 
     def test_lr_predict(self):
         '''Test case against prediction input errors.'''
         # Set up the model
         lr_settings = LRSettings()
-        lr = LR(lr_settings, np.asarray([7.02, 8.11]), np.asarray([43.1, 0.06]))
+        pca_data = PCADataModel(
+            x_data=pd.DataFrame(),
+            x_train=pd.DataFrame(),
+            y=np.asarray([7.02, 8.11]),
+            array_scores=np.asarray([43.1, 0.06])
+        )
+        lr = LR(lr_settings, pca_data)
 
         # Shold raise an exception when started with no data
         with self.assertRaises(TypeError):

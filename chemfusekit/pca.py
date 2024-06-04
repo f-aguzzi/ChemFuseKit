@@ -14,6 +14,13 @@ from chemfusekit.__utils import print_table, GraphMode
 from .__base import BaseDataModel
 
 
+class PCADataModel(BaseDataModel):
+    '''Data model for the PCA outputs.'''
+    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray):
+        super().__init__(x_data, x_train, y)
+        self.array_scores = array_scores
+
+
 class PCASettings:
     '''Holds the settings for the PCA object.'''
     def __init__(self, target_variance: float = 0.95,
@@ -259,3 +266,15 @@ class PCA:
         )
 
         self.array_scores = array_scores
+
+    def export_data(self) -> PCADataModel:
+        '''Export data artifacts.'''
+        if self.pca_model is None or self.array_scores is None:
+            raise RuntimeError("Run both pca() and pca_stats() methods before exporting data!")
+
+        return PCADataModel(
+            self.data.x_data,
+            self.data.x_train,
+            self.data.y,
+            self.array_scores
+        )
