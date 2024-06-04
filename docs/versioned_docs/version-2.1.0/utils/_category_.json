@@ -1,0 +1,8 @@
+{
+  "label": "Utilities module",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "A module containing helper functions."
+  }
+}

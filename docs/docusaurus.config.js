@@ -102,16 +102,21 @@ const config = {
             position: 'left',
           },
           {
-            to: 'blog',
-            label: 'Blog',
-            position: 'right'
-          },
-          {
             type: 'docSidebar',
             docsPluginId: 'cookbook',
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'Cookbook',
+          },
+          {
+            type: 'docsVersionDropdown',
+            label: 'Docs version',
+            position: 'right'
+          },
+          {
+            to: 'blog',
+            label: 'Blog',
+            position: 'right'
           },
           {
             href: 'https://github.com/f-aguzzi/tesi',
