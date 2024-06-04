@@ -1,3 +1,21 @@
+## [2.0.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.2.0...v2.0.0-beta.1) (2024-06-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* added base class for classifiers, models, settings
+
+### Features
+
+* added base class for classifiers, models, settings ([4af5d47](https://github.com/f-aguzzi/tesi/commit/4af5d4778d28021dcd2e23f00fc5810ae178769d))
+
+
+### Docs
+
+* fix broken github pages build ([862ddf6](https://github.com/f-aguzzi/tesi/commit/862ddf6557973229ec9b85830b677822db0f9da7))
+* new cookbook section ([fd9a243](https://github.com/f-aguzzi/tesi/commit/fd9a2435469bdcf0457909ec3424ce1af5b118a9))
+* updated docusaurus with versioning ([0b6d5c4](https://github.com/f-aguzzi/tesi/commit/0b6d5c4319f371a757ad0fc3a142e2eb1d959137)), closes [#33](https://github.com/f-aguzzi/tesi/issues/33)
+
 ## [1.2.0](https://github.com/f-aguzzi/tesi/compare/v1.1.3...v1.2.0) (2024-06-03)
 
 
