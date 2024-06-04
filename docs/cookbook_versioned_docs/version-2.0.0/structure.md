@@ -130,7 +130,7 @@ classDiagram
 
 \
 \
-The data types are modular and interexchangeable too. Both [`LLDFDataModel`](/docs/lldf/lldfdatamodel) and [`PCADataModel`](/docs/pca/pcadatamodel) inherit from [`BaseDataModel`](/docs/base/basedatamodel) as shown in the following diagram:
+The data types are modular and interexchangeable too. Both [`LLDFDataModel`](/docs/lldf/lldfmodel) and [`PCADataModel`](/docs/pca/pcadatamodel) inherit from [`BaseDataModel`](/docs/base/basedatamodel) as shown in the following diagram:
 
 ```mermaid
 classDiagram
@@ -148,6 +148,7 @@ classDiagram
 
     class PCADataModel {
         +array_scores: ndarray
+        +components: int
         __init__(..., array_scores)
     }
 
