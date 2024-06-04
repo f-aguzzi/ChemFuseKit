@@ -1,3 +1,15 @@
+## [2.0.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2024-06-04)
+
+
+### Features
+
+* made LR inherit from BaseClassifier ([d06a7db](https://github.com/f-aguzzi/tesi/commit/d06a7db270a99517a6445c94bdfacc1901e90121))
+
+
+### Docs
+
+* new version ([7c96050](https://github.com/f-aguzzi/tesi/commit/7c96050e20382fdd2312584dd0cf8ee091329181))
+
 ## [2.0.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v1.2.0...v2.0.0-beta.1) (2024-06-04)
 
 
