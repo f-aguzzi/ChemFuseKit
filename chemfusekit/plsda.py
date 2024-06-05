@@ -133,3 +133,11 @@ class PLSDA(BaseClassifier):
             x = self.data.x_data
             y = self.data.x_train.Substance.astype('category').cat.codes
             run_split_test(x, y, PLSR(self.settings.n_components), mode=self.settings.output)
+
+    def import_model(self, import_path: str):
+        model_backup = copy(self.model)
+        super().import_model(import_path)
+        if not isinstance(self.model, PLSR):
+            self.model = model_backup
+            raise ImportError("The file you tried to import is not a PLSRegression classifier.")
+        self.settings.n_components = self.model.n_components

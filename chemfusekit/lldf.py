@@ -139,14 +139,9 @@ class LLDF:
 
         self.fused_data = LLDFDataModel(x_data, x_train, y)
 
-    def export_data(self, export_path: str):
+    def export_data(self, export_path: str, sheet_name: str = 'Sheet1'):
         '''Exports the data fusion artifacts to a file'''
         if self.fused_data is None:
             raise RuntimeError("Cannot export data before data fusion.")
 
-        x_train_dataframe = pd.DataFrame(self.fused_data.x_train)
-
-        try:
-            x_train_dataframe.to_excel(export_path)
-        except Exception as exc:
-            raise RuntimeError("Could not export data to the selected path.") from exc
+        self.fused_data.export_to_file(export_path=export_path, sheet_name=sheet_name)
