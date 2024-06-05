@@ -26,3 +26,10 @@ The second two are `NumPy` `ndarray`s:
 
 The last is an integer:
 - `components`
+
+## Methods
+
+Both methods are inherited from [`BaseDataModel`](../base/basedatamodel.md):
+
+- `@classmethod def load_from_file(import_path: str, sheet_name: str = 'Sheet1')`: creates a `BaseDataModel` instance from an Excel file
+- `export_to_file(export_path: str, sheet_name: str = 'Sheet1')`: exports the `BaseDataModel` contents to an Excel table
