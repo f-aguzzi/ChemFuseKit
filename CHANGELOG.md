@@ -1,3 +1,15 @@
+## [2.2.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.1.0...v2.2.0-beta.1) (2024-06-07)
+
+
+### Features
+
+* excel import with user-defined schema ([f0d0d74](https://github.com/f-aguzzi/tesi/commit/f0d0d74efa04711d89bafa2082c352f117fd0680))
+
+
+### Docs
+
+* update to version 2.2.0 ([ebff95d](https://github.com/f-aguzzi/tesi/commit/ebff95d7cf00d7c86d987d113543631acc0a0113))
+
 ## [2.1.0](https://github.com/f-aguzzi/tesi/compare/v2.0.0...v2.1.0) (2024-06-07)
 
 
