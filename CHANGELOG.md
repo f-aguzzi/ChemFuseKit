@@ -1,3 +1,15 @@
+## [2.1.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.0.0...v2.1.0-beta.1) (2024-06-05)
+
+
+### Features
+
+* **import/export:** fully functional file dumping ([e1d0044](https://github.com/f-aguzzi/tesi/commit/e1d004448afd86f4ffa2ed4b87629e6798ef41b2))
+
+
+### chore
+
+* **license:** add GPLv3 license ([3fdd0b8](https://github.com/f-aguzzi/tesi/commit/3fdd0b87b6587b7413dd36f5101d37a5d712e7d7))
+
 ## [2.0.0](https://github.com/f-aguzzi/tesi/compare/v1.2.0...v2.0.0) (2024-06-04)
 
 

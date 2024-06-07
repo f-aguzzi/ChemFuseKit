@@ -1,4 +1,5 @@
 '''Logistic Regression Module'''
+from copy import copy
 from typing import Optional
 
 import numpy as np
@@ -128,3 +129,11 @@ class LR(BaseClassifier):
         )
 
         return prediction
+
+    def import_model(self, import_path: str):
+        model_backup = copy(self.model)
+        super().import_model(import_path)
+        if not isinstance(self.model, LogisticRegression):
+            self.model = model_backup
+            raise ImportError("The file you tried to import is not a LogisticRegression classifier.")
+        self.settings.algorithm = self.model.solver

@@ -1,4 +1,5 @@
 '''k-Nearest Neighbors Analysis module'''
+from copy import copy
 from typing import Optional
 from beartype.typing import Callable
 
@@ -79,3 +80,14 @@ class KNN(BaseClassifier):
                 algorithm=self.settings.algorithm
             )
             run_split_test(self.data.x_data, self.data.y, knn_split)
+
+    def import_model(self, import_path: str):
+        model_backup = copy(self.model)
+        super().import_model(import_path)
+        if not isinstance(self.model, KNeighborsClassifier):
+            self.model = model_backup
+            raise ImportError("The file you tried to import is not a KNeighborsClassifier.")
+        self.settings.n_neighbors = self.model.n_neighbors
+        self.settings.metric = self.model.metric
+        self.settings.weights = self.model.weights
+        self.settings.algorithm = self.model.algorithm
