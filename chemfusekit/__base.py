@@ -18,7 +18,8 @@ class BaseDataModel:
         self.y = y
 
     @classmethod
-    def load_from_file(cls, import_path: str, sheet_name: str = 'Sheet1'):
+    def load_from_file(cls, import_path: str, sheet_name: str = 'Sheet1', class_column: str = 'Substance',
+                       index_column: str | None = None):
         try:
             table_data = pd.read_excel(
                 import_path,
@@ -29,12 +30,15 @@ class BaseDataModel:
         except Exception as exc:
             raise FileNotFoundError("Error opening the selected files.") from exc
 
-        x = table_data.iloc[:, 1:]
+        if index_column is not None:
+            x = table_data.drop(index_column, axis=1)
+        else:
+            x = table_data.iloc[:, 1:]
 
         # It is necessary to convert the column names as string to select them
         x.columns = x.columns.astype(str)  # to make the colnames as text
 
-        y = table_data.loc[:, 'Substance'].values
+        y = table_data.loc[:, class_column].values
         y_dataframe = pd.DataFrame(y, columns=['Substance'])
         x_train = pd.concat(
             [y_dataframe, x],
