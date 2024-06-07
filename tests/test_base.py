@@ -53,9 +53,9 @@ class TestBase(unittest.TestCase):
         reimported_data = BaseDataModel.load_from_file("export_test_2.xlsx")
 
         # Assert the equality between the re-exported data and the re-reimported data
-        self.assertTrue(lldf.fused_data.x_data.compare(imported_data.x_data).empty)
-        self.assertTrue(lldf.fused_data.x_train.compare(imported_data.x_train).empty)
-        self.assertTrue((lldf.fused_data.y == imported_data.y).all())
+        self.assertTrue(lldf.fused_data.x_data.compare(reimported_data.x_data).empty)
+        self.assertTrue(lldf.fused_data.x_train.compare(reimported_data.x_train).empty)
+        self.assertTrue((lldf.fused_data.y == reimported_data.y).all())
 
         # Clean up
         os.remove("export_test.xlsx")

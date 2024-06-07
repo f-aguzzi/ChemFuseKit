@@ -13,10 +13,13 @@ from .__base import GraphMode, BaseDataModel
 
 class Table:
     '''Holds the path, preprocessing choice and sheet name for a single Excel table.'''
-    def __init__(self, file_path: str, sheet_name: str, preprocessing: str):
+    def __init__(self, file_path: str, sheet_name: str, preprocessing: str, class_column: str = 'Substance',
+                 index_column: str | None = None):
         self.file_path = file_path
         self.sheet_name = sheet_name
         self.preprocessing = preprocessing
+        self.class_column = class_column
+        self.index_column = index_column
 
 
 class LLDFDataModel(BaseDataModel):
@@ -67,7 +70,12 @@ class LLDF:
                 raise FileNotFoundError("Error opening the selected files.") from exc
 
             # select only numerical attributes
-            x = table_data.iloc[:, 1:]
+            if table.index_column is not None:
+                x = table_data.drop(table.index_column, axis=1)
+            else:
+                x = table_data.iloc[:, 1:]
+
+            x = table_data.drop(table.class_column, axis=1)
 
             # It is necessary to convert the column names as string to select them
             x.columns = x.columns.astype(str)     # to make the colnames as text
@@ -122,7 +130,7 @@ class LLDF:
         except Exception as exc:
             raise FileNotFoundError("Error opening the selected files.") from exc
 
-        y = table_data.loc[:, 'Substance'].values
+        y = table_data.loc[:, self.tables[0].class_column].values
         y_dataframe = pd.DataFrame(y, columns=['Substance'])
 
         # Fused dataset

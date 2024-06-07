@@ -1,0 +1,8 @@
+{
+  "label": "PCA module",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "A module for principal component analysis."
+  }
+}
