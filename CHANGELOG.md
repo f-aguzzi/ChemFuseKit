@@ -1,3 +1,10 @@
+## [2.3.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.1...v2.3.0-beta.2) (2024-06-08)
+
+
+### Bug Fixes
+
+* **lldf:** wrong exception type on export with invalid format ([3842ed9](https://github.com/f-aguzzi/tesi/commit/3842ed9d1f003c19565ef1a4cbd8e5544f6476e4))
+
 ## [2.3.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.2.0...v2.3.0-beta.1) (2024-06-08)
 
 
