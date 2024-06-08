@@ -1,3 +1,15 @@
+## [2.3.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.2.0...v2.3.0-beta.1) (2024-06-08)
+
+
+### Features
+
+* added json and csv support for table import/export ([392933a](https://github.com/f-aguzzi/tesi/commit/392933a09d7333e81d99feb6a5b67bd5e30051d4))
+
+
+### Docs
+
+* version 2.3.0 ([a10d464](https://github.com/f-aguzzi/tesi/commit/a10d46437e5c6d3fe29d3b4fded01e87e352687e))
+
 ## [2.2.0](https://github.com/f-aguzzi/tesi/compare/v2.1.0...v2.2.0) (2024-06-07)
 
 
