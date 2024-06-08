@@ -1,3 +1,10 @@
+## [2.3.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-06-08)
+
+
+### Bug Fixes
+
+* **CI/CD:** conditional workflow run ([74d308b](https://github.com/f-aguzzi/tesi/commit/74d308be2f4c1750e5d6f8bcbda889e895a828fa))
+
 ## [2.3.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.1...v2.3.0-beta.2) (2024-06-08)
 
 
