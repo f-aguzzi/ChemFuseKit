@@ -66,7 +66,7 @@ class TestLLDF(unittest.TestCase):
         lldf.lldf()
 
         # Try exporting data to an invalid path
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             lldf.export_data('$£=0\//|') 
 
 if __name__ == '__main__':
