@@ -5,9 +5,6 @@ on:
         - 'chemfusekit/**'
         - 'tests/**'
         - '.github/workflows/unittest.yml'
-      branches:
-        - main
-        - pre/*
 
 jobs:
   build:
