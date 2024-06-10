@@ -21,12 +21,27 @@ class BaseDataModel:
     def load_from_file(cls, import_path: str, sheet_name: str = 'Sheet1', class_column: str = 'Substance',
                        index_column: str | None = None):
         try:
-            table_data = pd.read_excel(
-                import_path,
-                sheet_name=sheet_name,
-                index_col=0,
-                header=0
-            )
+            # Autodetect the format based on the file extension
+            if import_path.endswith('.xlsx'):
+                table_data = pd.read_excel(
+                    import_path,
+                    sheet_name=sheet_name,
+                    index_col=0,
+                    header=0
+                )
+            elif import_path.endswith('.csv'):
+                table_data = pd.read_csv(
+                    import_path,
+                    index_col=0,
+                    header=0
+                )
+            elif import_path.endswith('.json'):
+                table_data = pd.read_json(
+                    import_path,
+                    orient='table'  # or other orientations based on your json format
+                )
+            else:
+                raise ValueError(f"Unsupported file format: {import_path}")
         except Exception as exc:
             raise FileNotFoundError("Error opening the selected files.") from exc
 
@@ -48,10 +63,24 @@ class BaseDataModel:
         return cls(x, x_train, y)
 
     def export_to_file(self, export_path: str, sheet_name: str = 'Sheet1'):
-        try:
-            self.x_train.to_excel(excel_writer=export_path, sheet_name=sheet_name)
-        except Exception as exc:
-            raise RuntimeError("Could not export data to the selected path.") from exc
+        # Determine the file format based on the file extension
+        if export_path.endswith('.xlsx'):
+            try:
+                self.x_train.to_excel(excel_writer=export_path, sheet_name=sheet_name)
+            except Exception as exc:
+                raise RuntimeError("Could not export data to the selected path.") from exc
+        elif export_path.endswith('.csv'):
+            try:
+                self.x_train.to_csv(export_path, index=False)
+            except Exception as exc:
+                raise RuntimeError("Could not export data to the selected path.") from exc
+        elif export_path.endswith('.json'):
+            try:
+                self.x_train.to_json(export_path, orient='table')  # or other orientations based on your needs
+            except Exception as exc:
+                raise RuntimeError("Could not export data to the selected path.") from exc
+        else:
+            raise ValueError(f"Unsupported file format: {export_path}")
 
 
 class BaseSettings:

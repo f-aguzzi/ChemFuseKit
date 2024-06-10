@@ -60,12 +60,27 @@ class LLDF:
         x_vector = []
         for table in self.tables:
             try:
-                table_data = pd.read_excel(
-                    table.file_path,
-                    sheet_name=table.sheet_name,
-                    index_col=0,
-                    header=0
-                )
+                # Autodetect the format based on the file extension
+                if table.file_path.endswith('.xlsx'):
+                    table_data = pd.read_excel(
+                        table.file_path,
+                        sheet_name=table.sheet_name,
+                        index_col=0,
+                        header=0
+                    )
+                elif table.file_path.endswith('.csv'):
+                    table_data = pd.read_csv(
+                        table.file_path,
+                        index_col=0,
+                        header=0
+                    )
+                elif table.file_path.endswith('.json'):
+                    table_data = pd.read_json(
+                        table.file_path,
+                        orient='table'  # or other orientations based on your json format
+                    )
+                else:
+                    raise ValueError(f"Unsupported file format: {table.file_path}")
             except Exception as exc:
                 raise FileNotFoundError("Error opening the selected files.") from exc
 
