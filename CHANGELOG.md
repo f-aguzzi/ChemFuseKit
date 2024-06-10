@@ -1,3 +1,28 @@
+## [2.3.0](https://github.com/f-aguzzi/tesi/compare/v2.2.0...v2.3.0) (2024-06-10)
+
+
+### Features
+
+* added json and csv support for table import/export ([392933a](https://github.com/f-aguzzi/tesi/commit/392933a09d7333e81d99feb6a5b67bd5e30051d4))
+
+
+### Bug Fixes
+
+* **CI/CD:** conditional workflow run ([74d308b](https://github.com/f-aguzzi/tesi/commit/74d308be2f4c1750e5d6f8bcbda889e895a828fa))
+* **lldf:** wrong exception type on export with invalid format ([3842ed9](https://github.com/f-aguzzi/tesi/commit/3842ed9d1f003c19565ef1a4cbd8e5544f6476e4))
+
+
+### Docs
+
+* version 2.3.0 ([a10d464](https://github.com/f-aguzzi/tesi/commit/a10d46437e5c6d3fe29d3b4fded01e87e352687e))
+
+
+### CI
+
+* **release:** 2.3.0-beta.1 [skip ci] ([6734667](https://github.com/f-aguzzi/tesi/commit/6734667e583e6194343658f169a771d0ba4981d4))
+* **release:** 2.3.0-beta.2 [skip ci] ([0551ea0](https://github.com/f-aguzzi/tesi/commit/0551ea07fe9a8514552e4af09efb030c8d112ffa))
+* **release:** 2.3.0-beta.3 [skip ci] ([aa9e280](https://github.com/f-aguzzi/tesi/commit/aa9e2800d1b7d5bdf20d3f0b53e0a04f17f0d8c5))
+
 ## [2.3.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-06-08)
 
 
