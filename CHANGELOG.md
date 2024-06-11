@@ -1,3 +1,55 @@
+## [2.4.0](https://github.com/f-aguzzi/tesi/compare/v2.3.0...v2.4.0) (2024-06-11)
+
+
+### Features
+
+* add from_file classmethod to BaseClassifier ([9478f88](https://github.com/f-aguzzi/tesi/commit/9478f88dbf58df1c5e06fbf1a996b936b8b174f9))
+* **PCA:** added reduce method ([1ad418e](https://github.com/f-aguzzi/tesi/commit/1ad418eec712522038dab118744c60a0dbf8f47f))
+* **PCA:** model import and export ([15e13f1](https://github.com/f-aguzzi/tesi/commit/15e13f13897073f79373924fb4658e3ecb590085))
+* PCA rescaled_data property ([9eb9301](https://github.com/f-aguzzi/tesi/commit/9eb93015e4fa936f93de46cf25c8de6d7898440e))
+* **LLDF:** print table name in graphs ([1d78181](https://github.com/f-aguzzi/tesi/commit/1d78181a7f066e63c8eebcbcfee019a076882fc6))
+* **BaseDataModel:** subscript sample selection ([0830397](https://github.com/f-aguzzi/tesi/commit/08303978b5773f16fbbd98c30b7751959d759558))
+
+
+### Bug Fixes
+
+* **LR:** add special case for binary classifiers ([8da46b7](https://github.com/f-aguzzi/tesi/commit/8da46b7ecb5f2708fff9d6088eb484ce0ad13f6f))
+* **PCA:** conditions of reduce exception raising ([1f74220](https://github.com/f-aguzzi/tesi/commit/1f74220039b0f59374f568ea5744dc3728a28a13))
+* error in condition in extended split tests ([5b56d15](https://github.com/f-aguzzi/tesi/commit/5b56d15787e95830dcc3937d21af5b8e93af8219))
+* **LLDF:** graph printing issues ([6eb9fba](https://github.com/f-aguzzi/tesi/commit/6eb9fba431339e430145d1d3dbc54ee9d6f6a802))
+* **LLDF:** import column names checking ([f51b11c](https://github.com/f-aguzzi/tesi/commit/f51b11c9981f9f7a26d688ab1954003e8be443a6))
+* **changelog:** realign versions ([24d74bf](https://github.com/f-aguzzi/tesi/commit/24d74bf7f8cb72f64cfd9732b0f7160b063d1a30))
+* **gitignore:** remove duplicates ([4442fb6](https://github.com/f-aguzzi/tesi/commit/4442fb674c25640e405991ef71022cd4071743b6))
+* **tests:** test case for BaseDataModel import/export ([0817547](https://github.com/f-aguzzi/tesi/commit/081754777e0b9be2a7ffe9b86b403a4538a682e1))
+* **pyproject:** update version ([4c2824f](https://github.com/f-aguzzi/tesi/commit/4c2824fa275cf21e4db339082238fd346b8fb79f))
+* **LLDF:** wrong data concatenation ([9bb5f93](https://github.com/f-aguzzi/tesi/commit/9bb5f9346d4ee19b11deaaf7567e4dd9538c3fd7))
+
+
+### chore
+
+* **docs:** upgrade to version 2.4.0 ([b296bbc](https://github.com/f-aguzzi/tesi/commit/b296bbc18506e6d058bf44e3de7eefc2ca416bfe))
+
+
+### Docs
+
+* updated case studies ([f838c2e](https://github.com/f-aguzzi/tesi/commit/f838c2e8d095f07e8c7f64e3776f072be6293728))
+
+
+### CI
+
+* **release:** 2.3.0-beta.10 [skip ci] ([ae1b35e](https://github.com/f-aguzzi/tesi/commit/ae1b35e0f5c8e5c6b6668792b4bbf019563b5c41))
+* **release:** 2.3.0-beta.11 [skip ci] ([d3b07cb](https://github.com/f-aguzzi/tesi/commit/d3b07cb18576794df9c0c74770adccfa65b6d52f))
+* **release:** 2.3.0-beta.12 [skip ci] ([7c653ac](https://github.com/f-aguzzi/tesi/commit/7c653ac50ff5f22cc00022b03004e4d6946c6e3b))
+* **release:** 2.3.0-beta.13 [skip ci] ([2baa4ea](https://github.com/f-aguzzi/tesi/commit/2baa4eab7cfc3ae8c09b8a4e00e27ece23aff90b))
+* **release:** 2.3.0-beta.14 [skip ci] ([84028f8](https://github.com/f-aguzzi/tesi/commit/84028f81f6e2cd4d50cd1f2d69ecc72c7d7edfe5))
+* **release:** 2.3.0-beta.4 [skip ci] ([45a03cf](https://github.com/f-aguzzi/tesi/commit/45a03cf5a791a40a4a4701dca5c49d75b11c4239))
+* **release:** 2.3.0-beta.5 [skip ci] ([c3a296b](https://github.com/f-aguzzi/tesi/commit/c3a296ba41d33ede5706e0454b135a21969682da))
+* **release:** 2.3.0-beta.6 [skip ci] ([0266be5](https://github.com/f-aguzzi/tesi/commit/0266be5e348a90768a7dbe383100998516632852))
+* **release:** 2.3.0-beta.7 [skip ci] ([6a6568d](https://github.com/f-aguzzi/tesi/commit/6a6568d77e951ddf5f3f4a0589b5b9ee70b4cc21))
+* **release:** 2.3.0-beta.8 [skip ci] ([65d0446](https://github.com/f-aguzzi/tesi/commit/65d04462323be399b908391b95b41b7f6ecf85fc))
+* **release:** 2.3.0-beta.9 [skip ci] ([dff1da7](https://github.com/f-aguzzi/tesi/commit/dff1da7f77a1fb6620d9efd1ba0dde102bf7c5d0))
+* **release:** 2.4.0-beta.1 [skip ci] ([d4ebd2c](https://github.com/f-aguzzi/tesi/commit/d4ebd2c5b3af5e7a59d9fe7c8ed6fa65e407f728))
+
 ## [2.4.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.3.0...v2.4.0-beta.1) (2024-06-11)
 
 
