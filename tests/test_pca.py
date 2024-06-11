@@ -224,4 +224,4 @@ class TestPCA(unittest.TestCase):
         reduced_data = pca.reduce(lldf.fused_data)
 
         # Check that the dimensionality (number of columns) is reduced
-        self.assertLess(lldf.fused_data.x_data.shape[1], reduced_data.x_data.shape[1])
+        self.assertLess(reduced_data.x_data.shape[1], lldf.fused_data.x_data.shape[1])

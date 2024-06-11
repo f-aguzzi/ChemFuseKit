@@ -336,7 +336,7 @@ class PCA:
 
     def reduce(self, data: BaseDataModel) -> BaseDataModel:
         '''Reduces dimensionality of data.'''
-        if self.pca_model is None or self:
+        if self.pca_model is None:
             raise RuntimeError(
                 "The PCA model hasn't been trained yet! You cannot use it to reduce data dimensionality."
             )
