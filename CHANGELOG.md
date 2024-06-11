@@ -1,3 +1,11 @@
+## [2.3.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.4...v2.3.0-beta.5) (2024-06-11)
+
+
+### Features
+
+* add from_file classmethod to BaseClassifier ([9478f88](https://github.com/f-aguzzi/tesi/commit/9478f88dbf58df1c5e06fbf1a996b936b8b174f9))
+* **PCA:** model import and export ([15e13f1](https://github.com/f-aguzzi/tesi/commit/15e13f13897073f79373924fb4658e3ecb590085))
+
 ## [2.3.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.3...v2.3.0-beta.4) (2024-06-11)
 
 
