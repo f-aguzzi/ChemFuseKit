@@ -82,6 +82,10 @@ class BaseDataModel:
         else:
             raise ValueError(f"Unsupported file format: {export_path}")
 
+    def __getitem__(self, index):
+        '''Get an item with array-style indexing'''
+        return pd.DataFrame(self.x_data.iloc[index, :]).transpose()
+
 
 class BaseSettings:
     '''Holds the settings for the BaseClassifier object.'''
@@ -118,10 +122,14 @@ class BaseClassifier:
     @classmethod
     def from_file(cls, settings, model_path):
         '''Creates a classifier instance from file'''
+        x_data = pd.DataFrame()
+        y_dataframe = pd.DataFrame(columns=['Substance'])
+        x_train = pd.concat([y_dataframe, x_data], axis=1)
+        y = np.asarray(y_dataframe)
         data = BaseDataModel(
-            pd.DataFrame(),
-            pd.DataFrame(),
-            np.asarray(pd.DataFrame)
+            x_data=x_data,
+            x_train=x_train,
+            y=y
         )
         class_instance = cls(settings, data)
         class_instance.import_model(model_path)
