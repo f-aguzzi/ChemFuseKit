@@ -333,3 +333,21 @@ class PCA:
             joblib.dump(self.pca_model, export_path)
         else:
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
+
+    def reduce(self, data: BaseDataModel) -> BaseDataModel:
+        '''Reduces dimensionality of data.'''
+        if self.pca_model is None or self:
+            raise RuntimeError(
+                "The PCA model hasn't been trained yet! You cannot use it to reduce data dimensionality."
+            )
+        x_data = pd.DataFrame(self.pca_model.transform(data.x_data))
+        y_dataframe = pd.DataFrame(data.y)
+        x_train = pd.concat(
+            [y_dataframe, x_data],
+            axis=1
+        )
+        return BaseDataModel(
+            x_data=x_data,
+            x_train=x_train,
+            y=data.y
+        )

@@ -35,6 +35,9 @@ PCA(settings: PCASettings, data: BaseDataModel)
   - *raises:*
     - `ImportError("The file you tried importing is not a valid Python object!")` when importing an invalid model;
     - `ImportError("The file you tried importing is not a sklearn PCA model!")` when the imported model is valid but an instance of the wrong class.
+- `reduce(self, data: BaseDataModel) -> BaseDataModel`: reduces dimensionality of data.
+  - *raises:*
+    - `RuntimeError("The PCA model hasn't been trained yet! You cannot use it to reduce data dimensionality.")` when run on an untrained model.
 
 ## Properties
 

@@ -193,3 +193,35 @@ class TestPCA(unittest.TestCase):
 
         # Assert the equality of the two models
         self.assertEqual(pca.pca_model.get_params(), pca2.pca_model.get_params())
+
+    def test_pca_reduce(self):
+        '''Test case for data dimensionality reduction.'''
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
+        )
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF(lldf_settings, [table1, table2])
+        lldf.lldf()
+
+        # Set up PCA
+        pca_settings = PCASettings()
+        pca = PCA(pca_settings, lldf.fused_data)
+
+        # Try rescaling data before training the model
+        with self.assertRaises(RuntimeError):
+            pca.reduce(lldf.fused_data)
+
+        # Execute PCA and then rescale
+        pca.pca()
+        reduced_data = pca.reduce(lldf.fused_data)
+
+        # Check that the dimensionality (number of columns) is reduced
+        self.assertLess(lldf.fused_data.x_data.shape[1], reduced_data.x_data.shape[1])
