@@ -9,18 +9,18 @@ The `LLDF` class is used for _low-level data fusion_.
 ## Syntax
 
 ```python
-LLDF(tables: List[Table], lldf_settings: LLDFSettings)
+LLDF(lldf_settings: LLDFSettings, tables: List[Table])
 ```
 
 ## Constructor parameters
 
-- `tables`: `List[`[`Table`](./table.md)`]`
-
-  A list of `Table` objects containing info about the files to import
-
 - `lldf_settings`: [`LLDFSettings`](./lldfsettings)
   
   The settings for the LLDF object.
+
+- `tables`: `List[`[`Table`](./table.md)`]`
+
+  A list of `Table` objects containing info about the files to import
 
 ## Fields
 

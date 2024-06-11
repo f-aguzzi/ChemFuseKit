@@ -85,12 +85,15 @@ class LLDF:
                 raise FileNotFoundError("Error opening the selected files.") from exc
 
             # select only numerical attributes
-            if table.index_column is not None:
+            if table.index_column is not None and table.index_column in table_data.columns:
                 x = table_data.drop(table.index_column, axis=1)
             else:
                 x = table_data.iloc[:, 1:]
 
-            x = table_data.drop(table.class_column, axis=1)
+            if table.class_column in table_data.columns:
+                x = table_data.drop(table.class_column, axis=1)
+            else:
+                x = x.iloc[:, 1:]
 
             # It is necessary to convert the column names as string to select them
             x.columns = x.columns.astype(str)     # to make the colnames as text
@@ -116,16 +119,33 @@ class LLDF:
                 )
 
             if self.settings.output is GraphMode.GRAPHIC:
-                numbers_string = x.columns
+                numbers_string = [str(col) for col in x.columns]
+
                 # Replace commas with points and join the numbers with a space
-                wl = np.array(list(map(lambda z: float(z.replace(',', '.')), numbers_string.split())))
-                # Let's plot the different datasets we preprocessed
-                fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, figsize=(15, 15))
-                # fig, axs = plt.subplots(2, 2, figsize=(15,15))
-                ax1.plot(wl, x.T)
-                ax1.set_title(f'Original data ({table.file_path})')
-                ax2.plot(wl, preprocessed_x.T)
-                ax2.set_title(f'Processed table ({table.preprocessing})')
+                try:
+                    wl = np.array(list(map(lambda z: float(z.replace(',', '.')), numbers_string)))
+                except ValueError:
+                    wl = numbers_string
+
+                if table.preprocessing != 'none':
+                    # Let's plot the different datasets we preprocessed
+                    fig, (ax1, ax2) = plt.subplots(2, figsize=(15, 15))
+                    ax1.plot(wl, x.T)
+                    ax1.set_title(f'Original data')
+                    ax2.plot(wl, preprocessed_x.T)
+                    ax2.set_title(f'Processed table with {table.preprocessing}')
+                    if table.file_path.endswith('.xlsx'):
+                        fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path}')
+                    else:
+                        fig.suptitle(f'Imported table: {table.file_path}')
+                else:
+                    # Let's plot the different datasets we preprocessed
+                    fig, ax1 = plt.subplots(1, figsize=(15, 15))
+                    ax1.plot(wl, x.T)
+                    if table.file_path.endswith('.xlsx'):
+                        fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path} (no preprocessing)')
+                    else:
+                        fig.suptitle(f'Imported table: {table.file_path} (no preprocessing)')
 
             # Create a new DataFrame with the processed numerical attributes
             processed_dataframe_x = pd.DataFrame(
@@ -133,7 +153,10 @@ class LLDF:
                 columns=x.columns
             )
 
-            x_vector.append(x)
+            # Reset the index of the dataframe
+            processed_dataframe_x = processed_dataframe_x.reset_index(drop=True)
+
+            x_vector.append(processed_dataframe_x)
 
         try:
             table_data = pd.read_excel(

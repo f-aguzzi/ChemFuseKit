@@ -1,5 +1,6 @@
 '''Utilities module: functions that are shared between different classes'''
 from sklearn.cross_decomposition import PLSRegression as PLSR
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -120,7 +121,13 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
 
         # See the classes the model used
         classes = model.classes_
-        classes = classes.reshape((1, len(classes)))
+        if isinstance(model, LogisticRegression) and len(classes) == 2:     # Binary classifier
+            classes = [" / ".join(classes)]
+            classes = np.asarray(classes)
+            classes = classes.reshape((1, 1))
+        else:   # All other cases
+            classes = classes.reshape((1, len(classes)))
+
         coefficients = model.coef_.transpose()
         intercepts = model.intercept_.reshape((1, len(model.intercept_)))
         print_table(
@@ -135,8 +142,10 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
         pred_column = predictions.reshape((1, predictions.shape[0]))
         prob_column = probabilities.transpose()
 
+        classes = np.unique(y_train)
+
         print_table(
-            np.concatenate((np.asarray(["True", "Prediction"]), classes.reshape(17, ))),
+            np.concatenate((np.asarray(["True", "Prediction"]), classes)),
             np.concatenate((
                 sample_column,
                 pred_column,
@@ -161,7 +170,7 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
         prob_column = probabilities.transpose()
 
         print_table(
-            np.concatenate((np.asarray(["Prediction"]), classes.reshape(17, ))),
+            np.concatenate((np.asarray(["Prediction"]), classes)),
             np.concatenate((
                 pred_column,
                 prob_column

@@ -1,6 +1,9 @@
 '''Principal Component Analysis Module'''
+from copy import copy
+from functools import cached_property
 from typing import Optional
 
+import joblib
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -57,7 +60,7 @@ class PCA:
 
         # Run PCA producing the reduced variable Xreg and select the first 10 components
         pca = PC(self.settings.initial_components)
-        pca.fit_transform(x_data)
+        pca.fit(x_data)
 
         # Define the class vector (discrete/categorical variable)
         # y_dataframe = pd.DataFrame(self.fused_data.y, columns=['Substance'])
@@ -65,7 +68,7 @@ class PCA:
         out_sum = np.cumsum(pca.explained_variance_ratio_)
 
         # Autoselect the number of components
-        for i,x in enumerate(out_sum):
+        for i, x in enumerate(out_sum):
             if x >= self.settings.target_variance:
                 self.components = i
                 break
@@ -109,7 +112,7 @@ class PCA:
         # Run PCA producing the pca_model with a proper number of components
         pca = PC(n_components=self.components)
         self.pca_model = pca
-        self.pca_model.fit_transform(x_data)
+        self.pca_model.fit(x_data)
 
     def pca_stats(self):
         '''Produces PCA-related statistics.'''
@@ -121,7 +124,7 @@ class PCA:
         scores = pd.DataFrame(data=self.pca_model.fit_transform(x_data), columns=pc_cols)
         scores.index = x_data.index
         scores = pd.concat([scores, x_train.Substance], axis = 1)
-        
+
         print_table(
             pc_cols + ['Substance'],
             [scores.iloc[:,i] for i in range(scores.shape[1])],
@@ -136,7 +139,7 @@ class PCA:
             index=x_data.columns
         )
         loadings["Attributes"] = loadings.index
-    
+
         print_table(
             pc_cols + ['Retention Time'],
             [loadings.iloc[:,i] for i in range(loadings.shape[1])],
@@ -280,4 +283,71 @@ class PCA:
             self.data.y,
             self.array_scores,
             self.components
+        )
+
+    @cached_property
+    def rescaled_data(self) -> PCADataModel:
+        if self.array_scores is None:
+            settings_backup = copy(self.settings)
+            self.settings.output = GraphMode.NONE
+            if self.pca_model is None:
+                self.pca()
+            self.pca_stats()
+
+        x_data = pd.DataFrame(self.pca_model.transform(self.data.x_data))
+        y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
+        x_train = pd.concat(
+            [y_dataframe, x_data],
+            axis=1
+        )
+
+        return PCADataModel(
+            x_data,
+            x_train,
+            self.data.y,
+            self.array_scores,
+            self.components
+        )
+
+    @classmethod
+    def from_file(cls, settings: PCASettings, model_path: str):
+        '''Creates a PCA instance from a file containing its sklearn core model.'''
+        try:
+            model = joblib.load(model_path)
+        except Exception as exc:
+            raise ImportError("The file you tried importing is not a valid Python object!") from exc
+        if not isinstance(model, PC):
+            raise ImportError("The file you tried importing is not a sklearn PCA model!")
+        data = BaseDataModel(
+            pd.DataFrame(),
+            pd.DataFrame(),
+            np.asarray(pd.DataFrame)
+        )
+        class_instance = PCA(settings, data)
+        class_instance.pca_model = model
+        return class_instance
+
+    def export_model(self, export_path: str):
+        '''Exports the underlying sklearn PCA model to a file.'''
+        if self.pca_model is not None:
+            joblib.dump(self.pca_model, export_path)
+        else:
+            raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
+
+    def reduce(self, data: BaseDataModel) -> BaseDataModel:
+        '''Reduces dimensionality of data.'''
+        if self.pca_model is None:
+            raise RuntimeError(
+                "The PCA model hasn't been trained yet! You cannot use it to reduce data dimensionality."
+            )
+        x_data = pd.DataFrame(self.pca_model.transform(data.x_data))
+        y_dataframe = pd.DataFrame(data.y)
+        x_train = pd.concat(
+            [y_dataframe, x_data],
+            axis=1
+        )
+        return BaseDataModel(
+            x_data=x_data,
+            x_train=x_train,
+            y=data.y
         )

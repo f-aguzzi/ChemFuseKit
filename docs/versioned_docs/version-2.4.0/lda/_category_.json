@@ -1,0 +1,8 @@
+{
+  "label": "LDA module",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "A module for linear discriminant analysis."
+  }
+}

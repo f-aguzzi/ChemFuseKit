@@ -48,19 +48,19 @@ class BaseDataModel:
         if index_column is not None:
             x = table_data.drop(index_column, axis=1)
         else:
-            x = table_data.iloc[:, 1:]
+            x = table_data
 
         # It is necessary to convert the column names as string to select them
         x.columns = x.columns.astype(str)  # to make the colnames as text
 
-        y = table_data.loc[:, class_column].values
-        y_dataframe = pd.DataFrame(y, columns=['Substance'])
-        x_train = pd.concat(
-            [y_dataframe, x],
-            axis=1
-        )
+        # Reset the index of the dataframe
+        # x = x.reset_index(drop=True)
 
-        return cls(x, x_train, y)
+        y = table_data.loc[:, class_column].values
+        x_train = x
+        x_data = x_train.drop(class_column, axis=1)
+
+        return cls(x_data, x_train, y)
 
     def export_to_file(self, export_path: str, sheet_name: str = 'Sheet1'):
         # Determine the file format based on the file extension
@@ -81,6 +81,10 @@ class BaseDataModel:
                 raise RuntimeError("Could not export data to the selected path.") from exc
         else:
             raise ValueError(f"Unsupported file format: {export_path}")
+
+    def __getitem__(self, index):
+        '''Get an item with array-style indexing'''
+        return pd.DataFrame(self.x_data.iloc[index, :]).transpose()
 
 
 class BaseSettings:
@@ -114,6 +118,22 @@ class BaseClassifier:
             joblib.dump(self.model, export_path)
         else:
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
+
+    @classmethod
+    def from_file(cls, settings, model_path):
+        '''Creates a classifier instance from file'''
+        x_data = pd.DataFrame()
+        y_dataframe = pd.DataFrame(columns=['Substance'])
+        x_train = pd.concat([y_dataframe, x_data], axis=1)
+        y = np.asarray(y_dataframe)
+        data = BaseDataModel(
+            x_data=x_data,
+            x_train=x_train,
+            y=y
+        )
+        class_instance = cls(settings, data)
+        class_instance.import_model(model_path)
+        return class_instance
 
     def predict(self, x_data: pd.DataFrame):
         '''Performs prediction once the model is trained.'''

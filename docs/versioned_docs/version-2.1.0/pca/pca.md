@@ -30,6 +30,7 @@ PCA(settings: PCASettings, data: BaseDataModel)
 
 - `pca(self)`: performs Principal Component Analysis
 - `pca_stats(self)` produces PCA-related statistics and graphs.
+- `export_data(self) -> PCADataModel`: exports a [`PCADataModel`](./pcadatamodel.md).
 
 ## Example
 
