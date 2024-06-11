@@ -147,7 +147,10 @@ class LLDF:
                 columns=x.columns
             )
 
-            x_vector.append(x)
+            # Reset the index of the dataframe
+            processed_dataframe_x = processed_dataframe_x.reset_index(drop=True)
+
+            x_vector.append(processed_dataframe_x)
 
         try:
             table_data = pd.read_excel(
