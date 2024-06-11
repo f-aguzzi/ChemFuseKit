@@ -1,9 +1,17 @@
-## [2.4.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.12...v2.4.0-beta.1) (2024-06-11)
+
+## [2.4.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.14...v2.4.0-beta.1) (2024-06-11)
 
 
 ### chore
 
 * **ci:** manually fix broken semantic release
+
+## [2.3.0-beta.14](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.13...v2.3.0-beta.14) (2024-06-11)
+
+
+### Bug Fixes
+
+* **gitignore:** remove duplicates ([4442fb6](https://github.com/f-aguzzi/tesi/commit/4442fb674c25640e405991ef71022cd4071743b6))
 
 ## [2.3.0-beta.13](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.12...v2.3.0-beta.13) (2024-06-11)
 
