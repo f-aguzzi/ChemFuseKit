@@ -1,3 +1,11 @@
+## [2.3.0-beta.8](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.7...v2.3.0-beta.8) (2024-06-11)
+
+
+### Bug Fixes
+
+* **LLDF:** graph printing issues ([6eb9fba](https://github.com/f-aguzzi/tesi/commit/6eb9fba431339e430145d1d3dbc54ee9d6f6a802))
+* **LLDF:** import column names checking ([f51b11c](https://github.com/f-aguzzi/tesi/commit/f51b11c9981f9f7a26d688ab1954003e8be443a6))
+
 ## [2.3.0-beta.7](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.6...v2.3.0-beta.7) (2024-06-11)
 
 
