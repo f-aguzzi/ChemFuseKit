@@ -1,3 +1,11 @@
+## [2.3.0-beta.9](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.8...v2.3.0-beta.9) (2024-06-11)
+
+
+### Bug Fixes
+
+* **LR:** add special case for binary classifiers ([8da46b7](https://github.com/f-aguzzi/tesi/commit/8da46b7ecb5f2708fff9d6088eb484ce0ad13f6f))
+* **LLDF:** wrong data concatenation ([9bb5f93](https://github.com/f-aguzzi/tesi/commit/9bb5f9346d4ee19b11deaaf7567e4dd9538c3fd7))
+
 ## [2.3.0-beta.8](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.7...v2.3.0-beta.8) (2024-06-11)
 
 
