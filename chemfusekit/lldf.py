@@ -85,12 +85,15 @@ class LLDF:
                 raise FileNotFoundError("Error opening the selected files.") from exc
 
             # select only numerical attributes
-            if table.index_column is not None:
+            if table.index_column is not None and table.index_column in table_data.columns:
                 x = table_data.drop(table.index_column, axis=1)
             else:
                 x = table_data.iloc[:, 1:]
 
-            x = table_data.drop(table.class_column, axis=1)
+            if table.class_column in table_data.columns:
+                x = table_data.drop(table.class_column, axis=1)
+            else:
+                x = x.iloc[:, 1:]
 
             # It is necessary to convert the column names as string to select them
             x.columns = x.columns.astype(str)     # to make the colnames as text
