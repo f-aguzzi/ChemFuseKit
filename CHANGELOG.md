@@ -1,3 +1,10 @@
+## [2.3.0-beta.7](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.6...v2.3.0-beta.7) (2024-06-11)
+
+
+### Bug Fixes
+
+* **PCA:** conditions of reduce exception raising ([1f74220](https://github.com/f-aguzzi/tesi/commit/1f74220039b0f59374f568ea5744dc3728a28a13))
+
 ## [2.3.0-beta.6](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.5...v2.3.0-beta.6) (2024-06-11)
 
 
