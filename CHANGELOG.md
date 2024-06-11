@@ -1,3 +1,10 @@
+## [2.3.0-beta.10](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.9...v2.3.0-beta.10) (2024-06-11)
+
+
+### Features
+
+* **BaseDataModel:** subscript sample selection ([0830397](https://github.com/f-aguzzi/tesi/commit/08303978b5773f16fbbd98c30b7751959d759558))
+
 ## [2.3.0-beta.9](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.8...v2.3.0-beta.9) (2024-06-11)
 
 
