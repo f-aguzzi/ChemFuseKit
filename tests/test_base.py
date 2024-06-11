@@ -95,6 +95,38 @@ class TestBase(unittest.TestCase):
         # Clean up
         os.remove("modelfile.sklearn")
 
+    def test_from_file(self):
+        '''Test case for classifier import from file'''
+        '''Integration test for model dumping and reloading.'''
+        # Let's start by creating and training an LDA model
+        lldf_settings = LLDFSettings()
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
+        )
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        tables = [table1, table2]
+        lldf = LLDF(lldf_settings, tables)
+        lldf.lldf()
+        lda_settings = LDASettings()
+        lda = LDA(lda_settings, lldf.fused_data)
+        lda.lda()
+
+        # Dump the model to file
+        lda.export_model("modelfile.sklearn")
+
+        lda2 = LDA.from_file(lda_settings, "modelfile.sklearn")
+
+        # Check whether the imported model is the same as the exported model
+        self.assertEqual(lda.model.get_params(), lda2.model.get_params())
+
+        # Clean up
+        os.remove("modelfile.sklearn")
 
 if __name__ == '__main__':
     unittest.main()

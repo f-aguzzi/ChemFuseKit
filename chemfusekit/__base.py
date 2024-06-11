@@ -115,6 +115,18 @@ class BaseClassifier:
         else:
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
 
+    @classmethod
+    def from_file(cls, settings, model_path):
+        '''Creates a classifier instance from file'''
+        data = BaseDataModel(
+            pd.DataFrame(),
+            pd.DataFrame(),
+            np.asarray(pd.DataFrame)
+        )
+        class_instance = cls(settings, data)
+        class_instance.import_model(model_path)
+        return class_instance
+
     def predict(self, x_data: pd.DataFrame):
         '''Performs prediction once the model is trained.'''
         if x_data is None:

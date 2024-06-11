@@ -28,6 +28,8 @@ BaseClassifier(settings: BaseSettings, data: BaseDataModel)
 ## Methods
 
 - `import_model(import_path: str)`: loads a model from file
+  - *raises*:
+    - `ImportError("The file you tried importing is not a sklearn model!")`
 - `export_model(export_path: str)`: exports a model to file
   - *raises*:
     - `RuntimeError("You haven't trained the model yet! You cannot export it now.")` when trying to export an untrained model

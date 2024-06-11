@@ -28,9 +28,14 @@ BaseClassifier(settings: BaseSettings, data: BaseDataModel)
 ## Methods
 
 - `import_model(import_path: str)`: loads a model from file
+  - *raises*:
+    - `ImportError("The file you tried importing is not a sklearn model!")`
 - `export_model(export_path: str)`: exports a model to file
   - *raises*:
     - `RuntimeError("You haven't trained the model yet! You cannot export it now.")` when trying to export an untrained model
+- `@classmethod from_file(cls, settings, model_path)`: creates a class instance by loading a model from file
+  - *raises*:
+    - `ImportError("The file you tried importing is not a sklearn model!")`
 - `predict(x_data: pd.DataFrame)`: performs prediction through the `model`
   - *raises*:
     - `TypeError("X data for prediction must be non-empty.")` on empty `x_data`
