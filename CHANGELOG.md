@@ -1,3 +1,10 @@
+## [2.3.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.3...v2.3.0-beta.4) (2024-06-11)
+
+
+### Features
+
+* PCA rescaled_data property ([9eb9301](https://github.com/f-aguzzi/tesi/commit/9eb93015e4fa936f93de46cf25c8de6d7898440e))
+
 ## [2.3.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-06-08)
 
 
