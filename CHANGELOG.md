@@ -1,3 +1,15 @@
+## [2.3.0-beta.13](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.12...v2.3.0-beta.13) (2024-06-11)
+
+
+### Bug Fixes
+
+* **changelog:** realign versions ([24d74bf](https://github.com/f-aguzzi/tesi/commit/24d74bf7f8cb72f64cfd9732b0f7160b063d1a30))
+
+
+### chore
+
+* **docs:** upgrade to version 2.4.0 ([b296bbc](https://github.com/f-aguzzi/tesi/commit/b296bbc18506e6d058bf44e3de7eefc2ca416bfe))
+
 ## [2.3.0-beta.12](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.11...v2.3.0-beta.12) (2024-06-11)
 
 
