@@ -1,3 +1,10 @@
+## [2.3.0-beta.12](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.11...v2.3.0-beta.12) (2024-06-11)
+
+
+### Bug Fixes
+
+* **tests:** test case for BaseDataModel import/export ([0817547](https://github.com/f-aguzzi/tesi/commit/081754777e0b9be2a7ffe9b86b403a4538a682e1))
+
 ## [2.3.0-beta.11](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.10...v2.3.0-beta.11) (2024-06-11)
 
 
