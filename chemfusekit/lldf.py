@@ -134,12 +134,18 @@ class LLDF:
                     ax1.set_title(f'Original data')
                     ax2.plot(wl, preprocessed_x.T)
                     ax2.set_title(f'Processed table with {table.preprocessing}')
-                    fig.suptitle(f'Imported table: {table.file_path}')
+                    if table.file_path.endswith('.xlsx'):
+                        fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path}')
+                    else:
+                        fig.suptitle(f'Imported table: {table.file_path}')
                 else:
                     # Let's plot the different datasets we preprocessed
                     fig, ax1 = plt.subplots(1, figsize=(15, 15))
                     ax1.plot(wl, x.T)
-                    fig.suptitle(f'Imported table: {table.file_path} (no preprocessing)')
+                    if table.file_path.endswith('.xlsx'):
+                        fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path} (no preprocessing)')
+                    else:
+                        fig.suptitle(f'Imported table: {table.file_path} (no preprocessing)')
 
             # Create a new DataFrame with the processed numerical attributes
             processed_dataframe_x = pd.DataFrame(
