@@ -121,7 +121,7 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
 
         # See the classes the model used
         classes = model.classes_
-        if isinstance(model, LogisticRegression) and len(classes == 2):     # Binary classifier
+        if isinstance(model, LogisticRegression) and len(classes) == 2:     # Binary classifier
             classes = [" / ".join(classes)]
             classes = np.asarray(classes)
             classes = classes.reshape((1, 1))
