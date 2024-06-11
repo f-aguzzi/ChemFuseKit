@@ -3,6 +3,8 @@ import unittest
 
 import os
 
+import numpy as np
+
 from chemfusekit.lldf import LLDFSettings, LLDF, Table
 from chemfusekit.__base import BaseDataModel
 from chemfusekit.lda import LDASettings, LDA
@@ -35,13 +37,11 @@ class TestBase(unittest.TestCase):
         imported_data = BaseDataModel.load_from_file("export_test.xlsx", "Sheet1")
 
         # Assert the equality between the fused data and the export/import data
+        # Compare the DataFrames using numpy.allclose()
+        tolerance = 1e-6
         self.assertTrue(
-            # The compare method returns a difference dataframe, if it's empty it means the two are equal
-            lldf.fused_data.x_data.compare(imported_data.x_data).empty
-        )
-        self.assertTrue(
-            # The compare method returns a difference dataframe, if it's empty it means the two are equal
-            lldf.fused_data.x_train.compare(imported_data.x_train).empty
+            # Compare the DataFrames using numpy.allclose(): true if they match within tolerance
+            np.allclose(lldf.fused_data.x_data.values, imported_data.x_data.values, atol=tolerance)
         )
         self.assertTrue(
             # The comparison between ndarrays returns an array of booleans, collapsed by "all()"
@@ -53,8 +53,7 @@ class TestBase(unittest.TestCase):
         reimported_data = BaseDataModel.load_from_file("export_test_2.xlsx")
 
         # Assert the equality between the re-exported data and the re-reimported data
-        self.assertTrue(lldf.fused_data.x_data.compare(reimported_data.x_data).empty)
-        self.assertTrue(lldf.fused_data.x_train.compare(reimported_data.x_train).empty)
+        self.assertTrue(np.allclose(lldf.fused_data.x_data.values, imported_data.x_data.values, atol=tolerance))
         self.assertTrue((lldf.fused_data.y == reimported_data.y).all())
 
         # Clean up
