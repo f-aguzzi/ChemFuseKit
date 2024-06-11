@@ -1,3 +1,10 @@
+## [2.4.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.12...v2.4.0-beta.1) (2024-06-11)
+
+
+### chore
+
+* **ci:** manually fix broken semantic release
+
 ## [2.3.0-beta.13](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.12...v2.3.0-beta.13) (2024-06-11)
 
 
