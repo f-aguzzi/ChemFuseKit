@@ -3,6 +3,7 @@ import unittest
 import copy
 from chemfusekit.pca import PCASettings, PCA, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF, Table
+from chemfusekit.lr import LRSettings, LR
 
 class TestPCA(unittest.TestCase):
     '''Test suite for the PCA module.'''
@@ -125,4 +126,31 @@ class TestPCA(unittest.TestCase):
 
         self.assertEqual(result_true_components, result_false_components)
         self.assertEqual(result_true_array_scores, result_false_array_scores)
- 
+
+    def test_pca_integration_lr(self):
+        '''Integration test for PCA+LR'''
+
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
+        )
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF(lldf_settings, [table1, table2])
+        lldf.lldf()
+
+        # Set up PCA and get the rescaled_data property directly
+        pca_settings = PCASettings()
+        pca = PCA(pca_settings, lldf.fused_data)
+        rescaled_data = pca.rescaled_data
+
+        # Set up and execute LR
+        lr_settings = LRSettings()
+        lr = LR(lr_settings, rescaled_data)
+        lr.lr()

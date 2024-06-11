@@ -1,4 +1,6 @@
 '''Principal Component Analysis Module'''
+from copy import copy
+from functools import cached_property
 from typing import Optional
 
 import numpy as np
@@ -57,7 +59,7 @@ class PCA:
 
         # Run PCA producing the reduced variable Xreg and select the first 10 components
         pca = PC(self.settings.initial_components)
-        pca.fit_transform(x_data)
+        pca.fit(x_data)
 
         # Define the class vector (discrete/categorical variable)
         # y_dataframe = pd.DataFrame(self.fused_data.y, columns=['Substance'])
@@ -65,7 +67,7 @@ class PCA:
         out_sum = np.cumsum(pca.explained_variance_ratio_)
 
         # Autoselect the number of components
-        for i,x in enumerate(out_sum):
+        for i, x in enumerate(out_sum):
             if x >= self.settings.target_variance:
                 self.components = i
                 break
@@ -109,7 +111,7 @@ class PCA:
         # Run PCA producing the pca_model with a proper number of components
         pca = PC(n_components=self.components)
         self.pca_model = pca
-        self.pca_model.fit_transform(x_data)
+        self.pca_model.fit(x_data)
 
     def pca_stats(self):
         '''Produces PCA-related statistics.'''
@@ -277,6 +279,30 @@ class PCA:
         return PCADataModel(
             self.data.x_data,
             self.data.x_train,
+            self.data.y,
+            self.array_scores,
+            self.components
+        )
+
+    @cached_property
+    def rescaled_data(self) -> PCADataModel:
+        if self.array_scores is None:
+            settings_backup = copy(self.settings)
+            self.settings.output = GraphMode.NONE
+            if self.pca_model is None:
+                self.pca()
+            self.pca_stats()
+
+        x_data = pd.DataFrame(self.pca_model.transform(self.data.x_data))
+        y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
+        x_train = pd.concat(
+            [y_dataframe, x_data],
+            axis=1
+        )
+
+        return PCADataModel(
+            x_data,
+            x_train,
             self.data.y,
             self.array_scores,
             self.components

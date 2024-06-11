@@ -29,7 +29,14 @@ PCA(settings: PCASettings, data: BaseDataModel)
 ## Methods
 
 - `pca(self)`: performs Principal Component Analysis
-- `pca_stats(self)` produces PCA-related statistics and graphs.
+- `pca_stats(self)`: produces PCA-related statistics and graphs.
+- `export_data(self) -> PCADataModel`: exports a [`PCADataModel`](./pcadatamodel.md) with rescaled `array_scores` while maintaining the original `x_data`, `x_train` and `y` inherited by the constructor.
+
+## Properties
+
+- `rescaled_data(self) -> PCADataModel`: retrieves a [`PCADataModel`](./pcadatamodel.md) containing the results of PCA analysis (number of components, array scores, and dimension-reduced data).
+
+<br />
 
 ## Example
 
@@ -43,4 +50,7 @@ pca.pca()
 # Print the number of components and the statistics
 print(pca.components)
 pca.pca_stats()
+
+# Get the rescaled data
+rescaled_data = pca.rescaled_data
 ```

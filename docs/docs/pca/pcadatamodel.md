@@ -11,7 +11,14 @@ It inherits from the [`BaseDataModel`](../base/basedatamodel.md).
 ## Syntax
 
 ```python
-PCAModel(x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray, components: int)
+PCAModel(
+    x_data: pd.DataFrame,
+    x_train: pd.DataFrame,
+    y: np.ndarray,
+    array_scores:
+    np.ndarray,
+    components: int
+)
 ```
 
 ## Fields and constructor parameters
