@@ -27,6 +27,7 @@ docs/build
 ## Generated files
 docs/.docusaurus
 docs/.cache-loader
+case studies/*.sklearn
 
 ## Misc
 .DS_Store
@@ -38,3 +39,5 @@ docs/.cache-loader
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+

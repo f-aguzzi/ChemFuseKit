@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Case study: training a classifier from lab data
@@ -7,3 +7,13 @@ sidebar_position: 4
 :::note
 This case study is still **under construction**.
 :::
+
+## Introduction
+
+## Methodology
+
+## Results
+
+## Discussion
+
+## Conclusion

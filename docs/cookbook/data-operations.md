@@ -155,17 +155,17 @@ settings = LLDFSettings()   # Initialize the default settings
 # Set up the import settings for the first table (spectral data)
 table1 = Table(
     file_path='chemical_data.xlsx',
-    sheet_name='Spectral samples'
-    preprocessing='snv'
-    class_column='Class'
+    sheet_name='Spectral samples',
+    preprocessing='snv',
+    class_column='Class',
     index_column='Sample number'
 )
 
 # Set up the import settings for the second table (chromatography data)
 table2 = Table(
     file_path='chemical_data.csv',
-    preprocessing='none'
-    class_column='class'
+    preprocessing='none',
+    class_column='class',
     index_column='Sample'
 )
 
