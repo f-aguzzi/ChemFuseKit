@@ -1,3 +1,20 @@
+## [2.3.0-beta.11](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.10...v2.3.0-beta.11) (2024-06-11)
+
+
+### Features
+
+* **LLDF:** print table name in graphs ([1d78181](https://github.com/f-aguzzi/tesi/commit/1d78181a7f066e63c8eebcbcfee019a076882fc6))
+
+
+### Bug Fixes
+
+* error in condition in extended split tests ([5b56d15](https://github.com/f-aguzzi/tesi/commit/5b56d15787e95830dcc3937d21af5b8e93af8219))
+
+
+### Docs
+
+* updated case studies ([f838c2e](https://github.com/f-aguzzi/tesi/commit/f838c2e8d095f07e8c7f64e3776f072be6293728))
+
 ## [2.3.0-beta.10](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.9...v2.3.0-beta.10) (2024-06-11)
 
 
