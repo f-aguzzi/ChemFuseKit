@@ -50,9 +50,15 @@ class LR(BaseClassifier):
 
         # See the classes the model used
         classes = np.unique(self.data.y)
-        classes = classes.reshape((1, len(classes)))
+        if len(classes) == 2:   # Binary classifier
+            classes = [" / ".join(classes)]
+            classes = np.asarray(classes)
+            classes = classes.reshape((1, 1))
+        else:   # Non-binary classifier
+            classes = classes.reshape((1, len(classes)))
         coefficients = model.coef_.transpose()
         intercepts = model.intercept_.reshape((1, len(model.intercept_)))
+
         print_table(
             ["Class"] + [f"Coefficient {i+1}" for i in range(model.coef_.shape[1])] + ["Intercept (bias)"],
             np.concatenate((classes, coefficients, intercepts)),
@@ -80,14 +86,16 @@ class LR(BaseClassifier):
         pred_column = predictions.reshape((1, predictions.shape[0]))
         prob_column = probabilities.transpose()
 
+        classes = np.unique(self.data.y)
+
         print_table(
-            np.concatenate((np.asarray(["Real sample", "Prediction"]), classes.reshape(17, ))),
+            np.concatenate((np.asarray(["Real sample", "Prediction"]), classes)),
             np.concatenate((
                 sample_column,
                 pred_column,
                 prob_column
             )),
-            f"LR Predictions with class probabilities (overall score: {scores}",
+            f"LR Predictions with class probabilities (overall score: {scores})",
             self.settings.output
         )
 
