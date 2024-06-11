@@ -1,3 +1,10 @@
+## [2.3.0-beta.6](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.5...v2.3.0-beta.6) (2024-06-11)
+
+
+### Features
+
+* **PCA:** added reduce method ([1ad418e](https://github.com/f-aguzzi/tesi/commit/1ad418eec712522038dab118744c60a0dbf8f47f))
+
 ## [2.3.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v2.3.0-beta.4...v2.3.0-beta.5) (2024-06-11)
 
 
