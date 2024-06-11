@@ -31,6 +31,10 @@ PCA(settings: PCASettings, data: BaseDataModel)
 - `pca(self)`: performs Principal Component Analysis
 - `pca_stats(self)`: produces PCA-related statistics and graphs.
 - `export_data(self) -> PCADataModel`: exports a [`PCADataModel`](./pcadatamodel.md) with rescaled `array_scores` while maintaining the original `x_data`, `x_train` and `y` inherited by the constructor.
+- `@classmethod from_file(cls, settings: PCASettings, model_path: str)`: creates a PCA instance from a file containing its sklearn core model.
+  - *raises:*
+    - `ImportError("The file you tried importing is not a valid Python object!")` when importing an invalid model;
+    - `ImportError("The file you tried importing is not a sklearn PCA model!")` when the imported model is valid but an instance of the wrong class.
 
 ## Properties
 

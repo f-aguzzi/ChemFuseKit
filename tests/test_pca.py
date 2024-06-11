@@ -154,3 +154,42 @@ class TestPCA(unittest.TestCase):
         lr_settings = LRSettings()
         lr = LR(lr_settings, rescaled_data)
         lr.lr()
+
+    def test_pca_import_export(self):
+        '''Test case for the import and export of PCA models.'''
+        # Perform preliminary data fusion
+        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        table1 = Table(
+            file_path="tests/qepas.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="snv"
+        )
+        table2 = Table(
+            file_path="tests/rt.xlsx",
+            sheet_name="Sheet1",
+            preprocessing="none"
+        )
+        lldf = LLDF(lldf_settings, [table1, table2])
+        lldf.lldf()
+
+        # Set up PCA
+        pca_settings = PCASettings()
+        pca = PCA(pca_settings, lldf.fused_data)
+
+        # Try exporting the model before executing pca()
+        with self.assertRaises(RuntimeError):
+            pca.export_model('pca_model.sklearn')
+
+        # Execute PCA and retry exporting
+        pca.pca()
+        pca.export_model('pca_model.sklearn')
+
+        # Try creating a new PCA object from the wrong type of file
+        with self.assertRaises(ImportError):
+            PCA.from_file(pca_settings, 'tests/qepas.xlsx')
+
+        # Create a new PCA object from file
+        pca2 = PCA.from_file(pca_settings, 'pca_model.sklearn')
+
+        # Assert the equality of the two models
+        self.assertEqual(pca.pca_model.get_params(), pca2.pca_model.get_params())

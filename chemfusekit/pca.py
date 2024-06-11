@@ -3,6 +3,7 @@ from copy import copy
 from functools import cached_property
 from typing import Optional
 
+import joblib
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -123,7 +124,7 @@ class PCA:
         scores = pd.DataFrame(data=self.pca_model.fit_transform(x_data), columns=pc_cols)
         scores.index = x_data.index
         scores = pd.concat([scores, x_train.Substance], axis = 1)
-        
+
         print_table(
             pc_cols + ['Substance'],
             [scores.iloc[:,i] for i in range(scores.shape[1])],
@@ -138,7 +139,7 @@ class PCA:
             index=x_data.columns
         )
         loadings["Attributes"] = loadings.index
-    
+
         print_table(
             pc_cols + ['Retention Time'],
             [loadings.iloc[:,i] for i in range(loadings.shape[1])],
@@ -307,3 +308,28 @@ class PCA:
             self.array_scores,
             self.components
         )
+
+    @classmethod
+    def from_file(cls, settings: PCASettings, model_path: str):
+        '''Creates a PCA instance from a file containing its sklearn core model.'''
+        try:
+            model = joblib.load(model_path)
+        except Exception as exc:
+            raise ImportError("The file you tried importing is not a valid Python object!") from exc
+        if not isinstance(model, PC):
+            raise ImportError("The file you tried importing is not a sklearn PCA model!")
+        data = BaseDataModel(
+            pd.DataFrame(),
+            pd.DataFrame(),
+            np.asarray(pd.DataFrame)
+        )
+        class_instance = PCA(settings, data)
+        class_instance.pca_model = model
+        return class_instance
+
+    def export_model(self, export_path: str):
+        '''Exports the underlying sklearn PCA model to a file.'''
+        if self.pca_model is not None:
+            joblib.dump(self.pca_model, export_path)
+        else:
+            raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
