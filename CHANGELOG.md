@@ -1,3 +1,10 @@
+## [2.5.0-beta.6](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.5...v2.5.0-beta.6) (2024-06-12)
+
+
+### Bug Fixes
+
+* **pca:** field and property issues ([91cefd3](https://github.com/f-aguzzi/tesi/commit/91cefd3d66475d13ed990ed2911014cc866e2f8d))
+
 ## [2.5.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.4...v2.5.0-beta.5) (2024-06-12)
 
 
