@@ -197,7 +197,10 @@ The `LR` model can be exported using the `export_model(export_path: str)` method
 
 ```python
 lr.export_model("LR_DMMP_acetone_classifier.sklearn")
+pca.export_model("DMMP_acetone_pca.sklearn")
 ```
+
+### Prediction
 
 In the future, when we need to classify DMMP and acetone on a new dataset, we can simply import the new dataset, perform the necessary data fusion, reduce the dimensionality through PCA, import the pre-trained `LR` model, and use it to classify the data. This streamlined process allows for efficient and consistent classification of DMMP and acetone samples.
 
@@ -247,3 +250,41 @@ print(prediction)
 ```
 
 ![Predicted results](./img/prediction.png)
+
+## Results
+
+The split testing seems to demonstrate the ability of the model to 
+
+
+## Discussion
+
+With a script containing less than 80 lines, it's possible to perform data fusion, training and model saving in `ChemFuseKit`. With 40 lines, it's possible to fuse another dataset, perform dimensionality reduction on it and then run inference. This is a massive reduction from the hundreds of lines that a comparable solution made directly with `scikit-learn` would require.
+
+The ability to have the entire analysis pipeline in one library, including data fusion, training, inference and data plotting, united with the ability for the user to save the artifacts at any time during the process (models, fused datasets, graphs), makes this library stand out as a unique solution in the chemiometry landscape.
+
+The case study demonstrates the effectiveness of the data fusion-based workflow of `ChemFuseKit` in creating a single, uninterrupted pipeline from the datasheets to the creation and export of a classifier. The pipeline involves several steps, including data preprocessing, data fusion, dimensionality reduction, and model training and evaluation.
+With a script containing less than 80 lines, it's possible to perform data fusion, training and model saving. With 40 more lines, it's possible to fuse another dataset, perform dimensionality reduction on it and then run inference. This is a massive reduction from the hundreds of lines that a comparable solution made directly with `scikit-learn` would require.
+
+Now, let's look back at each step:
+
+- **Data preprocessing** is a crucial step in the pipeline as it ensures the consistency and comparability of the data across different samples. In this case, manual alignment and checking of the samples were required, and normalization was applied to the IMS and QEPAS data to ensure the data was rescaled.
+
+- **Data fusion** is the most significant aspect of the case study. The three tables contained in the Excel datasheet were concatenated row-wise to form a single table that contains the data from the IMS and QEPAS spectrometers, as well as the GC retention times. This step is essential in integrating the data from the different sensors and creating a unified dataset for further analysis.
+
+- **Dimensionality reduction** was necessary to address the high dimensionality of the fused dataset and the collinearity of many of its components. PCA was used to simplify the high-dimensional data by transforming the original data into a new set of variables called principal components. By retaining only the first few principal components, one can often capture most of the information in the original data with fewer variables, making it easier to visualize and analyze.
+
+- **Model training and evaluation** were the final steps in the pipeline. A LR object was used to classify the data, and the model was configured to perform split testing, with 70% of the data allocated for the training set and the remaining 30% for the evaluation set. The confusion matrix and classification report indicated promising results.
+
+The case study also demonstrates the ease of use of ChemFuseKit in creating a pipeline for data analysis. The use of Python code and the availability of settings and methods for each step of the pipeline make it accessible to users of different levels of expertise.
+
+## Conclusion
+
+Overall, the data fusion-based workflow of `ChemFuseKit` provides a valuable tool for data analysis, integrating the data from different sensors and creating a unified dataset for further analysis. The pipeline created in this case study can be used as a template for future data analysis projects, providing a streamlined and efficient process for data analysis.
+
+`ChemFuseKit` is a powerful and user-friendly tool for data analysis in the field of chemometrics. It offers a simple and effective solution for a wide range of applications, from academic study to professional usage in small and large labs. One of the key strengths of `ChemFuseKit` is its well-configured default values and numerous automated features in the classifiers, which make it easy for users of all levels to achieve accurate results.
+
+The algorithms used in `ChemFuseKit` are based on those from `scikit-learn`, a well-established and reliable machine learning library. This ensures that the algorithms used in ChemFuseKit are of high quality and meet industry standards. However, `ChemFuseKit` goes beyond simply providing access to these algorithms by offering an intuitive interface that streamlines the process of data analysis and makes it more efficient.
+
+One of the major advantages of `ChemFuseKit` is its scalability. Regardless of the size of the dataset, the library can handle it with ease, making it a great option for batch processing. This is particularly important in the field of chemometrics, where large datasets are common and efficient data processing is crucial.
+
+In conclusion, it's safe to say that `ChemFuseKit` is a versatile and powerful tool for data analysis in chemometrics. Its user-friendly interface, automated features, and scalability make it a great choice for both academic and professional use.
