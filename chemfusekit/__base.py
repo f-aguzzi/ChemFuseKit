@@ -95,7 +95,7 @@ class BaseSettings:
         self.output = output
 
 
-class BaseClassifierSettings:
+class BaseClassifierSettings(BaseSettings):
     '''Holds the settings for the BaseClassifier object.'''
 
     def __init__(self, output: GraphMode = GraphMode.NONE, test_split: bool = False):
