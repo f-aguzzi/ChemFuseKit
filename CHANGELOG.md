@@ -1,3 +1,10 @@
+## [2.5.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.4...v2.5.0-beta.5) (2024-06-12)
+
+
+### Bug Fixes
+
+* **BaseActionClass:** trailing commas creating unwanted tuple ([1b057ab](https://github.com/f-aguzzi/tesi/commit/1b057abb23710c0aef8f67875411d63e47a61036))
+
 ## [2.5.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.3...v2.5.0-beta.4) (2024-06-12)
 
 
