@@ -1,3 +1,21 @@
+## [2.5.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.4.0...v2.5.0-beta.1) (2024-06-12)
+
+
+### Features
+
+* **base:** added BaseActionClass as root class ([4f0bac8](https://github.com/f-aguzzi/tesi/commit/4f0bac831f6ca215212f6c801b01483ef2d0e5cc))
+* LDA and PCA inherit from BaseReducer ([7b797bd](https://github.com/f-aguzzi/tesi/commit/7b797bdfb00404b90fdeaf4178085f2d2bdb9c34))
+
+
+### chore
+
+* **docs:** upgrade to version 2.5.0 ([387499f](https://github.com/f-aguzzi/tesi/commit/387499f5add4ceae62d07891ffd531406607cdaf))
+
+
+### Docs
+
+* finish first case study ([21fcb01](https://github.com/f-aguzzi/tesi/commit/21fcb014b8b510fe7718e1443a1daad0afd09e0e))
+
 ## [2.4.0](https://github.com/f-aguzzi/tesi/compare/v2.3.0...v2.4.0) (2024-06-11)
 
 
