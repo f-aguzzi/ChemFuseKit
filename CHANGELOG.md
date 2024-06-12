@@ -1,3 +1,10 @@
+## [2.5.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.1...v2.5.0-beta.2) (2024-06-12)
+
+
+### Bug Fixes
+
+* **base:** settings inheritance ([8a14a00](https://github.com/f-aguzzi/tesi/commit/8a14a0036bf3791deda182ec0f3aa618806f180d))
+
 ## [2.5.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.4.0...v2.5.0-beta.1) (2024-06-12)
 
 
