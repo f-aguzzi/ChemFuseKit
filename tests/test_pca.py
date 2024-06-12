@@ -192,7 +192,7 @@ class TestPCA(unittest.TestCase):
         pca2 = PCA.from_file(pca_settings, 'pca_model.sklearn')
 
         # Assert the equality of the two models
-        self.assertEqual(pca.pca_model.get_params(), pca2.pca_model.get_params())
+        self.assertEqual(pca.model.get_params(), pca2.model.get_params())
 
     def test_pca_reduce(self):
         '''Test case for data dimensionality reduction.'''

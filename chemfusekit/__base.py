@@ -170,7 +170,6 @@ class BaseReducer(BaseActionClass):
 
     def __init__(self, settings: BaseSettings, data: BaseDataModel):
         super().__init__(settings, data)
-        self.rescaled_data = None
     
     @abstractmethod
     def export_data(self) -> BaseDataModel:
@@ -193,4 +192,8 @@ class BaseReducer(BaseActionClass):
             x_train=x_train,
             y=data.y
         )
-    
+
+    @property
+    @abstractmethod
+    def rescaled_data(self) -> BaseDataModel:
+        pass

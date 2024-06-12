@@ -1,4 +1,5 @@
 '''Principal Component Analysis Module'''
+import functools
 from copy import copy
 from functools import cached_property
 from typing import Optional
@@ -48,7 +49,7 @@ class PCA(BaseReducer):
     def __init__(self, settings: PCASettings, data: BaseDataModel):
         super().__init__(settings, data)
         self.components = 0
-        self.pca_model: Optional[PC] = None
+        self.model: Optional[PC] = None
         self.array_scores: Optional[np.ndarray] = None
 
     def pca(self):
@@ -108,10 +109,10 @@ class PCA(BaseReducer):
             plt.ylabel('Cumulative Proportional Variance Explained')
             plt.show()
 
-        # Run PCA producing the pca_model with a proper number of components
+        # Run PCA producing the model with a proper number of components
         pca = PC(n_components=self.components)
-        self.pca_model = pca
-        self.pca_model.fit(x_data)
+        self.model = pca
+        self.model.fit(x_data)
 
     def pca_stats(self):
         '''Produces PCA-related statistics.'''
@@ -120,20 +121,20 @@ class PCA(BaseReducer):
 
         # Prepare the Scores dataframe (and concatenate the original 'Region' variable)
         pc_cols = [f"PC{i+1}" for i in range(self.components)]
-        scores = pd.DataFrame(data=self.pca_model.fit_transform(x_data), columns=pc_cols)
+        scores = pd.DataFrame(data=self.model.fit_transform(x_data), columns=pc_cols)
         scores.index = x_data.index
-        scores = pd.concat([scores, x_train.Substance], axis = 1)
+        scores = pd.concat([scores, x_train.Substance], axis=1)
 
         print_table(
             pc_cols + ['Substance'],
-            [scores.iloc[:,i] for i in range(scores.shape[1])],
+            [scores.iloc[:, i] for i in range(scores.shape[1])],
             "PCA scores for each component",
             self.settings.output
         )
 
         # Prepare the loadings dataframe
         loadings = pd.DataFrame(
-            self.pca_model.components_.T,
+            self.model.components_.T,
             columns=pc_cols,
             index=x_data.columns
         )
@@ -141,7 +142,7 @@ class PCA(BaseReducer):
 
         print_table(
             pc_cols + ['Retention Time'],
-            [loadings.iloc[:,i] for i in range(loadings.shape[1])],
+            [loadings.iloc[:, i] for i in range(loadings.shape[1])],
             "PCA Loadings",
             self.settings.output
         )
@@ -177,9 +178,9 @@ class PCA(BaseReducer):
             fig.show()
 
         # Get PCA scores
-        t = scores.iloc[:,0:self.components]
+        t = scores.iloc[:, 0:self.components]
         # Get PCA loadings
-        p = loadings.iloc[:,0:self.components]
+        p = loadings.iloc[:, 0:self.components]
         # Calculate error array
         err = x_data - np.dot(t,p.T)
         # Calculate Q-residuals (sum over the rows of the error array)
@@ -206,7 +207,7 @@ class PCA(BaseReducer):
         # Create a dataframe using only T2 and Q-residuals
         hot_q_data = pd.DataFrame(
             {'T2': tsq, 'Qres': q, 'Substance': x_train.Substance},
-            index = x_data.index
+            index=x_data.index
         )
 
         if self.settings.output is GraphMode.GRAPHIC:
@@ -216,7 +217,7 @@ class PCA(BaseReducer):
                 x="T2",
                 y="Qres",
                 hover_data={'Sample': (hot_q_data.index)},
-                color = "Substance"
+                color="Substance"
             )
             fig.add_hline(y=abs(q_conf),line_dash="dot", line_color='Red')
             fig.add_vline(x=tsq_conf,line_dash="dot", line_color='Red')
@@ -264,7 +265,7 @@ class PCA(BaseReducer):
 
         print_table(
             pc_cols,
-            [array_scores[:,i] for i in range(array_scores.shape[1])],
+            [array_scores[:, i] for i in range(array_scores.shape[1])],
             "Array without 'Substance' column",
             self.settings.output
         )
@@ -273,7 +274,7 @@ class PCA(BaseReducer):
 
     def export_data(self) -> PCADataModel:
         '''Export data artifacts.'''
-        if self.pca_model is None or self.array_scores is None:
+        if self.model is None or self.array_scores is None:
             raise RuntimeError("Run both pca() and pca_stats() methods before exporting data!")
 
         return PCADataModel(
@@ -286,15 +287,14 @@ class PCA(BaseReducer):
 
     @cached_property
     def rescaled_data(self) -> PCADataModel:
-        if self.array_scores is None:
+        if self.model is None:
             settings_backup = copy(self.settings)
             self.settings.output = GraphMode.NONE
-            if self.pca_model is None:
-                self.pca()
+            self.pca()
             self.pca_stats()
             self.settings = settings_backup
 
-        x_data = pd.DataFrame(self.pca_model.transform(self.data.x_data))
+        x_data = pd.DataFrame(self.model.transform(self.data.x_data))
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
         x_train = pd.concat(
             [y_dataframe, x_data],
@@ -324,7 +324,7 @@ class PCA(BaseReducer):
             np.asarray(pd.DataFrame)
         )
         class_instance = PCA(settings, data)
-        class_instance.pca_model = model
+        class_instance.model = model
         return class_instance
 
     def import_model(self, import_path: str):
@@ -336,7 +336,7 @@ class PCA(BaseReducer):
 
     def export_model(self, export_path: str):
         '''Exports the underlying sklearn PCA model to a file.'''
-        if self.pca_model is not None:
-            joblib.dump(self.pca_model, export_path)
+        if self.model is not None:
+            joblib.dump(self.model, export_path)
         else:
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")

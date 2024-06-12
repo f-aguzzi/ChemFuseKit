@@ -1,5 +1,6 @@
 '''Linear Discriminant Analysis module'''
 from copy import copy
+from functools import cached_property
 from typing import Optional
 
 import joblib
@@ -8,7 +9,6 @@ import pandas as pd
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 
-from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import graph_output, run_split_test
 from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
 from .__base import BaseDataModel, BaseClassifier, BaseClassifierSettings, BaseReducer
@@ -138,4 +138,26 @@ class LDA(BaseClassifier, BaseReducer):
             x_train=self.data.x_train,
             y=self.data.y,
             components=self.settings.components
+        )
+
+    @cached_property
+    def rescaled_data(self) -> BaseDataModel:
+        if self.model is None:
+            settings_backup = copy(self.settings)
+            self.settings.output = GraphMode.NONE
+            self.settings.test_split = False
+            self.lda()
+            self.settings = settings_backup
+
+        x_data = pd.DataFrame(self.model.transform(self.data.x_data))
+        y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
+        x_train = pd.concat(
+            [y_dataframe, x_data],
+            axis=1
+        )
+
+        return BaseDataModel(
+            x_data,
+            x_train,
+            self.data.y
         )
