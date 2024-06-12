@@ -1,13 +1,14 @@
-'''This module contains the test cases for the LDA module.'''
+"""This module contains the test cases for the LDA module."""
 import unittest
 from chemfusekit.lda import LDASettings, LDA, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF, Table
 
+
 class TestLDA(unittest.TestCase):
-    '''Test suite for the LDA module.'''
+    """Test suite for the LDA module."""
 
     def test_lda_settings(self):
-        '''Test case against settings errors.'''
+        """Test case against settings errors."""
         # Check for negative component rejection
         with self.assertRaises(ValueError):
             LDASettings(components=-3, output=GraphMode.TEXT)
@@ -16,7 +17,7 @@ class TestLDA(unittest.TestCase):
             LDASettings(output=GraphMode.NONE, test_split=True)
 
     def test_lda_constructor(self):
-        '''Test case against constructor parameter issues.'''
+        """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
@@ -49,9 +50,9 @@ class TestLDA(unittest.TestCase):
 
         # Finally, with proper values:
         LDA(lda_settings, lldf.fused_data)
-    
+
     def test_lda(self):
-        '''Integration test case.'''
+        """Integration test case."""
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
@@ -88,7 +89,7 @@ class TestLDA(unittest.TestCase):
         lda.lda()
 
     def test_lda_predict(self):
-        '''Test case against prediction parameter issues.'''
+        """Test case against prediction parameter issues."""
 
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
@@ -110,7 +111,7 @@ class TestLDA(unittest.TestCase):
         lda = LDA(lda_settings, lldf.fused_data)
 
         # Pick a random sample for prediction
-        x_data_sample = lldf.fused_data.x_train.iloc[119] # should be DMMP
+        x_data_sample = lldf.fused_data.x_train.iloc[119]  # should be DMMP
         x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
 
         # Run prediction with untrained model (should throw exception)

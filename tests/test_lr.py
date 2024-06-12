@@ -1,4 +1,4 @@
-'''This module contains the test cases for the LR module.'''
+"""This module contains the test cases for the LR module."""
 import unittest
 
 import numpy as np
@@ -8,11 +8,12 @@ from chemfusekit.lldf import LLDFSettings, LLDF, Table
 from chemfusekit.pca import PCASettings, PCA, PCADataModel
 from chemfusekit.lr import LRSettings, LR, GraphMode
 
+
 class TestLR(unittest.TestCase):
-    '''Test suite for the LR module.'''
+    """Test suite for the LR module."""
 
     def test_lr_settings(self):
-        '''Test case against settings input errors.'''
+        """Test case against settings input errors."""
         # Should raise an exception when the algorithm is not available
         with self.assertRaises(ValueError):
             LRSettings(
@@ -33,14 +34,14 @@ class TestLR(unittest.TestCase):
                 algorithm='liblinear',
                 output=None,
                 test_split=False
-            ) 
+            )
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm='liblinear',
                 output=GraphMode.NONE,
                 test_split=None
             )
-        
+
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
             LRSettings(output=GraphMode.NONE, test_split=True)
@@ -52,7 +53,7 @@ class TestLR(unittest.TestCase):
         )
 
     def test_lr_constructor(self):
-        '''Test case against constructor input errors.'''
+        """Test case against constructor input errors."""
         data_model = PCADataModel(
             x_data=pd.DataFrame(),
             x_train=pd.DataFrame(),
@@ -79,7 +80,7 @@ class TestLR(unittest.TestCase):
         )
 
     def test_lr(self):
-        '''Integration test case for LR training.'''
+        """Integration test case for LR training."""
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
@@ -134,7 +135,7 @@ class TestLR(unittest.TestCase):
         lr.lr()
 
     def test_lr_predict(self):
-        '''Test case against prediction input errors.'''
+        """Test case against prediction input errors."""
         # Set up the model
         lr_settings = LRSettings()
         pca_data = PCADataModel(

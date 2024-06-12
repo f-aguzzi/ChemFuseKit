@@ -1,13 +1,14 @@
-'''This module contains the test cases for the SVM module.'''
+"""This module contains the test cases for the SVM module."""
 import unittest
 from chemfusekit.svm import SVMSettings, SVM, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF, Table
 
+
 class TestSVM(unittest.TestCase):
-    '''Test suite for the LDA module.'''
+    """Test suite for the LDA module."""
 
     def test_svm_settings(self):
-        '''Test case against settings errors.'''
+        """Test case against settings errors."""
         # Test against null type
         with self.assertRaises(TypeError):
             SVMSettings(None, GraphMode.NONE, False)
@@ -29,7 +30,7 @@ class TestSVM(unittest.TestCase):
         SVMSettings(kernel='gaussian', output=GraphMode.GRAPHIC, test_split=False)
 
     def test_svm_constructor(self):
-        '''Test case against constructor parameter issues.'''
+        """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
@@ -61,10 +62,10 @@ class TestSVM(unittest.TestCase):
             SVM(None, None)
 
         # Finally, with proper values:
-        svm = SVM(svm_settings, lldf.fused_data)
-    
+        SVM(svm_settings, lldf.fused_data)
+
     def test_svm(self):
-        '''Integration test case.'''
+        """Integration test case."""
 
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
@@ -97,7 +98,7 @@ class TestSVM(unittest.TestCase):
         svm.svm()
 
     def test_svm_predict(self):
-        '''Test case against prediction parameter issues.'''
+        """Test case against prediction parameter issues."""
 
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
@@ -119,7 +120,7 @@ class TestSVM(unittest.TestCase):
         svm = SVM(svm_settings, lldf.fused_data)
 
         # Pick a random sample for prediction
-        x_data_sample = lldf.fused_data.x_train.iloc[119] # should be DMMP
+        x_data_sample = lldf.fused_data.x_train.iloc[119]  # should be DMMP
         x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
 
         # Run prediction with untrained model (should throw exception)

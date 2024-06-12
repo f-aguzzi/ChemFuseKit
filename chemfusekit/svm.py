@@ -1,18 +1,14 @@
-'''Support Vector Machine module.'''
+"""Support Vector Machine module."""
 from copy import copy
-from typing import Optional
-
-import pandas as pd
 
 from sklearn.svm import SVC
 
-from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import GraphMode, run_split_test, print_confusion_matrix
 from .__base import BaseClassifierSettings, BaseClassifier, BaseDataModel
 
 
 class SVMSettings(BaseClassifierSettings):
-    '''Holds the settings for the SVM object.'''
+    """Holds the settings for the SVM object."""
     def __init__(self, kernel: str = 'linear', output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
         if kernel not in ['linear', 'poly', 'gaussian', 'sigmoid']:
@@ -21,12 +17,12 @@ class SVMSettings(BaseClassifierSettings):
 
 
 class SVM(BaseClassifier):
-    '''Class for Support Vector Machine analysis of the data'''
+    """Class for Support Vector Machine analysis of the data"""
     def __init__(self, settings: SVMSettings, data: BaseDataModel):
         super().__init__(settings, data)
 
     def svm(self):
-        '''Performs Support Vector Machine analysis'''
+        """Performs Support Vector Machine analysis"""
 
         # Linear kernel
         if self.settings.kernel == 'linear':

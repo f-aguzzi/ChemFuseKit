@@ -1,12 +1,13 @@
-'''This module contains the test cases for the LLDF module.'''
+"""This module contains the test cases for the LLDF module."""
 import unittest
 from chemfusekit.lldf import LLDFSettings, LLDF, GraphMode, Table
 
+
 class TestLLDF(unittest.TestCase):
-    '''Test suite for the LLDF module.'''
+    """Test suite for the LLDF module."""
 
     def test_file_loading(self):
-        '''Test case against file loading errors.'''
+        """Test case against file loading errors."""
         # load a non-existent file on purpose
         settings = LLDFSettings(
             output=GraphMode.NONE
@@ -23,7 +24,7 @@ class TestLLDF(unittest.TestCase):
         self.assertRaises(FileNotFoundError, lldf.lldf)
 
     def test_preprocessing_techniques(self):
-        '''Test case against wrong preprocessing user input.'''
+        """Test case against wrong preprocessing user input."""
         with self.assertRaises(SyntaxError):
             settings = LLDFSettings(
                 output=GraphMode.NONE
@@ -47,9 +48,9 @@ class TestLLDF(unittest.TestCase):
         )
         lldf = LLDF(settings, [table1])
         lldf.lldf()
-    
+
     def test_export(self):
-        '''Test case against wrong export settings.'''
+        """Test case against wrong export settings."""
         settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path='tests/qepas.xlsx',
@@ -57,7 +58,7 @@ class TestLLDF(unittest.TestCase):
             preprocessing='snv'
         )
         lldf = LLDF(settings, [table1])
-        
+
         # Try exporting data before data fusion
         with self.assertRaises(RuntimeError):
             lldf.export_data('path')
@@ -67,7 +68,8 @@ class TestLLDF(unittest.TestCase):
 
         # Try exporting data to an invalid path
         with self.assertRaises(ValueError):
-            lldf.export_data('$£=0\//|') 
+            lldf.export_data('$£=0\//|')
+
 
 if __name__ == '__main__':
     unittest.main()

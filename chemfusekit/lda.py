@@ -1,9 +1,7 @@
-'''Linear Discriminant Analysis module'''
+"""Linear Discriminant Analysis module"""
 from copy import copy
 from functools import cached_property
-from typing import Optional
 
-import joblib
 import numpy as np
 import pandas as pd
 
@@ -16,7 +14,7 @@ from .pca import PCADataModel
 
 
 class LDADataModel(BaseDataModel):
-    '''Holds the output data from LDA.'''
+    """Holds the output data from LDA."""
 
     def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, components: int):
         super().__init__(x_data, x_train, y)
@@ -24,7 +22,7 @@ class LDADataModel(BaseDataModel):
 
 
 class LDASettings(BaseClassifierSettings):
-    '''Holds the settings for the LDA object.'''
+    """Holds the settings for the LDA object."""
 
     def __init__(self, components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
@@ -34,7 +32,7 @@ class LDASettings(BaseClassifierSettings):
 
 
 class LDA(BaseClassifier, BaseReducer):
-    '''Class to store the data, methods and artifacts for Linear Discriminant Analysis'''
+    """Class to store the data, methods and artifacts for Linear Discriminant Analysis"""
 
     def __init__(self, settings: LDASettings, data: BaseDataModel):
         super().__init__(settings, data)
@@ -45,7 +43,7 @@ class LDA(BaseClassifier, BaseReducer):
             self.settings.components = data.components - 1
 
     def lda(self):
-        '''Performs Linear Discriminant Analysis'''
+        """Performs Linear Discriminant Analysis"""
 
         lda = LD(n_components=self.settings.components)  # N-1 where N are the classes
         scores_lda = lda.fit(self.data.x_data, self.data.y).transform(self.data.x_data)
@@ -132,8 +130,8 @@ class LDA(BaseClassifier, BaseReducer):
         self.settings.components = self.model.n_components
 
     def export_data(self) -> LDADataModel:
-        '''Export the data to an object.'''
-        return LDADataModel (
+        """Export the data to an object."""
+        return LDADataModel(
             x_data=self.data.x_data,
             x_train=self.data.x_train,
             y=self.data.y,
