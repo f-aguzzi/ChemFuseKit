@@ -1,26 +1,29 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# BaseClassifier class
+# BaseReducer class
 
-A parent class for all classifiers, containing basic shared utilities. Inherits from [`BaseActionClass`](./baseactionclass.md).
+A parent class for all reducers (decomposition-performing classes), containing basic shared utilities.
+Inherits from [`BaseActionClass`](./baseactionclass.md).
 
 ## Syntax
 
 ```python
-BaseClassifier(settings: BaseSettings, data: BaseDataModel)
+BaseReducer(settings: BaseSettings, data: BaseDataModel)
 ```
 ## Constructor parameters
 
-- `settings`: object of type [`BaseSettings`](./basesettings.md). Contains the settings for the `BaseClassifier` object.
+- `settings`: object of type [`BaseSettings`](./basesettings.md). Contains the settings for the `BaseReducer` object.
 - `data`: object of type [`BaseDataModel`](../base/basedatamodel.md). Contains the data to be analyzed.
 
 ## Fields
 
-- `settings`: object of type [`BaseSettings`](./basesettings.md). Contains the settings for the `BaseClassifier` object.
+- `settings`: contains the settings for the `BaseReducer` object.
 - `data`: object of type [`BaseDataModel`](../base/basedatamodel.md). Contains the data to be analyzed.
 - `model`: a `sklearn` model from `scikit-learn` or `None`. Defaults to `None`.
+- `components`: integer. The number of components to be kept after dimensionality reduction. Defaults to `0`.
+- `rescaled_data`: `pd.DataFrame` or `None`. The data after being rescaled. Defaults to `None`.
 
 ## Methods
 
@@ -34,7 +37,8 @@ BaseClassifier(settings: BaseSettings, data: BaseDataModel)
 	+ *raises*:
 		- `ImportError("The file you tried importing is not a sklearn model!")`
 	+ *note*: this method creates an empty `BaseDataModel` object and assigns it to the `data` field of the class instance.
-- `predict(self, x_data: pd.DataFrame)`: performs prediction once the model is trained
+- `@abstractmethod export_data(self) -> BaseDataModel`: exports the data in the `BaseDataModel` format.
+- `reduce(self) -> BaseDataModel`: reduces the dimensionality of the data.
 	+ *raises*:
-		- `TypeError(f"X data for {self.__class__.__name__} prediction must be non-empty.")` on empty `x_data`
-		- `RuntimeError(f"The {self.__class__.__name__} model is not trained yet!")` when run with an untrained `model`
+		- `RuntimeError("The model hasn't been trained yet! You cannot use it to reduce data dimensionality.")` when run with an untrained `model`.
+
