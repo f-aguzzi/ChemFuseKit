@@ -14,7 +14,7 @@ from sklearn.decomposition import PCA as PC
 import scipy.stats
 
 from chemfusekit.__utils import print_table, GraphMode
-from .__base import BaseDataModel, BaseReducer
+from .__base import BaseDataModel, BaseReducer, BaseSettings
 
 
 class PCADataModel(BaseDataModel):
@@ -26,11 +26,12 @@ class PCADataModel(BaseDataModel):
         self.components = components
 
 
-class PCASettings:
+class PCASettings(BaseSettings):
     '''Holds the settings for the PCA object.'''
     def __init__(self, target_variance: float = 0.95,
                  confidence_level: float = 0.05,
                  initial_components: int = 10, output: GraphMode = GraphMode.NONE):
+        super().__init__(output)
         if target_variance < 0:
             raise ValueError("Target variance should be positive or null.")
         if confidence_level < 0 or confidence_level > 1:
@@ -40,7 +41,6 @@ class PCASettings:
         self.target_variance = target_variance
         self.confidence_level = confidence_level
         self.initial_components = initial_components
-        self.output = output
 
 
 class PCA(BaseReducer):

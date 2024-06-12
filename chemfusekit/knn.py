@@ -9,7 +9,7 @@ import pandas as pd
 
 from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
-from .__base import BaseClassifierSettings, BaseClassifier
+from .__base import BaseClassifierSettings, BaseClassifier, BaseDataModel
 
 
 class KNNSettings(BaseClassifierSettings):
@@ -39,7 +39,7 @@ class KNNSettings(BaseClassifierSettings):
 
 class KNN(BaseClassifier):
     '''Class to store the data, methods and artifacts for k-Nearest Neighbors Analysis'''
-    def __init__(self, settings: KNNSettings, fused_data: LLDFDataModel):
+    def __init__(self, settings: KNNSettings, fused_data: BaseDataModel):
         super().__init__(settings, fused_data)
 
     def knn(self):
