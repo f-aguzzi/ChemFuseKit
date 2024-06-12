@@ -11,10 +11,10 @@ from sklearn.cross_decomposition import PLSRegression as PLSR
 
 from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import GraphMode, print_table, print_confusion_matrix, run_split_test
-from .__base import BaseSettings, BaseDataModel, BaseClassifier
+from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier
 
 
-class PLSDASettings(BaseSettings):
+class PLSDASettings(BaseClassifierSettings):
     '''Holds the settings for the PLSDA object.'''
     def __init__(self, n_components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)

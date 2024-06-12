@@ -8,11 +8,11 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
-from .__base import BaseSettings, BaseDataModel, BaseClassifier
+from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier
 from .pca import PCADataModel
 
 
-class LRSettings(BaseSettings):
+class LRSettings(BaseClassifierSettings):
     '''Holds the settings for the LR object.'''
     def __init__(self, algorithm: str = 'liblinear', output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)

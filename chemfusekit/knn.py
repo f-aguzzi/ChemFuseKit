@@ -9,10 +9,10 @@ import pandas as pd
 
 from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
-from .__base import BaseSettings, BaseClassifier
+from .__base import BaseClassifierSettings, BaseClassifier
 
 
-class KNNSettings(BaseSettings):
+class KNNSettings(BaseClassifierSettings):
     '''Holds the settings for the kNN object.'''
     def __init__(self, n_neighbors: int = 15, metric: str | Callable = 'euclidean', weights: str | Callable = 'uniform',
                  algorithm: str = 'auto', output: GraphMode = GraphMode.NONE, test_split: bool = False):

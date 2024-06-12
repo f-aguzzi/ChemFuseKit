@@ -8,7 +8,7 @@ from scipy.signal import savgol_filter
 import matplotlib
 import matplotlib.pyplot as plt
 
-from .__base import GraphMode, BaseDataModel
+from .__base import GraphMode, BaseDataModel, BaseSettings
 
 
 class Table:
@@ -28,10 +28,10 @@ class LLDFDataModel(BaseDataModel):
         super().__init__(x_data, x_train, y)
 
 
-class LLDFSettings:
+class LLDFSettings(BaseSettings):
     '''Holds the settings for the LLDF object.'''
     def __init__(self, output: GraphMode = GraphMode.NONE):
-        self.output = output
+        super().__init__(output)
 
 
 def _snv(input_data: np.ndarray):

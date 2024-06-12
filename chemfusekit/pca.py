@@ -46,10 +46,9 @@ class PCASettings:
 class PCA(BaseReducer):
     '''A class to store the data, methods and artifacts for Principal Component Analysis'''
     def __init__(self, settings: PCASettings, data: BaseDataModel):
-        self.data = data
+        super().__init__(settings, data)
         self.components = 0
         self.pca_model: Optional[PC] = None
-        self.settings = settings
         self.array_scores: Optional[np.ndarray] = None
 
     def pca(self):

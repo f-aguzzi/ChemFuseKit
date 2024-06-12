@@ -8,10 +8,10 @@ from sklearn.svm import SVC
 
 from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import GraphMode, run_split_test, print_confusion_matrix
-from .__base import BaseSettings, BaseClassifier, BaseDataModel
+from .__base import BaseClassifierSettings, BaseClassifier, BaseDataModel
 
 
-class SVMSettings(BaseSettings):
+class SVMSettings(BaseClassifierSettings):
     '''Holds the settings for the SVM object.'''
     def __init__(self, kernel: str = 'linear', output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)

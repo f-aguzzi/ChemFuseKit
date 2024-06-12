@@ -89,20 +89,27 @@ class BaseDataModel:
 
 
 class BaseSettings:
+    '''Holds the settings for all objects with settings.'''
+
+    def __init__(self, output: GraphMode = GraphMode.NONE):
+        self.output = output
+
+
+class BaseClassifierSettings:
     '''Holds the settings for the BaseClassifier object.'''
 
     def __init__(self, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+        super().__init__(output)
         if test_split is True and output is GraphMode.NONE:
             raise Warning(
                 "You selected test_split but it won't run because you disabled the output."
             )
-        self.output = output
         self.test_split = test_split
 
 
 class BaseActionClass(ABC):
     '''Abstract base class for all reducers and classifiers.'''
-    def __init__(self, settings, data: BaseDataModel):
+    def __init__(self, settings: BaseSettings, data: BaseDataModel):
         self.settings = settings,
         self.data = data,
         self.model: BaseEstimator | None = None
@@ -144,7 +151,7 @@ class BaseActionClass(ABC):
 class BaseClassifier(BaseActionClass):
     '''Parent class for all classifiers, containing basic shared utilities.'''
 
-    def __init__(self, settings: BaseSettings, data: BaseDataModel):
+    def __init__(self, settings: BaseClassifierSettings, data: BaseDataModel):
         super().__init__(settings, data)
 
     def predict(self, x_data: pd.DataFrame):
@@ -161,7 +168,7 @@ class BaseClassifier(BaseActionClass):
 class BaseReducer(BaseActionClass):
     '''Parent class for all reducers (decomposition-performing classes), containing basic shared utilities.'''
 
-    def __init__(self, settings, data: BaseDataModel):
+    def __init__(self, settings: BaseSettings, data: BaseDataModel):
         super().__init__(settings, data)
         self.rescaled_data = None
     
