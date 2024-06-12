@@ -11,6 +11,9 @@ In this cookbook page, you will be shown how the project is structured, and the 
 ```
 chemfusekit
  │
+ ├── base
+ │    └── BaseDataModel
+ │
  ├── lda
  │    ├── LDASettings
  │    └── LDA
@@ -121,15 +124,28 @@ The classifiers themselves all inherit from a base class called [`BaseClassifier
 
 ```mermaid
 classDiagram
-    
-    class BaseClassifier {
+
+    <<Abstract>> BaseActionClass
+    class BaseActionClass {
+        __init__(settings, data)
         +settings: BaseSettings
         +data: BaseDataModel
         +model: sklearn model
-        __init__(settings, data)
         import_model(import_path: str)
         export_model(export_path: str)
+    }
+    
+    <<Abstract>> BaseClassifier
+    class BaseClassifier {
+        +settings: BaseSettings
+        __init__(settings, data)
         predict(x_data: pd.DataFrame)
+    }
+
+    <<Abstract>> BaseReducer
+    class BaseReducer {
+        +export_data()
+        +reduce()
     }
 
     class KNN {
@@ -152,11 +168,21 @@ classDiagram
         ...
     }
 
-    BaseClassifier *-- KNN
-    BaseClassifier *-- LDA
-    BaseClassifier *-- LR
-    BaseClassifier *-- PLSDA
-    BaseClassifier *-- SVM
+    class PCA {
+        pca_stats()
+    }
+
+    BaseClassifier <|.. KNN
+    BaseClassifier <|.. LDA
+    BaseClassifier <|.. LR
+    BaseClassifier <|.. PLSDA
+    BaseClassifier <|.. SVM
+
+    BaseReducer <|.. PCA
+    BaseReducer <|.. LDA
+
+    BaseActionClass <|.. BaseReducer
+    BaseActionClass <|.. BaseClassifier
 ```
 
 
@@ -194,4 +220,8 @@ This allows all the classifiers to use the `LLDF` data, dimension-reduced `PCA` 
 
 All the data models (`BaseDataModel`, and its derived, `LLDFDataModel` and `PCADataModel`) can export their content to Excel tables.
 
-All classifiers derived from `BaseClassifier` (`KNN`, `LDA`, `LR`, `PLSDA`, `SVM`) can import and export their sklearn data model from and to file.
+All classes derived from `BaseActionClass` (that is, all which derive from `BaseClassifier`, `BaseReducer`, or both) can import and export their sklearn data model from and to file.
+
+All classifiers derived from `BaseClassifier` (`KNN`, `LDA`, `LR`, `PLSDA`, `SVM`) can perform training and inference.
+
+All reducers derived from `BaseReducer` (`LDA`, `PCA`) can perform dimensionality reduction.

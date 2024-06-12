@@ -11,7 +11,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import graph_output, run_split_test
 from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
-from .__base import BaseDataModel, BaseClassifier, BaseSettings
+from .__base import BaseDataModel, BaseClassifier, BaseSettings, BaseReducer
 from .pca import PCADataModel
 
 
@@ -24,7 +24,7 @@ class LDASettings(BaseSettings):
         self.components = components
 
 
-class LDA(BaseClassifier):
+class LDA(BaseClassifier, BaseReducer):
     '''Class to store the data, methods and artifacts for Linear Discriminant Analysis'''
     def __init__(self, settings: LDASettings, data: BaseDataModel):
         super().__init__(settings, data)
@@ -33,6 +33,7 @@ class LDA(BaseClassifier):
         # Self-detect components if the data is from PCA
         if isinstance(data, PCADataModel):
             self.settings.components = data.components - 1
+
 
     def lda(self):
         '''Performs Linear Discriminant Analysis'''

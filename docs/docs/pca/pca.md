@@ -5,6 +5,7 @@ sidebar_position: 1
 # PCA class
 
 A class to store the data, methods and artifacts for _Principal Component Analysis_.
+Inherits from [`BaseReducer`](../base/basereducer.md).
 
 ## Syntax
 

@@ -125,7 +125,10 @@ class BaseActionClass(ABC):
     
     def import_model(self, import_path: str):
         '''Imports a sklearn model from a file.'''
-        model = joblib.load(import_path)
+        try:
+            model = joblib.load(import_path)
+        except Exception as exc:
+            raise ImportError("The file you tried importing is not a valid Python object!") from exc
         if not isinstance(model, BaseEstimator):
             raise ImportError("The file you tried importing is not a sklearn model!")
         self.model = model
@@ -160,21 +163,20 @@ class BaseReducer(BaseActionClass):
 
     def __init__(self, settings, data: BaseDataModel):
         super().__init__(settings, data)
-        self.components : int = 0
         self.rescaled_data = None
     
     @abstractmethod
     def export_data(self) -> BaseDataModel:
         pass
     
-    def reduce(self) -> BaseDataModel:
+    def reduce(self, data: BaseDataModel) -> BaseDataModel:
         '''Reduces dimensionality of data.'''
         if self.model is None:
             raise RuntimeError(
                 "The model hasn't been trained yet! You cannot use it to reduce data dimensionality."
             )
-        x_data = pd.DataFrame(self.model.transform(self.data.x_data))
-        y_dataframe = pd.DataFrame(self.data.y)
+        x_data = pd.DataFrame(self.model.transform(data.x_data))
+        y_dataframe = pd.DataFrame(data.y)
         x_train = pd.concat(
             [y_dataframe, x_data],
             axis=1
@@ -182,6 +184,6 @@ class BaseReducer(BaseActionClass):
         return BaseDataModel(
             x_data=x_data,
             x_train=x_train,
-            y=self.data.y
+            y=data.y
         )
     

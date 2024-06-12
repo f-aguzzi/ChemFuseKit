@@ -14,7 +14,7 @@ from sklearn.decomposition import PCA as PC
 import scipy.stats
 
 from chemfusekit.__utils import print_table, GraphMode
-from .__base import BaseDataModel
+from .__base import BaseDataModel, BaseReducer
 
 
 class PCADataModel(BaseDataModel):
@@ -43,7 +43,7 @@ class PCASettings:
         self.output = output
 
 
-class PCA:
+class PCA(BaseReducer):
     '''A class to store the data, methods and artifacts for Principal Component Analysis'''
     def __init__(self, settings: PCASettings, data: BaseDataModel):
         self.data = data
@@ -293,6 +293,7 @@ class PCA:
             if self.pca_model is None:
                 self.pca()
             self.pca_stats()
+            self.settings = settings_backup
 
         x_data = pd.DataFrame(self.pca_model.transform(self.data.x_data))
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
@@ -327,27 +328,16 @@ class PCA:
         class_instance.pca_model = model
         return class_instance
 
+    def import_model(self, import_path: str):
+        model_backup = copy(self.model)
+        super().import_model(import_path)
+        if not isinstance(self.model, PC):
+            self.model = model_backup
+            raise ImportError("The file you tried to import is not a PrincipalComponentAnalysis classifier.")
+
     def export_model(self, export_path: str):
         '''Exports the underlying sklearn PCA model to a file.'''
         if self.pca_model is not None:
             joblib.dump(self.pca_model, export_path)
         else:
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
-
-    def reduce(self, data: BaseDataModel) -> BaseDataModel:
-        '''Reduces dimensionality of data.'''
-        if self.pca_model is None:
-            raise RuntimeError(
-                "The PCA model hasn't been trained yet! You cannot use it to reduce data dimensionality."
-            )
-        x_data = pd.DataFrame(self.pca_model.transform(data.x_data))
-        y_dataframe = pd.DataFrame(data.y)
-        x_train = pd.concat(
-            [y_dataframe, x_data],
-            axis=1
-        )
-        return BaseDataModel(
-            x_data=x_data,
-            x_train=x_train,
-            y=data.y
-        )
