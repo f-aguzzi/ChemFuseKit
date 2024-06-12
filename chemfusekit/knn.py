@@ -60,7 +60,7 @@ class KNN(BaseClassifier):
         y_pred = knn.predict(self.data.x_data)
         print_table(
             ["Predictions"],
-            y_pred.reshape(1,len(y_pred)),
+            y_pred.reshape(1, len(y_pred)),
             "Data and predictions",
             self.settings.output
         )

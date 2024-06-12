@@ -110,8 +110,8 @@ class BaseClassifierSettings(BaseSettings):
 class BaseActionClass(ABC):
     '''Abstract base class for all reducers and classifiers.'''
     def __init__(self, settings: BaseSettings, data: BaseDataModel):
-        self.settings = settings,
-        self.data = data,
+        self.settings = settings
+        self.data = data
         self.model: BaseEstimator | None = None
 
     @classmethod
