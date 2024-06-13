@@ -35,8 +35,8 @@ class KNNSettings(BaseClassifierSettings):
 
 class KNN(BaseClassifier):
     """Class to store the data, methods and artifacts for k-Nearest Neighbors Analysis"""
-    def __init__(self, settings: KNNSettings, fused_data: BaseDataModel):
-        super().__init__(settings, fused_data)
+    def __init__(self, settings: KNNSettings, data: BaseDataModel):
+        super().__init__(settings, data)
 
     def knn(self):
         """Performs k-Nearest Neighbors Analysis"""

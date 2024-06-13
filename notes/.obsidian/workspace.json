@@ -4,35 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "12787b874046e9fa",
+        "id": "fc14948cf9ed0d91",
         "type": "tabs",
         "children": [
           {
-            "id": "cf57d78b279c78a1",
+            "id": "d87282dcd05850e5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Devlog/2024-05-18.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "24e13959c0a297de",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "To do.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -82,7 +65,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "69d30c5a06e1ba59",
@@ -106,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "To do.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "To do.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,16 +127,15 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "To do.md"
-              }
+              "state": {}
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -166,8 +147,20 @@
       "command-palette:Apri riquadro comandi": false
     }
   },
-  "active": "24e13959c0a297de",
+  "active": "d87282dcd05850e5",
   "lastOpenFiles": [
+    "References/FT-IR and Raman spectroscopy data fusion with chemometrics for simultaneous determination of chemical quality indices of edible oils during thermal oxidation.md",
+    "References/Discriminant analysis of vegetable oils by thermogravimetric-gas chromatography-mass spectrometry combined with data fusion and chemometrics without sample pretreatment.md",
+    "A Novel Forensic Tool for the Characterization and Comparison of Printing Ink Evidence.. Development and Evaluation of a Searchable Database Using Data Fusion of Spectrochemical Methods.md",
+    "References/Data fusion methodologies for food and beverage authentication and quality assessment – A review,.md",
+    "References/Assessment of premium organic orange juices authenticity using HPLC-HR-MS and HS-SPME-GC-MS combining data fusion and chemometrics,Food Control.md",
+    "References/Assessing the varietal origin of extra-virgin olive oil using liquid chromatography fingerprints of phenolic compound, data fusion and chemometrics.md",
+    "References/A Review of Data Fusion Techniques.md",
+    "References/Data fusion.md",
+    "References/An introduction to multisensor data fusion.md",
+    "References/Springer Handbook of Robotics, Multisensor Data Fusion.md",
+    "To do.md",
+    "References",
     "UML/Components.md",
     "SVM.md",
     "PEP coding standards.md",

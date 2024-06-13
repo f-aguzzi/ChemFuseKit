@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Case study: data fusion
+# Case study: low-level data fusion
 
 :::note
 This case study is still **under construction**.
@@ -13,6 +13,7 @@ This case study is still **under construction**.
 
 This case study aims to demonstrate the uniqueness of the data fusion - based workflow of ChemFuseKit for a unitary prediction and analysis. As a real-world example, a dataset containing data from three different sensors will be used to train a classifier able to distinguish between dimethyl methylphosphonate (DMMP) and acetone samples. The objective is to create a single, uninterrupted pipeline from the datasheets to the creation of the classifier and its export as a reusable model.
 
+The type of data fusion performed is the simplest -  the so-called *low-level data fusion* approach -  in which the data from different sensors is simply concatenated row-wise. 
 
 ## Methodology
 
@@ -253,7 +254,9 @@ print(prediction)
 
 ## Results
 
-The split testing seems to demonstrate the ability of the model to 
+Data preprocessing is a crucial step in the workflow because it ensures data uniformity and comparability between different samples. In this case, manual data alignment and sample checking were necessary, and normalization was applied to IMS and QEPAS data. The subsequent data fusion step was the most significant and characteristic aspect of the case study. The three tables in the Excel spreadsheet were concatenated horizontally, allowing the data from the three sensors to be treated as a single multicomponent regressor. The dimensionality of such a fused dataset proved to be largely exaggerated, given the very high collinearity of the components in the spectrographic results, and the PCA analysis allowed 99% of the variance in the data to be explained by only 4 components (the former already explained about 90%). The subsequent model training and validation steps by split testing indicated that the model was trained correctly despite the very low number of samples available, probably due to the high quality of the regressors due to their separation by PCA.
+
+Translated with DeepL.com (free version)
 
 
 ## Discussion
@@ -262,8 +265,7 @@ With a script containing less than 80 lines, it's possible to perform data fusio
 
 The ability to have the entire analysis pipeline in one library, including data fusion, training, inference and data plotting, united with the ability for the user to save the artifacts at any time during the process (models, fused datasets, graphs), makes this library stand out as a unique solution in the chemiometry landscape.
 
-The case study demonstrates the effectiveness of the data fusion-based workflow of `ChemFuseKit` in creating a single, uninterrupted pipeline from the datasheets to the creation and export of a classifier. The pipeline involves several steps, including data preprocessing, data fusion, dimensionality reduction, and model training and evaluation.
-With a script containing less than 80 lines, it's possible to perform data fusion, training and model saving. With 40 more lines, it's possible to fuse another dataset, perform dimensionality reduction on it and then run inference. This is a massive reduction from the hundreds of lines that a comparable solution made directly with `scikit-learn` would require.
+<br />
 
 Now, let's look back at each step:
 
