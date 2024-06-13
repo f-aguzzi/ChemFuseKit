@@ -1,18 +1,17 @@
-'''Performs low-level data fusion on input arrays, outputs the results'''
+"""Performs low-level data fusion on input arrays, outputs the results"""
 from typing import Optional, List
 
 import numpy as np
 import pandas as pd
 from scipy.signal import savgol_filter
 
-import matplotlib
 import matplotlib.pyplot as plt
 
-from .__base import GraphMode, BaseDataModel
+from .__base import GraphMode, BaseDataModel, BaseSettings
 
 
 class Table:
-    '''Holds the path, preprocessing choice and sheet name for a single Excel table.'''
+    """Holds the path, preprocessing choice and sheet name for a single Excel table."""
     def __init__(self, file_path: str, sheet_name: str, preprocessing: str, class_column: str = 'Substance',
                  index_column: str | None = None):
         self.file_path = file_path
@@ -23,40 +22,40 @@ class Table:
 
 
 class LLDFDataModel(BaseDataModel):
-    '''Models the output data from the LLDF operation'''
+    """Models the output data from the LLDF operation"""
     def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray):
         super().__init__(x_data, x_train, y)
 
 
-class LLDFSettings:
-    '''Holds the settings for the LLDF object.'''
+class LLDFSettings(BaseSettings):
+    """Holds the settings for the LLDF object."""
     def __init__(self, output: GraphMode = GraphMode.NONE):
-        self.output = output
+        super().__init__(output)
 
 
 def _snv(input_data: np.ndarray):
-    '''Applies normalization to an input array'''
+    """Applies normalization to an input array"""
     # Define a new array and populate it with the corrected data
     output_data = np.zeros_like(input_data)
     for i in range(input_data.shape[0]):
 
         # Apply correction
         output_data[i, :] = (
-            (input_data[i, :] - np.mean(input_data[i,:])) / np.std(input_data[i, :])
+            (input_data[i, :] - np.mean(input_data[i, :])) / np.std(input_data[i, :])
         )
 
     return output_data
 
 
 class LLDF:
-    '''Holds together all the data, methods and artifacts of the LLDF operation'''
+    """Holds together all the data, methods and artifacts of the LLDF operation"""
     def __init__(self, settings: LLDFSettings, tables: List[Table]):
         self.settings = settings
         self.tables = tables
         self.fused_data: Optional[LLDFDataModel] = None
 
     def lldf(self):
-        '''Performs low-level data fusion'''
+        """Performs low-level data fusion"""
         x_vector = []
         for table in self.tables:
             try:
@@ -186,7 +185,7 @@ class LLDF:
         self.fused_data = LLDFDataModel(x_data, x_train, y)
 
     def export_data(self, export_path: str, sheet_name: str = 'Sheet1'):
-        '''Exports the data fusion artifacts to a file'''
+        """Exports the data fusion artifacts to a file"""
         if self.fused_data is None:
             raise RuntimeError("Cannot export data before data fusion.")
 

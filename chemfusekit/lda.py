@@ -1,22 +1,29 @@
-'''Linear Discriminant Analysis module'''
+"""Linear Discriminant Analysis module"""
 from copy import copy
-from typing import Optional
+from functools import cached_property
 
-import joblib
 import numpy as np
 import pandas as pd
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 
-from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import graph_output, run_split_test
 from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
-from .__base import BaseDataModel, BaseClassifier, BaseSettings
+from .__base import BaseDataModel, BaseClassifier, BaseClassifierSettings, BaseReducer
 from .pca import PCADataModel
 
 
-class LDASettings(BaseSettings):
-    '''Holds the settings for the LDA object.'''
+class LDADataModel(BaseDataModel):
+    """Holds the output data from LDA."""
+
+    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, components: int):
+        super().__init__(x_data, x_train, y)
+        self.components = components
+
+
+class LDASettings(BaseClassifierSettings):
+    """Holds the settings for the LDA object."""
+
     def __init__(self, components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
         if components <= 2:
@@ -24,8 +31,9 @@ class LDASettings(BaseSettings):
         self.components = components
 
 
-class LDA(BaseClassifier):
-    '''Class to store the data, methods and artifacts for Linear Discriminant Analysis'''
+class LDA(BaseClassifier, BaseReducer):
+    """Class to store the data, methods and artifacts for Linear Discriminant Analysis"""
+
     def __init__(self, settings: LDASettings, data: BaseDataModel):
         super().__init__(settings, data)
         self.settings = settings
@@ -35,14 +43,14 @@ class LDA(BaseClassifier):
             self.settings.components = data.components - 1
 
     def lda(self):
-        '''Performs Linear Discriminant Analysis'''
+        """Performs Linear Discriminant Analysis"""
 
-        lda = LD(n_components=self.settings.components) # N-1 where N are the classes
+        lda = LD(n_components=self.settings.components)  # N-1 where N are the classes
         scores_lda = lda.fit(self.data.x_data, self.data.y).transform(self.data.x_data)
         pred = lda.predict(self.data.x_data)
 
         print_table(
-            [f"LV{i+1}" for i in range(scores_lda.shape[1])],
+            [f"LV{i + 1}" for i in range(scores_lda.shape[1])],
             list(zip(*scores_lda)),
             "LDA scores",
             self.settings.output
@@ -54,17 +62,19 @@ class LDA(BaseClassifier):
             "LDA Priors",
             self.settings.output
         )
-        means_values = [[f"Feature {i+1}" for i in range(lda.means_.shape[1])]] + [list(lda.means_[i, :]) for i in range(lda.means_.shape[0])]
-        
+        means_values = [[f"Feature {i + 1}" for i in range(lda.means_.shape[1])]] + [list(lda.means_[i, :]) for i in
+                                                                                     range(lda.means_.shape[0])]
+
         print_table(
-            ["Feature"] + [f"Class {i+1}" for i in range(lda.means_.shape[0])], 
+            ["Feature"] + [f"Class {i + 1}" for i in range(lda.means_.shape[0])],
             means_values,
             "LDA Class Means",
             self.settings.output
         )
         print_table(
-            ["Component"] + [f"Feature {i+1}" for i in range(lda.coef_.shape[0])],
-            [[f"Component {i+1}" for i in range(min(self.settings.components, lda.coef_.shape[1]))]] + [list(lda.coef_[:self.settings.components, i]) for i in range(lda.coef_.shape[0])],
+            ["Component"] + [f"Feature {i + 1}" for i in range(lda.coef_.shape[0])],
+            [[f"Component {i + 1}" for i in range(min(self.settings.components, lda.coef_.shape[1]))]] + [
+                list(lda.coef_[:self.settings.components, i]) for i in range(lda.coef_.shape[0])],
             "LDA Coefficients",
             self.settings.output
         )
@@ -84,12 +94,12 @@ class LDA(BaseClassifier):
             mode=self.settings.output
         )
 
-        lv_cols = [f'LV{i+1}' for i in range(self.settings.components)]
-        scores = pd.DataFrame(data=scores_lda, columns=lv_cols)     # latent variables
+        lv_cols = [f'LV{i + 1}' for i in range(self.settings.components)]
+        scores = pd.DataFrame(data=scores_lda, columns=lv_cols)  # latent variables
         scores.index = self.data.x_data.index
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
 
-        scores = pd.concat([scores, y_dataframe], axis = 1)
+        scores = pd.concat([scores, y_dataframe], axis=1)
 
         # Store the trained model
         self.model = lda
@@ -118,3 +128,34 @@ class LDA(BaseClassifier):
             self.model = model_backup
             raise ImportError("The file you tried to import is not a LinearDiscriminantAnalysis classifier.")
         self.settings.components = self.model.n_components
+
+    def export_data(self) -> LDADataModel:
+        """Export the data to an object."""
+        return LDADataModel(
+            x_data=self.data.x_data,
+            x_train=self.data.x_train,
+            y=self.data.y,
+            components=self.settings.components
+        )
+
+    @cached_property
+    def rescaled_data(self) -> BaseDataModel:
+        if self.model is None:
+            settings_backup = copy(self.settings)
+            self.settings.output = GraphMode.NONE
+            self.settings.test_split = False
+            self.lda()
+            self.settings = settings_backup
+
+        x_data = pd.DataFrame(self.model.transform(self.data.x_data))
+        y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
+        x_train = pd.concat(
+            [y_dataframe, x_data],
+            axis=1
+        )
+
+        return BaseDataModel(
+            x_data,
+            x_train,
+            self.data.y
+        )

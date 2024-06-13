@@ -1,21 +1,18 @@
-'''Partial Least Squares Discriminant Analysis module.'''
+"""Partial Least Squares Discriminant Analysis module."""
 from copy import copy
-from typing import Optional
 
-import pandas as pd
 import numpy as np
-
+import pandas as pd
 import plotly.express as px
-
 from sklearn.cross_decomposition import PLSRegression as PLSR
 
-from chemfusekit.lldf import LLDFDataModel
 from chemfusekit.__utils import GraphMode, print_table, print_confusion_matrix, run_split_test
-from .__base import BaseSettings, BaseDataModel, BaseClassifier
+from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier
 
 
-class PLSDASettings(BaseSettings):
-    '''Holds the settings for the PLSDA object.'''
+class PLSDASettings(BaseClassifierSettings):
+    """Holds the settings for the PLSDA object."""
+
     def __init__(self, n_components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
         if n_components < 1:
@@ -24,15 +21,16 @@ class PLSDASettings(BaseSettings):
 
 
 class PLSDA(BaseClassifier):
-    '''
+    """
     Class to store the data, methods and artifacts for Partial Least Squares
     Discriminant Analysis
-    '''
+    """
+
     def __init__(self, settings: PLSDASettings, data: BaseDataModel):
         super().__init__(settings, data)
 
     def plsda(self):
-        '''Performs Partial Least Squares Discriminant Analysis'''
+        """Performs Partial Least Squares Discriminant Analysis"""
         x = self.data.x_data
         y = self.data.x_train.Substance.astype('category').cat.codes
 
@@ -92,7 +90,7 @@ class PLSDA(BaseClassifier):
             fig.show()
 
             # Loadings plot
-            fig = px.scatter(loadings, x="LV1", y="LV2",text="Attributes")
+            fig = px.scatter(loadings, x="LV1", y="LV2", text="Attributes")
             fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
             fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
             fig.update_traces(textposition='top center')
@@ -108,11 +106,11 @@ class PLSDA(BaseClassifier):
             classes = np.unique(y)
             for i in range(len(np.unique(pred)) - len(classes)):
                 classes = np.append(classes, f'Unknown substance {i}')
-            predicted_substances = [classes[p-3] for p in pred]
+            predicted_substances = [classes[p - 3] for p in pred]
             print_table(
                 ["Sample number", "True", "Predicted"],
                 np.stack((
-                    [f"{i+1}" for i in range(len(pred))],
+                    [f"{i + 1}" for i in range(len(pred))],
                     y,
                     predicted_substances
                 )),

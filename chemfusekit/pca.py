@@ -1,24 +1,23 @@
-'''Principal Component Analysis Module'''
+"""Principal Component Analysis Module"""
 from copy import copy
 from functools import cached_property
 from typing import Optional
 
 import joblib
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
-import matplotlib.pyplot as plt
-
+import scipy.stats
 from sklearn.decomposition import PCA as PC
 
-import scipy.stats
-
 from chemfusekit.__utils import print_table, GraphMode
-from .__base import BaseDataModel
+from .__base import BaseDataModel, BaseReducer, BaseSettings
 
 
 class PCADataModel(BaseDataModel):
-    '''Data model for the PCA outputs.'''
+    """Data model for the PCA outputs."""
+
     def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray,
                  components: int):
         super().__init__(x_data, x_train, y)
@@ -26,11 +25,13 @@ class PCADataModel(BaseDataModel):
         self.components = components
 
 
-class PCASettings:
-    '''Holds the settings for the PCA object.'''
+class PCASettings(BaseSettings):
+    """Holds the settings for the PCA object."""
+
     def __init__(self, target_variance: float = 0.95,
                  confidence_level: float = 0.05,
                  initial_components: int = 10, output: GraphMode = GraphMode.NONE):
+        super().__init__(output)
         if target_variance < 0:
             raise ValueError("Target variance should be positive or null.")
         if confidence_level < 0 or confidence_level > 1:
@@ -40,20 +41,19 @@ class PCASettings:
         self.target_variance = target_variance
         self.confidence_level = confidence_level
         self.initial_components = initial_components
-        self.output = output
 
 
-class PCA:
-    '''A class to store the data, methods and artifacts for Principal Component Analysis'''
+class PCA(BaseReducer):
+    """A class to store the data, methods and artifacts for Principal Component Analysis"""
+
     def __init__(self, settings: PCASettings, data: BaseDataModel):
-        self.data = data
+        super().__init__(settings, data)
         self.components = 0
-        self.pca_model: Optional[PC] = None
-        self.settings = settings
+        self.model: Optional[PC] = None
         self.array_scores: Optional[np.ndarray] = None
 
     def pca(self):
-        '''Performs Principal Component Analysis.'''
+        """Performs Principal Component Analysis."""
 
         # Read from the data fusion object
         x_data = self.data.x_data
@@ -74,7 +74,7 @@ class PCA:
                 break
         self.components = max(self.components, 3)
 
-        compsexpv = [[(i+1), pca.explained_variance_ratio_[i]] for i in np.arange(pca.n_components_)]
+        compsexpv = [[(i + 1), pca.explained_variance_ratio_[i]] for i in np.arange(pca.n_components_)]
         comps, expv = zip(*compsexpv)
         print_table(
             ["Components", "Explained Variance"],
@@ -92,7 +92,7 @@ class PCA:
             plt.ylabel('Proportion of Variance Explained')
             plt.show()
 
-        compsexpv = [[(i+1), out_sum[i]] for i in np.arange(pca.n_components_)]
+        compsexpv = [[(i + 1), out_sum[i]] for i in np.arange(pca.n_components_)]
         comps, expv = zip(*compsexpv)
         print_table(
             ["Components", "Cumulative Explained Variance"],
@@ -109,32 +109,32 @@ class PCA:
             plt.ylabel('Cumulative Proportional Variance Explained')
             plt.show()
 
-        # Run PCA producing the pca_model with a proper number of components
+        # Run PCA producing the model with a proper number of components
         pca = PC(n_components=self.components)
-        self.pca_model = pca
-        self.pca_model.fit(x_data)
+        self.model = pca
+        self.model.fit(x_data)
 
     def pca_stats(self):
-        '''Produces PCA-related statistics.'''
+        """Produces PCA-related statistics."""
         x_data = self.data.x_data
         x_train = self.data.x_train
 
         # Prepare the Scores dataframe (and concatenate the original 'Region' variable)
-        pc_cols = [f"PC{i+1}" for i in range(self.components)]
-        scores = pd.DataFrame(data=self.pca_model.fit_transform(x_data), columns=pc_cols)
+        pc_cols = [f"PC{i + 1}" for i in range(self.components)]
+        scores = pd.DataFrame(data=self.model.fit_transform(x_data), columns=pc_cols)
         scores.index = x_data.index
-        scores = pd.concat([scores, x_train.Substance], axis = 1)
+        scores = pd.concat([scores, x_train.Substance], axis=1)
 
         print_table(
             pc_cols + ['Substance'],
-            [scores.iloc[:,i] for i in range(scores.shape[1])],
+            [scores.iloc[:, i] for i in range(scores.shape[1])],
             "PCA scores for each component",
             self.settings.output
         )
 
         # Prepare the loadings dataframe
         loadings = pd.DataFrame(
-            self.pca_model.components_.T,
+            self.model.components_.T,
             columns=pc_cols,
             index=x_data.columns
         )
@@ -142,7 +142,7 @@ class PCA:
 
         print_table(
             pc_cols + ['Retention Time'],
-            [loadings.iloc[:,i] for i in range(loadings.shape[1])],
+            [loadings.iloc[:, i] for i in range(loadings.shape[1])],
             "PCA Loadings",
             self.settings.output
         )
@@ -178,22 +178,22 @@ class PCA:
             fig.show()
 
         # Get PCA scores
-        t = scores.iloc[:,0:self.components]
+        t = scores.iloc[:, 0:self.components]
         # Get PCA loadings
-        p = loadings.iloc[:,0:self.components]
+        p = loadings.iloc[:, 0:self.components]
         # Calculate error array
-        err = x_data - np.dot(t,p.T)
+        err = x_data - np.dot(t, p.T)
         # Calculate Q-residuals (sum over the rows of the error array)
-        q= np.sum(err**2, axis=1)
+        q = np.sum(err ** 2, axis=1)
         # Calculate Hotelling's T-squared (note that data are normalised by default)
-        tsq = np.sum((t/np.std(t, axis=0))**2, axis=1)
+        tsq = np.sum((t / np.std(t, axis=0)) ** 2, axis=1)
 
         def mean_confidence_interval(data, confidence=self.settings.confidence_level):
             a = 1.0 * np.array(data)
             n = len(a)
             m, se = np.mean(a), scipy.stats.sem(a)
-            h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
-            return m, m-h, m+h
+            h = se * scipy.stats.t.ppf((1 + confidence) / 2., n - 1)
+            return m, m - h, m + h
 
         tsq_conf = (mean_confidence_interval(
             tsq.values,
@@ -207,7 +207,7 @@ class PCA:
         # Create a dataframe using only T2 and Q-residuals
         hot_q_data = pd.DataFrame(
             {'T2': tsq, 'Qres': q, 'Substance': x_train.Substance},
-            index = x_data.index
+            index=x_data.index
         )
 
         if self.settings.output is GraphMode.GRAPHIC:
@@ -216,11 +216,11 @@ class PCA:
                 hot_q_data,
                 x="T2",
                 y="Qres",
-                hover_data={'Sample': (hot_q_data.index)},
-                color = "Substance"
+                hover_data={'Sample': hot_q_data.index},
+                color="Substance"
             )
-            fig.add_hline(y=abs(q_conf),line_dash="dot", line_color='Red')
-            fig.add_vline(x=tsq_conf,line_dash="dot", line_color='Red')
+            fig.add_hline(y=abs(q_conf), line_dash="dot", line_color='Red')
+            fig.add_vline(x=tsq_conf, line_dash="dot", line_color='Red')
             fig.update_traces(textposition='top center')
             fig.update_layout(
                 height=600,
@@ -246,7 +246,7 @@ class PCA:
                 normalized_hot_q_data,
                 x="T2",
                 y="Qres",
-                hover_data={'Sample': (normalized_hot_q_data.index)},
+                hover_data={'Sample': normalized_hot_q_data.index},
                 color="Substance"
             )
             fig_normalized.add_hline(y=abs(q_conf / np.max(q)), line_dash="dot", line_color='Red')
@@ -265,7 +265,7 @@ class PCA:
 
         print_table(
             pc_cols,
-            [array_scores[:,i] for i in range(array_scores.shape[1])],
+            [array_scores[:, i] for i in range(array_scores.shape[1])],
             "Array without 'Substance' column",
             self.settings.output
         )
@@ -273,8 +273,8 @@ class PCA:
         self.array_scores = array_scores
 
     def export_data(self) -> PCADataModel:
-        '''Export data artifacts.'''
-        if self.pca_model is None or self.array_scores is None:
+        """Export data artifacts."""
+        if self.model is None or self.array_scores is None:
             raise RuntimeError("Run both pca() and pca_stats() methods before exporting data!")
 
         return PCADataModel(
@@ -287,14 +287,14 @@ class PCA:
 
     @cached_property
     def rescaled_data(self) -> PCADataModel:
-        if self.array_scores is None:
+        if self.model is None:
             settings_backup = copy(self.settings)
             self.settings.output = GraphMode.NONE
-            if self.pca_model is None:
-                self.pca()
+            self.pca()
             self.pca_stats()
+            self.settings = settings_backup
 
-        x_data = pd.DataFrame(self.pca_model.transform(self.data.x_data))
+        x_data = pd.DataFrame(self.model.transform(self.data.x_data))
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
         x_train = pd.concat(
             [y_dataframe, x_data],
@@ -311,7 +311,7 @@ class PCA:
 
     @classmethod
     def from_file(cls, settings: PCASettings, model_path: str):
-        '''Creates a PCA instance from a file containing its sklearn core model.'''
+        """Creates a PCA instance from a file containing its sklearn core model."""
         try:
             model = joblib.load(model_path)
         except Exception as exc:
@@ -324,30 +324,19 @@ class PCA:
             np.asarray(pd.DataFrame)
         )
         class_instance = PCA(settings, data)
-        class_instance.pca_model = model
+        class_instance.model = model
         return class_instance
 
+    def import_model(self, import_path: str):
+        model_backup = copy(self.model)
+        super().import_model(import_path)
+        if not isinstance(self.model, PC):
+            self.model = model_backup
+            raise ImportError("The file you tried to import is not a PrincipalComponentAnalysis classifier.")
+
     def export_model(self, export_path: str):
-        '''Exports the underlying sklearn PCA model to a file.'''
-        if self.pca_model is not None:
-            joblib.dump(self.pca_model, export_path)
+        """Exports the underlying sklearn PCA model to a file."""
+        if self.model is not None:
+            joblib.dump(self.model, export_path)
         else:
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
-
-    def reduce(self, data: BaseDataModel) -> BaseDataModel:
-        '''Reduces dimensionality of data.'''
-        if self.pca_model is None:
-            raise RuntimeError(
-                "The PCA model hasn't been trained yet! You cannot use it to reduce data dimensionality."
-            )
-        x_data = pd.DataFrame(self.pca_model.transform(data.x_data))
-        y_dataframe = pd.DataFrame(data.y)
-        x_train = pd.concat(
-            [y_dataframe, x_data],
-            axis=1
-        )
-        return BaseDataModel(
-            x_data=x_data,
-            x_train=x_train,
-            y=data.y
-        )

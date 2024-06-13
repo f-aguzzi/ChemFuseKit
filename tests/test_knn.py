@@ -1,4 +1,4 @@
-'''This module contains the test cases for the KNN module.'''
+"""This module contains the test cases for the KNN module."""
 import unittest
 
 import pandas as pd
@@ -9,63 +9,62 @@ from chemfusekit.lldf import LLDFSettings, LLDF, LLDFDataModel, Table
 
 
 class TestKNN(unittest.TestCase):
-    '''Test suite for the KNN module.'''
+    """Test suite for the KNN module."""
 
     def test_knn_settings(self):
-        '''Test case against settings errors.'''
+        """Test case against settings errors."""
 
         # n_neighbors parameter
         with self.assertRaises(ValueError):
-            KNNSettings(n_neighbors=-3) # Negative value
+            KNNSettings(n_neighbors=-3)  # Negative value
         with self.assertRaises(ValueError):
             KNNSettings(n_neighbors=0)  # Zero value
         KNNSettings(n_neighbors=7)  # Correct value (shouldn't raise anything)
 
         # metric parameter
         with self.assertRaises(ValueError):
-            KNNSettings(metric='invalid attribute') # Non-existent technique
+            KNNSettings(metric='invalid attribute')  # Non-existent technique
         with self.assertRaises(TypeError):
             value = 3
-            KNNSettings(metric=value)   # Non-callable
+            KNNSettings(metric=value)  # Non-callable
 
         for x in ['minkwoski', 'precomputed', 'euclidean']:
-            KNNSettings(metric=x)   # Correct values (shouldn't raise anything)
+            KNNSettings(metric=x)  # Correct values (shouldn't raise anything)
         x = lambda a: a + 10
-        KNNSettings(metric=x)   # Pass a callable (shoulnd't raise anything)
+        KNNSettings(metric=x)  # Pass a callable (shouldn't raise anything)
 
         # weights parameter
         with self.assertRaises(ValueError):
-            KNNSettings(weights='invalid attribute') # Non-existent technique
+            KNNSettings(weights='invalid attribute')  # Non-existent technique
         with self.assertRaises(TypeError):
             value = 3
-            KNNSettings(weights=value)   # Non-callable
+            KNNSettings(weights=value)  # Non-callable
 
-        for x in ['uniform', 'distance']: # Correct values (shouldn't raise anything)
+        for x in ['uniform', 'distance']:  # Correct values (shouldn't raise anything)
             KNNSettings(weights=x)
         x = lambda a: a + 10
-        KNNSettings(weights=x)   # Pass a callable (shoulnd't raise anything)
-
+        KNNSettings(weights=x)  # Pass a callable (shouldn't raise anything)
 
         # algorithm parameter
         with self.assertRaises(ValueError):
-            KNNSettings(algorithm='invalid attribute') # Non-existent technique
+            KNNSettings(algorithm='invalid attribute')  # Non-existent technique
         for x in ['auto', 'ball_tree', 'kd_tree', 'brute']:
-            KNNSettings(algorithm=x)    # Correct values (shouldn't raise anything)
+            KNNSettings(algorithm=x)  # Correct values (shouldn't raise anything)
 
         # output parameter
         with self.assertRaises(TypeError):
-            KNNSettings(output=3)   # Wrong type (not a GraphMode enum)
+            KNNSettings(output=3)  # Wrong type (not a GraphMode enum)
 
         # test_split parameter
         with self.assertRaises(TypeError):
-            KNNSettings(test_split=3)   # Wrong type (not a bool)
+            KNNSettings(test_split=3)  # Wrong type (not a bool)
 
         # output and test_split incompatibilities
         with self.assertRaises(Warning):
             KNNSettings(output=GraphMode.NONE, test_split=True)
 
     def test_knn_constructor(self):
-        '''Test case against constructor errors.'''
+        """Test case against constructor errors."""
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
@@ -93,7 +92,7 @@ class TestKNN(unittest.TestCase):
             KNN(knn_settings, wrong_fused_data)  # pass an object of the wrong class as fused_data
 
     def test_knn(self):
-        '''Integration test case for the training function.'''
+        """Integration test case for the training function."""
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
@@ -125,7 +124,7 @@ class TestKNN(unittest.TestCase):
         knn.knn()
 
     def test_prediction(self):
-        '''Test case against prediction parameter issues.'''
+        """Test case against prediction parameter issues."""
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
@@ -146,7 +145,7 @@ class TestKNN(unittest.TestCase):
         knn = KNN(knn_settings, lldf.fused_data)
 
         # Pick a random sample for prediction
-        x_data_sample = lldf.fused_data.x_train.iloc[119] # should be DMMP
+        x_data_sample = lldf.fused_data.x_train.iloc[119]  # should be DMMP
         x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
 
         # Run prediction with untrained model (should throw exception)

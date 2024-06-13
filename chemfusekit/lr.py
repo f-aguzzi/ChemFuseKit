@@ -1,19 +1,17 @@
-'''Logistic Regression Module'''
+"""Logistic Regression Module"""
 from copy import copy
-from typing import Optional
 
 import numpy as np
 import pandas as pd
-
 from sklearn.linear_model import LogisticRegression
 
 from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
-from .__base import BaseSettings, BaseDataModel, BaseClassifier
+from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier
 from .pca import PCADataModel
 
 
-class LRSettings(BaseSettings):
-    '''Holds the settings for the LR object.'''
+class LRSettings(BaseClassifierSettings):
+    """Holds the settings for the LR object."""
     def __init__(self, algorithm: str = 'liblinear', output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
         if algorithm not in [
@@ -29,7 +27,7 @@ class LRSettings(BaseSettings):
 
 
 class LR(BaseClassifier):
-    '''Class to store the data, methods and artifacts for Logistic Regression'''
+    """Class to store the data, methods and artifacts for Logistic Regression"""
     def __init__(self, settings: LRSettings, data: BaseDataModel):
         super().__init__(settings, data)
         if isinstance(data, PCADataModel):
@@ -38,7 +36,7 @@ class LR(BaseClassifier):
             self.array_scores = data.x_train.drop('Substance', axis=1).values
 
     def lr(self):
-        '''Performs Logistic Regression'''
+        """Performs Logistic Regression"""
 
         # Let's build our model on the training set
         model = LogisticRegression(
@@ -123,7 +121,7 @@ class LR(BaseClassifier):
             )
 
     def predict(self, x_sample: pd.DataFrame):
-        '''Performs LR prediction once the model is trained.'''
+        """Performs LR prediction once the model is trained."""
         prediction = super().predict(x_sample)
         probabilities = self.model.predict_proba(x_sample)
 

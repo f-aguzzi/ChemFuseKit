@@ -1,3 +1,56 @@
+## [2.5.0-beta.6](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.5...v2.5.0-beta.6) (2024-06-12)
+
+
+### Bug Fixes
+
+* **pca:** field and property issues ([91cefd3](https://github.com/f-aguzzi/tesi/commit/91cefd3d66475d13ed990ed2911014cc866e2f8d))
+
+## [2.5.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.4...v2.5.0-beta.5) (2024-06-12)
+
+
+### Bug Fixes
+
+* **BaseActionClass:** trailing commas creating unwanted tuple ([1b057ab](https://github.com/f-aguzzi/tesi/commit/1b057abb23710c0aef8f67875411d63e47a61036))
+
+## [2.5.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.3...v2.5.0-beta.4) (2024-06-12)
+
+
+### Bug Fixes
+
+* **base:** third round of inheritance fixes ([c3b1bbb](https://github.com/f-aguzzi/tesi/commit/c3b1bbb36c7c150525a6d9d0c87f863291ad397e))
+
+## [2.5.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.2...v2.5.0-beta.3) (2024-06-12)
+
+
+### Bug Fixes
+
+* **base:** inheritance settings (2) ([103040c](https://github.com/f-aguzzi/tesi/commit/103040c940ba884debaf8fdc2239d3dee0e76ab2))
+
+## [2.5.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v2.5.0-beta.1...v2.5.0-beta.2) (2024-06-12)
+
+
+### Bug Fixes
+
+* **base:** settings inheritance ([8a14a00](https://github.com/f-aguzzi/tesi/commit/8a14a0036bf3791deda182ec0f3aa618806f180d))
+
+## [2.5.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.4.0...v2.5.0-beta.1) (2024-06-12)
+
+
+### Features
+
+* **base:** added BaseActionClass as root class ([4f0bac8](https://github.com/f-aguzzi/tesi/commit/4f0bac831f6ca215212f6c801b01483ef2d0e5cc))
+* LDA and PCA inherit from BaseReducer ([7b797bd](https://github.com/f-aguzzi/tesi/commit/7b797bdfb00404b90fdeaf4178085f2d2bdb9c34))
+
+
+### chore
+
+* **docs:** upgrade to version 2.5.0 ([387499f](https://github.com/f-aguzzi/tesi/commit/387499f5add4ceae62d07891ffd531406607cdaf))
+
+
+### Docs
+
+* finish first case study ([21fcb01](https://github.com/f-aguzzi/tesi/commit/21fcb014b8b510fe7718e1443a1daad0afd09e0e))
+
 ## [2.4.0](https://github.com/f-aguzzi/tesi/compare/v2.3.0...v2.4.0) (2024-06-11)
 
 

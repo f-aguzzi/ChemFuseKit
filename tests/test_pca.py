@@ -1,15 +1,16 @@
-'''This module contains the test cases for the PCA module.'''
+"""This module contains the test cases for the PCA module."""
 import unittest
 import copy
 from chemfusekit.pca import PCASettings, PCA, GraphMode
 from chemfusekit.lldf import LLDFSettings, LLDF, Table
 from chemfusekit.lr import LRSettings, LR
 
+
 class TestPCA(unittest.TestCase):
-    '''Test suite for the PCA module.'''
+    """Test suite for the PCA module."""
 
     def test_pca_settings(self):
-        '''Test case against settings errors.'''
+        """Test case against settings errors."""
         # Test for rejection of a negative variance:
         with self.assertRaises(ValueError):
             PCASettings(target_variance=-0.3)
@@ -31,7 +32,7 @@ class TestPCA(unittest.TestCase):
         )
 
     def test_pca_constructor(self):
-        '''Test case against constructor parameter issues.'''
+        """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
@@ -64,12 +65,12 @@ class TestPCA(unittest.TestCase):
 
         # Finally, with proper values:
         PCA(lda_settings, lldf.fused_data)
-    
+
     def test_pca(self):
-        '''
+        """
         Integration test case to verify that the output does not change based on
         whether the output is set to true or false
-        '''
+        """
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
@@ -128,7 +129,7 @@ class TestPCA(unittest.TestCase):
         self.assertEqual(result_true_array_scores, result_false_array_scores)
 
     def test_pca_integration_lr(self):
-        '''Integration test for PCA+LR'''
+        """Integration test for PCA+LR"""
 
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
@@ -156,7 +157,7 @@ class TestPCA(unittest.TestCase):
         lr.lr()
 
     def test_pca_import_export(self):
-        '''Test case for the import and export of PCA models.'''
+        """Test case for the import and export of PCA models."""
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(
@@ -192,10 +193,10 @@ class TestPCA(unittest.TestCase):
         pca2 = PCA.from_file(pca_settings, 'pca_model.sklearn')
 
         # Assert the equality of the two models
-        self.assertEqual(pca.pca_model.get_params(), pca2.pca_model.get_params())
+        self.assertEqual(pca.model.get_params(), pca2.model.get_params())
 
     def test_pca_reduce(self):
-        '''Test case for data dimensionality reduction.'''
+        """Test case for data dimensionality reduction."""
         # Perform preliminary data fusion
         lldf_settings = LLDFSettings(output=GraphMode.NONE)
         table1 = Table(

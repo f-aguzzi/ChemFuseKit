@@ -1,4 +1,4 @@
-'''Utilities module: functions that are shared between different classes'''
+"""Utilities module: functions that are shared between different classes"""
 from sklearn.cross_decomposition import PLSRegression as PLSR
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -16,13 +16,15 @@ from tabulate import tabulate
 
 from enum import Enum, auto
 
+
 class GraphMode(Enum):
     TEXT = auto()
     GRAPHIC = auto()
     NONE = auto()
 
+
 def graph_output(scores, model, name: str, mode: GraphMode = GraphMode.GRAPHIC):
-    '''A reusable graphing function.'''
+    """A reusable graphing function."""
     # Return early if output is disabled
     if mode is GraphMode.NONE:
         return
@@ -38,7 +40,7 @@ def graph_output(scores, model, name: str, mode: GraphMode = GraphMode.GRAPHIC):
 
         # Display the explained variance ratio
         print("Explained Variance Ratio:", model.explained_variance_ratio_)
-    
+
     if mode is GraphMode.GRAPHIC:
         # Scores table
         print_table(
@@ -47,7 +49,7 @@ def graph_output(scores, model, name: str, mode: GraphMode = GraphMode.GRAPHIC):
             f"{name} Scores"
         )
 
-        #Scores plot
+        # Scores plot
         fig = px.scatter(scores, x="LV1", y="LV2", color="Substance", hover_data=['Substance'])
         fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
         fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
@@ -61,25 +63,25 @@ def graph_output(scores, model, name: str, mode: GraphMode = GraphMode.GRAPHIC):
         fig = px.scatter_3d(scores, x='LV1', y='LV2', z='LV3',
                             color='Substance', hover_data=['Substance'],
                             hover_name=scores.index
-        )
+                            )
         fig.update_layout(title_text=f"3D colored by Substance for {name}")
         fig.show()
 
 
 def print_table(header_values, cell_values, title: str, mode: GraphMode = GraphMode.GRAPHIC):
-    '''Multimodal table printing utility.'''
+    """Multimodal table printing utility."""
     # Return early if output is disabled
     if mode is GraphMode.NONE:
         return
     # Graphical table printing
     elif mode is GraphMode.GRAPHIC:
         fig = go.Figure(data=[go.Table(
-        header=dict(values=header_values,
-                    fill_color='paleturquoise',
-                    align='left'),
-        cells=dict(values=cell_values,
-                fill_color='lavender',
-                align='left'))
+            header=dict(values=header_values,
+                        fill_color='paleturquoise',
+                        align='left'),
+            cells=dict(values=cell_values,
+                       fill_color='lavender',
+                       align='left'))
         ])
         fig.update_layout(title=title)
         fig.show()
@@ -94,7 +96,7 @@ def print_table(header_values, cell_values, title: str, mode: GraphMode = GraphM
 
 
 def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAPHIC):
-    '''A function to run split tests on trained models.'''
+    """A function to run split tests on trained models."""
 
     # Return early if there's nothing to print
     if mode is GraphMode.NONE:
@@ -121,11 +123,11 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
 
         # See the classes the model used
         classes = model.classes_
-        if isinstance(model, LogisticRegression) and len(classes) == 2:     # Binary classifier
+        if isinstance(model, LogisticRegression) and len(classes) == 2:  # Binary classifier
             classes = [" / ".join(classes)]
             classes = np.asarray(classes)
             classes = classes.reshape((1, 1))
-        else:   # All other cases
+        else:  # All other cases
             classes = classes.reshape((1, len(classes)))
 
         coefficients = model.coef_.transpose()
@@ -192,7 +194,7 @@ def run_split_test(x, y, model, extended=False, mode: GraphMode = GraphMode.GRAP
 
 
 def print_confusion_matrix(y1, y2, title: str, mode: GraphMode = GraphMode.GRAPHIC):
-    '''Function to simplify the plotting of confusion matrices'''
+    """Function to simplify the plotting of confusion matrices"""
 
     # Return early if there's nothing to print
     if mode is GraphMode.NONE:
@@ -202,7 +204,7 @@ def print_confusion_matrix(y1, y2, title: str, mode: GraphMode = GraphMode.GRAPH
 
     # Get unique class labels from y_true
     class_labels = sorted(set(y2))
-    
+
     # Create the report
     report = classification_report(y1, y2, digits=2, output_dict=True)
 
@@ -236,5 +238,5 @@ def print_confusion_matrix(y1, y2, title: str, mode: GraphMode = GraphMode.GRAPH
         ['substance'] + list(cr.columns),
         [cr.index, cr['precision'], cr['recall'], cr['f1-score'], cr['support']],
         "Classification Report",
-        mode 
+        mode
     )

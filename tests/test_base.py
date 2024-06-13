@@ -1,4 +1,4 @@
-'''This module contains the test cases for the base module.'''
+"""This module contains the test cases for the base module."""
 import unittest
 
 import os
@@ -12,7 +12,7 @@ from chemfusekit.lda import LDASettings, LDA
 
 class TestBase(unittest.TestCase):
     def test_import_export(self):
-        '''Test case for table import and export.'''
+        """Test case for table import and export."""
 
         # Import and fuse data from tables
         lldf_settings = LLDFSettings()
@@ -61,7 +61,7 @@ class TestBase(unittest.TestCase):
         os.remove("export_test_2.xlsx")
 
     def test_model_import(self):
-        '''Integration test for model dumping and reloading.'''
+        """Integration test for model dumping and reloading."""
         # Let's start by creating and training an LDA model
         lldf_settings = LLDFSettings()
         table1 = Table(
@@ -95,7 +95,7 @@ class TestBase(unittest.TestCase):
         os.remove("modelfile.sklearn")
 
     def test_from_file(self):
-        '''Test case for classifier import from file'''
+        """Test case for classifier import from file"""
         '''Integration test for model dumping and reloading.'''
         # Let's start by creating and training an LDA model
         lldf_settings = LLDFSettings()
@@ -126,6 +126,7 @@ class TestBase(unittest.TestCase):
 
         # Clean up
         os.remove("modelfile.sklearn")
+
 
 if __name__ == '__main__':
     unittest.main()
