@@ -38,7 +38,7 @@ class KNN(BaseClassifier):
     def __init__(self, settings: KNNSettings, data: BaseDataModel):
         super().__init__(settings, data)
 
-    def knn(self):
+    def train(self):
         """Performs k-Nearest Neighbors Analysis"""
         # Prepare and train the kNN model
         knn = KNeighborsClassifier(

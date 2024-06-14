@@ -24,10 +24,10 @@ The `LLDF` class will take these settings and perform low-level data fusion on t
 two Excel tables we picked.
 
 ```python
-from chemfusekit.lldf import LLDFSettings, LLDF
+from chemfusekit.df import DFSettings, DF
 
 # Initialize the settings for low-level data fusion
-lldf_settings = LLDFSettings(
+lldf_settings = DFSettings(
     qepas_path='tests/qepas.xlsx',
     qepas_sheet='Sheet1',
     rt_path='tests/rt.xlsx',
@@ -36,7 +36,7 @@ lldf_settings = LLDFSettings(
 )
 
 # Initialize and run low-level data fusion
-lldf = LLDF(lldf_settings)
+lldf = DF(lldf_settings)
 lldf.lldf()
 ```
 
@@ -59,15 +59,15 @@ from chemfusekit.pca import PCASettings, PCA
 
 # Initialize the settings for Principal Component Analysis
 pca_settings = PCASettings(
-    target_variance=0.99,   # the minimum acceptable level of cumulative explained covariance
+    target_variance=0.99,  # the minimum acceptable level of cumulative explained covariance
     confidence_level=0.05,  # the desired level of confidence
     initial_components=10,  # the initial amount of components for the iterative analysis
-    output=GraphMode.GRAPHIC    # graphs will be printed
+    output=GraphMode.GRAPHIC  # graphs will be printed
 )
 
 # Initialize and run the PCA class
 pca = PCA(lldf.fused_data, pca_settings)
-pca.pca()
+pca.train()
 
 # Print the number of components and the statistics
 print(pca.components)
@@ -83,14 +83,14 @@ component than what we figured out from the `PCA` analysis of the previous step.
 from chemfusekit.lda import LDASettings, LDA
 
 settings = LDASettings(
-    components=(pca.components - 1),    # one less component than the number determined by PCA
-    output=GraphMode.GRAPHIC,   # graphs will be printed
-    test_split=True # Split testing is enabled
+    components=(pca.components - 1),  # one less component than the number determined by PCA
+    output=GraphMode.GRAPHIC,  # graphs will be printed
+    test_split=True  # Split testing is enabled
 )
 
 # Initialize and run the LDA class
 lda = LDA(lldf.fused_data, settings)
-lda.lda()
+lda.train()
 ```
 
 ## Fourth step: prediction

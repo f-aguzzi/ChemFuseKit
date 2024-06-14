@@ -21,7 +21,7 @@ PCA(settings: PCASettings, data: BaseDataModel)
 
 ## Fields
 
-- `fused_data`: object of type [`LLDF`](../lldf/lldf-class.md). Contains the data to be analyzed.
+- `data`: object of type [`BaseDataModel`](../base/basedatamodel.md.md). Contains the data to be analyzed.
 - `components`: Number of components for the PCA analysis. Defaults to 0.
 - `model`: A `PCA` model from `scikit-learn`. Defaults to `None`.
 - `settings`: object of type [`PCASettings`](./pcasettings.md). Contains the settings for
@@ -29,7 +29,7 @@ PCA(settings: PCASettings, data: BaseDataModel)
 
 ## Methods
 
-- `pca(self)`: performs Principal Component Analysis
+- `train(self)`: performs Principal Component Analysis
 - `pca_stats(self)`: produces PCA-related statistics and graphs.
 - `export_data(self) -> PCADataModel`: exports a [`PCADataModel`](./pcadatamodel.md) with rescaled `array_scores` while maintaining the original `x_data`, `x_train` and `y` inherited by the constructor.
 - `@classmethod from_file(cls, settings: PCASettings, model_path: str)`: creates a PCA instance from a file containing its sklearn core model.
@@ -53,7 +53,7 @@ from chemfusekit.pca import PCA
 
 # Initialize and run the PCA class
 pca = PCA(lldf.fused_data, pca_settings)
-pca.pca()
+pca.train()
 
 # Print the number of components and the statistics
 print(pca.components)

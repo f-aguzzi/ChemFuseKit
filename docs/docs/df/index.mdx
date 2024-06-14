@@ -2,7 +2,7 @@ import DocCardList from '@theme/DocCardList';
 
 # LLDF Module
 
-A module for low-level data fusion.
+A module for data fusion (low-level or mid-level).
 
 # Members
 
@@ -19,29 +19,29 @@ classDiagram
         __init__(file_path, sheet_name, preprocessing)
     }
 
-    class LLDFSettings {
+    class DFSettings {
         +GraphOutput output
         __init__(output)
     }
 
-    class LLDF {
-        +LLDFSettings settings
+    class DF {
+        +DFSettings settings
         +Table[] tables
-        +LLDFDataModel | None fused_data
+        +DFDataModel | None fused_data
         lldf()
         -_snv()
         +export_data(export_path: str)
         __init__(settings, tables[])
     }
 
-    class LLDFDataModel {
+    class DFDataModel {
         +x_data: pd.DataFrame
         +x_train: pd.DataFrame
         +y: np.ndarray
         __init__(x_data, x_train, y)
     }
 
-    LLDF *-- LLDFModel
-    LLDF *-- Table
-    LLDF *-- LLDFSettings
+    DF *-- DFModel
+    DF *-- Table
+    DF *-- DFSettings
 ```

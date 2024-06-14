@@ -21,14 +21,14 @@ class Table:
         self.index_column = index_column
 
 
-class LLDFDataModel(BaseDataModel):
-    """Models the output data from the LLDF operation"""
+class DFDataModel(BaseDataModel):
+    """Models the output data from the DF operation"""
     def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray):
         super().__init__(x_data, x_train, y)
 
 
-class LLDFSettings(BaseSettings):
-    """Holds the settings for the LLDF object."""
+class DFSettings(BaseSettings):
+    """Holds the settings for the DF object."""
     def __init__(self, output: GraphMode = GraphMode.NONE):
         super().__init__(output)
 
@@ -47,15 +47,15 @@ def _snv(input_data: np.ndarray):
     return output_data
 
 
-class LLDF:
+class DF:
     """Holds together all the data, methods and artifacts of the LLDF operation"""
-    def __init__(self, settings: LLDFSettings, tables: List[Table]):
+    def __init__(self, settings: DFSettings, tables: List[Table]):
         self.settings = settings
         self.tables = tables
-        self.fused_data: Optional[LLDFDataModel] = None
+        self.fused_data: Optional[DFDataModel] = None
 
-    def lldf(self):
-        """Performs low-level data fusion"""
+    def fuse(self):
+        """Performs data fusion"""
         x_vector = []
         for table in self.tables:
             try:
@@ -114,7 +114,7 @@ class LLDF:
                 preprocessed_x = x
             else:
                 raise SyntaxError(
-                    f"LLDF: this type of preprocessing does not exist ({table.preprocessing=})"
+                    f"DF: this type of preprocessing does not exist ({table.preprocessing=})"
                 )
 
             if self.settings.output is GraphMode.GRAPHIC:
@@ -182,7 +182,7 @@ class LLDF:
             axis=1
         )
 
-        self.fused_data = LLDFDataModel(x_data, x_train, y)
+        self.fused_data = DFDataModel(x_data, x_train, y)
 
     def export_data(self, export_path: str, sheet_name: str = 'Sheet1'):
         """Exports the data fusion artifacts to a file"""

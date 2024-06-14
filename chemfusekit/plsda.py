@@ -29,7 +29,7 @@ class PLSDA(BaseClassifier):
     def __init__(self, settings: PLSDASettings, data: BaseDataModel):
         super().__init__(settings, data)
 
-    def plsda(self):
+    def train(self):
         """Performs Partial Least Squares Discriminant Analysis"""
         x = self.data.x_data
         y = self.data.x_train.Substance.astype('category').cat.codes

@@ -2,19 +2,19 @@
 sidebar_position: 1
 ---
 
-# LLDF class
+# DF class
 
-The `LLDF` class is used for _low-level data fusion_.
+The `DF` class is used for _data fusion_ (low-level or mid-level).
 
 ## Syntax
 
 ```python
-LLDF(lldf_settings: LLDFSettings, tables: List[Table])
+DF(df_settings: DFSettings, tables: List[Table])
 ```
 
 ## Constructor parameters
 
-- `lldf_settings`: [`LLDFSettings`](./lldfsettings)
+- `df_settings`: [`DFSettings`](./dfsettings)
   
   The settings for the LLDF object.
 
@@ -24,7 +24,7 @@ LLDF(lldf_settings: LLDFSettings, tables: List[Table])
 
 ## Fields
 
-- `settings`: [`LLDFSettings`](./lldfsettings)
+- `settings`: [`DFSettings`](./dfsettings)
   
   The settings for the LLDF object.
 
@@ -32,18 +32,18 @@ LLDF(lldf_settings: LLDFSettings, tables: List[Table])
 
   A list of `Table` objects containing info about the files to import
 
-- `fused_data`: [`LLDFModel`](./lldfmodel.md) 
+- `fused_data`: [`DFModel`](./dfmodel.md) 
 
   The resulting model containing the data fusion artifacts.
 
 ## Methods
 
 - `_snv(self, input_data)`: static method to rescale input arrays
-- `lldf(self)`: performs low-level data fusion on the data passed in the settings
+- `fuse(self)`: performs data fusion on the data passed in the settings
   - *raises*:
     - `FileNotFoundError("Error opening the selected files.")`
       if the files specified in the settings are not valid
-    - `SyntaxError("LLDF: this type of preprocessing does not exist")`
+    - `SyntaxError("DF: this type of preprocessing does not exist")`
       if the preprocessing method specified in the settings is not valid
 - `export_data(self, export_path)`: exports the data fusion artifacts to an Excel file
   - *raises*:
@@ -56,12 +56,12 @@ LLDF(lldf_settings: LLDFSettings, tables: List[Table])
 ## Example
 
 ```python
-from chemfusekit.lldf import LLDF
+from chemfusekit.df import DF
 
 # Initialize and run low-level data fusion
-lldf = LLDF(tables, lldf_settings)
-lldf.lldf()
+df = DF(tables, lldf_settings)
+df.fuse()
 
 # Export the LLDF data to an Excel file
-lldf.export_data('output_file.xlsx')
+df.export_data('output_file.xlsx')
 ```

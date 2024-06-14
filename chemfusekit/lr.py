@@ -35,7 +35,7 @@ class LR(BaseClassifier):
         else:
             self.array_scores = data.x_train.drop('Substance', axis=1).values
 
-    def lr(self):
+    def train(self):
         """Performs Logistic Regression"""
 
         # Let's build our model on the training set

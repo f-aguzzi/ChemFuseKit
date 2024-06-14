@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 from chemfusekit.knn import KNNSettings, KNN, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, LLDFDataModel, Table
+from chemfusekit.df import DFSettings, DF, DFDataModel, Table
 
 
 class TestKNN(unittest.TestCase):
@@ -66,7 +66,7 @@ class TestKNN(unittest.TestCase):
     def test_knn_constructor(self):
         """Test case against constructor errors."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -77,24 +77,24 @@ class TestKNN(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # settings parameter
-        wrong_settings = LLDFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
+        wrong_settings = DFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
         with self.assertRaises(TypeError):
-            KNN(wrong_settings, lldf.fused_data)  # pass an object of the wrong class as settings
+            KNN(wrong_settings, df.fused_data)  # pass an object of the wrong class as settings
 
         # fused_data parameter
         knn_settings = KNNSettings()
-        wrong_fused_data = lldf_settings
+        wrong_fused_data = df_settings
         with self.assertRaises(TypeError):
             KNN(knn_settings, wrong_fused_data)  # pass an object of the wrong class as fused_data
 
     def test_knn(self):
         """Integration test case for the training function."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -105,28 +105,28 @@ class TestKNN(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up and run KNN (no output)
         knn_settings = KNNSettings()
-        knn = KNN(knn_settings, lldf.fused_data)
-        knn.knn()
+        knn = KNN(knn_settings, df.fused_data)
+        knn.train()
 
         # With graph output
         knn_settings = KNNSettings(output=GraphMode.GRAPHIC)
-        knn = KNN(knn_settings, lldf.fused_data)
-        knn.knn()
+        knn = KNN(knn_settings, df.fused_data)
+        knn.train()
 
         # With text output
         knn_settings = KNNSettings(output=GraphMode.TEXT)
-        knn = KNN(knn_settings, lldf.fused_data)
-        knn.knn()
+        knn = KNN(knn_settings, df.fused_data)
+        knn.train()
 
     def test_prediction(self):
         """Test case against prediction parameter issues."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -137,15 +137,15 @@ class TestKNN(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up KNN without training it
         knn_settings = KNNSettings()
-        knn = KNN(knn_settings, lldf.fused_data)
+        knn = KNN(knn_settings, df.fused_data)
 
         # Pick a random sample for prediction
-        x_data_sample = lldf.fused_data.x_train.iloc[119]  # should be DMMP
+        x_data_sample = df.fused_data.x_train.iloc[119]  # should be DMMP
         x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
 
         # Run prediction with untrained model (should throw exception)
@@ -153,7 +153,7 @@ class TestKNN(unittest.TestCase):
             knn.predict(x_data_sample)
 
         # Run training
-        knn.knn()
+        knn.train()
 
         # Run prediction with empty data (should throw exception)
         with self.assertRaises(TypeError):

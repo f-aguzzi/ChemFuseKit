@@ -4,12 +4,12 @@ sidebar_position: 2
 
 # LLDFSettings class
 
-Holds the settings for the [`LLDF`](./lldf-class.md) object.
+Holds the settings for the [`DF`](./df-class.md) object.
 
 ## Syntax
 
 ```python
-LLDFSettings(output: GraphMode)
+DFSettings(output: GraphMode)
 ```
 
 ## Fields and constructor parameters
@@ -18,8 +18,8 @@ LLDFSettings(output: GraphMode)
 ## Example
 
 ```python
-from chemfusekit.lldf import LLDFSettings
+from chemfusekit.df import DFSettings
 
 # Initialize the settings for low-level data fusion
-lldf_settings = LLDFSettings(output=GraphMode.TEXT)
+df_settings = DFSettings(output=GraphMode.TEXT)
 ```

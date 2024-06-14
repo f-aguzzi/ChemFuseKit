@@ -22,13 +22,12 @@ PLSDA(settings: PLSDASettings, data: BaseDataModel)
 
 - `settings`: object of type [`PLSDASettings`](./plsdasettings.md). Contains the settings for
   the `PLSDA` object. 
-- `fused_data`: onject of type ['LLDFModel`](../lldf/lldfmodel.md). Contains the
-  artifacts from the data fusion process.
+- `data`: object of type [`BaseDataModel`](../base/basedatamodel.md.md). Contains the data to be analyzed.
 - `model`: a `PLSRegression` model from `scikit-learn`. Defaults to `None`.
 
 ## Methods
 
-- `plsda(self)`: trains the Partial Least Squares Discriminant Analysis model.
+- `train(self)`: trains the Partial Least Squares Discriminant Analysis model.
 - `predict(self, x_data)`: performs PLSDA prediction once the model is trained.
   - *raises*:
     - `RuntimeError("The PLSDA model is not trained yet!")` if the `PLSDA` model hasn't been trained yet
@@ -40,7 +39,7 @@ from chemfusekit.knn import PLSDA
 
 # Initialize and run the LDA class
 plsda = PLSDA(settings, lldf.fused_data)
-plsda.plsda()
+plsda.train()
 
 # Run predictions
 plsda.predict(x_data)

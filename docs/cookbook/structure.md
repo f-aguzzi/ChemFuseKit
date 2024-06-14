@@ -72,7 +72,7 @@ Let's assume your new data is called `new_data`. Knowing that the training data,
 
 ```python
 knn.data = new_data
-knn.knn()
+knn.train()
 ```
 
 The training method is always called like its container class, but in lower case. To train a `KNN` model, like in this case, you just have to call `.knn()` on it. Same goes for `.lda()` on `LDA`, `.lldf()` on `LLDF`, and so on.
@@ -124,65 +124,86 @@ The classifiers themselves all inherit from a base class called [`BaseClassifier
 
 ```mermaid
 classDiagram
-
-    <<Abstract>> BaseActionClass
-    class BaseActionClass {
-        __init__(settings, data)
-        +settings: BaseSettings
-        +data: BaseDataModel
-        +model: sklearn model
-        import_model(import_path: str)
-        export_model(export_path: str)
-    }
+    BaseDataModel <|-- LLDFDataModel
+    BaseDataModel <|-- ComponentDataModel
+    ComponentDataModel <|.. PCADataModel
+    ComponentDataModel <|.. LDADataModel
     
-    <<Abstract>> BaseClassifier
-    class BaseClassifier {
-        +settings: BaseSettings
-        __init__(settings, data)
-        predict(x_data: pd.DataFrame)
+    class BaseDataModel {
+        x_data
+        x_train
+        y
+        load_from_file()
+        export_to_file()
     }
 
-    <<Abstract>> BaseReducer
+    <<abstract>> ComponentDataModel
+    class ComponentDataModel {
+        n_components
+    }
+
+    class PCADataModel {
+        array_scores
+    }
+
+    class LDADataModel {
+
+    }
+
+    class LLDFDataModel {
+        tables
+    }
+
+    BaseActionClass <|.. BaseReducer
+    BaseActionClass <|.. BaseClassifier
+
+    BaseDataModel *-- BaseActionClass
+
+    <<abstract>> BaseActionClass
+    class BaseActionClass {
+        train()
+        settings
+        data ~BaseDataModel~
+        model
+        from_file()
+        import_model()
+        export_model()
+    }
+
+    BaseReducer <|.. PCA
+    BaseReducer <|.. LDA
+    BaseReducer <|.. PLSDA
+
+    <<abstract>> BaseReducer
     class BaseReducer {
-        +export_data()
-        +reduce()
+        components
+        rescaled_data
+        export_data()
+        reduce()
     }
 
-    class KNN {
-        ...
+    <<abstract>> BaseClassifier
+    class BaseClassifier {
+        predict()
     }
 
-    class LDA {
-        ...
-    }
-
-    class LR {
-        ...
-    }
-
-    class PLSDA {
-        ...
-    }
-
-    class SVM {
-        ...
-    }
+    BaseClassifier <| .. LDA
+    BaseClassifier <| .. LR
+    BaseClassifier <| .. SVM
+    BaseClassifier <| .. KNN
+    BaseClassifier <| .. PLSDA
 
     class PCA {
         pca_stats()
     }
 
-    BaseClassifier <|.. KNN
-    BaseClassifier <|.. LDA
-    BaseClassifier <|.. LR
-    BaseClassifier <|.. PLSDA
-    BaseClassifier <|.. SVM
+    class LLDF {
+        fuse_data()
+    }
 
-    BaseReducer <|.. PCA
-    BaseReducer <|.. LDA
-
-    BaseActionClass <|.. BaseReducer
-    BaseActionClass <|.. BaseClassifier
+    class LR {
+        array_scores
+    }
 ```
 
 
@@ -215,6 +236,7 @@ classDiagram
 ```
 
 This allows all the classifiers to use the `LLDF` data, dimension-reduced `PCA` data, or any other type of data as long as it follows the `BaseDataModel` template.
+
 
 ## File import and export
 

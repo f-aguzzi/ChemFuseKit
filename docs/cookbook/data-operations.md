@@ -148,9 +148,9 @@ Even though the header names are slightly different, the content of the first tw
 The `LLDF` module allows us to join these two tables (the current and the one from the previous examples) to form a single dataset that contains both spectral data and retention times. Let's see how.
 
 ```python
-from chemfusekit.lldf import LLDFSettings, LLDF, GraphMode, Table
+from chemfusekit.df import DFSettings, DF, GraphMode, Table
 
-settings = LLDFSettings()   # Initialize the default settings
+settings = DFSettings()  # Initialize the default settings
 
 # Set up the import settings for the first table (spectral data)
 table1 = Table(
@@ -173,7 +173,7 @@ table2 = Table(
 tables = [Table1, Table2]
 
 # Let's pass the settings and the tables to the LLDF constructor
-lldf = LLDF(settings, tables)
+lldf = DF(settings, tables)
 
 # Let's finally perform data fusion with the lldf() method!
 lldf.lldf()

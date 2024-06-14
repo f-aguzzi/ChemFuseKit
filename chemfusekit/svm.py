@@ -21,7 +21,7 @@ class SVM(BaseClassifier):
     def __init__(self, settings: SVMSettings, data: BaseDataModel):
         super().__init__(settings, data)
 
-    def svm(self):
+    def train(self):
         """Performs Support Vector Machine analysis"""
 
         # Linear kernel

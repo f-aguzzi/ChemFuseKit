@@ -22,7 +22,7 @@ KNN(settings: KNNSettings, data: LLDFModel)
 
 - `settings`: object of type [`KNNSettings`](/tesi/docs/knn/knnsettings). Contains the settings for
   the `KNN` object. 
-- `fused_data`: onject of type ['LLDFModel`](/tesi/docs/lldf/lldfmodel). Contains the
+- `data`: onject of type ['DFModel`](/tesi/docs/df/dfmodel). Contains the
   artifacts from the data fusion process.
 - `model`: a `KNeighborsClassifier` model from `scikit-learn`. Defaults to `None`.
 
@@ -40,7 +40,7 @@ from chemfusekit.knn import KNN
 
 # Initialize and run the LDA class
 knn = KNN(settings, lldf.fused_data)
-knn.knn()
+knn.train()
 
 # Run predictions
 knn.predict(x_data)

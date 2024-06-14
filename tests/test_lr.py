@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from chemfusekit.lldf import LLDFSettings, LLDF, Table
+from chemfusekit.df import DFSettings, DF, Table
 from chemfusekit.pca import PCASettings, PCA, PCADataModel
 from chemfusekit.lr import LRSettings, LR, GraphMode
 
@@ -82,7 +82,7 @@ class TestLR(unittest.TestCase):
     def test_lr(self):
         """Integration test case for LR training."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -93,12 +93,12 @@ class TestLR(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         pca_settings = PCASettings()
-        pca = PCA(pca_settings, lldf.fused_data)
-        pca.pca()
+        pca = PCA(pca_settings, df.fused_data)
+        pca.train()
         pca.pca_stats()
 
         pca_data = pca.export_data()
@@ -106,33 +106,33 @@ class TestLR(unittest.TestCase):
         # With no output
         lr_settings = LRSettings()
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With text output
         lr_settings = LRSettings(output=GraphMode.TEXT)
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With graph output
         # With text output
         lr_settings = LRSettings(output=GraphMode.GRAPHIC)
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With text output and split tests
         lr_settings = LRSettings(output=GraphMode.TEXT, test_split=True)
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With graph output and split tests
         lr_settings = LRSettings(output=GraphMode.GRAPHIC, test_split=True)
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
-        # A final test with just the LLDF data:
+        # A final test with just the df data:
         lr_settings = LRSettings()
-        lr = LR(lr_settings, lldf.fused_data)
-        lr.lr()
+        lr = LR(lr_settings, df.fused_data)
+        lr.train()
 
     def test_lr_predict(self):
         """Test case against prediction input errors."""

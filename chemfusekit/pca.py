@@ -52,7 +52,7 @@ class PCA(BaseReducer):
         self.model: Optional[PC] = None
         self.array_scores: Optional[np.ndarray] = None
 
-    def pca(self):
+    def train(self):
         """Performs Principal Component Analysis."""
 
         # Read from the data fusion object
@@ -290,7 +290,7 @@ class PCA(BaseReducer):
         if self.model is None:
             settings_backup = copy(self.settings)
             self.settings.output = GraphMode.NONE
-            self.pca()
+            self.train()
             self.pca_stats()
             self.settings = settings_backup
 

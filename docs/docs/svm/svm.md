@@ -24,14 +24,14 @@ The constructor raises:
 
 ## Fields
 
-- `fused_data`: object of type [`LLDFModel`](../lldf/lldfmodel.md). Contains the data to be analyzed.
+- `data`: object of type [`BaseDataModel`](../base/basedatamodel.md). Contains the data to be analyzed.
 - `settings`: object of type [`SVMSettings`](./svmsettings.md). Contains the settings for
-  the `PCA` object. 
+  the `SVM` object. 
 - `pca_model`: an `SVM` model from `scikit-learn`. Defaults to `None`.
 
 ## Methods
 
-- `svm(self)`: performs Support Vector Machine analysis.
+- `train(self)`: performs Support Vector Machine analysis.
   - *raises*:
     - `ValueError(SVM: this type of kernel does not exist.")` if the kernel type is invalid
 - `predict(self, x_data)`: performs classification based on SVM
@@ -44,6 +44,6 @@ The constructor raises:
 from chemfusekit.svm import SVM
 
 # Initialize and run the SVM class
-svm = LDA(lldf.fused_data, settings)
-svm.svm()
+svm = SVM(lldf.fused_data, settings)
+svm.train()
 ```

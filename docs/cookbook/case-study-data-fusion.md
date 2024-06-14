@@ -90,10 +90,10 @@ On the other hand, the GC data does not require any preprocessing. The data obta
 The most significant aspect of data preprocessing in this case study is data fusion. The three tables contained in the Excel datasheet are concatenated row-wise to form a single table that contains the data from the IMS and QEPAS spectrometers, as well as the GC retention times.
 
 ```python
-from chemfusekit.lldf import LLDFSettings, LLDF, GraphMode, Table
+from chemfusekit.df import DFSettings, DF, GraphMode, Table
 
 # Initialize the settings to produce graphical output for the operation
-settings = LLDFSettings(output=GraphMode.GRAPHIC)
+settings = DFSettings(output=GraphMode.GRAPHIC)
 
 # Set up the import settings for the first table (IMS spectral data)
 table1 = Table(
@@ -126,7 +126,7 @@ table3 = Table(
 tables = [table1, table2, table3]
 
 # Let's pass the settings and the tables to the LLDF constructor
-lldf = LLDF(settings, tables)
+lldf = DF(settings, tables)
 
 # Let's finally perform data fusion with the lldf() method!
 lldf.lldf()
@@ -156,7 +156,7 @@ pca_settings = PCASettings(
 
 # Initialize and run PCA on the fused dataset
 pca = PCA(pca_settings, fused_data)
-pca.pca()
+pca.train()
 
 # Run the tests and statistics
 pca.pca_stats()
@@ -182,7 +182,7 @@ lr_settings = LRSettings(output=GraphMode.GRAPHIC, test_split=True)
 
 # Initialize and train LR
 lr = LR(lr_settings, reduced_dataset)
-lr.lr()
+lr.train()
 ```
 
 ### Model evaluation
@@ -206,12 +206,12 @@ pca.export_model("DMMP_acetone_pca.sklearn")
 In the future, when we need to classify DMMP and acetone on a new dataset, we can simply import the new dataset, perform the necessary data fusion, reduce the dimensionality through PCA, import the pre-trained `LR` model, and use it to classify the data. This streamlined process allows for efficient and consistent classification of DMMP and acetone samples.
 
 ```python
-from chemfusekit.lldf import LLDFSettings, LLDF, GraphMode, Table
+from chemfusekit.df import DFSettings, DF, GraphMode, Table
 from chemfusekit.pca import PCASettings, PCA
 from chemfusekit.lr import LRSettings, LR
 
 # Data fusion
-lldf_settings = LLDFSettings(output=GraphMode.GRAPHIC)
+lldf_settings = DFSettings(output=GraphMode.GRAPHIC)
 table1 = Table(
     file_path='new_dataset.xlsx',
     sheet_name='IMS',
@@ -234,7 +234,7 @@ table3 = Table(
     index_column='Sample_id'
 )
 tables = [table1, table2, table3]
-lldf = LLDF(lldf_settings, tables)
+lldf = DF(lldf_settings, tables)
 lldf.lldf()
 fused_data = lldf.fused_data
 

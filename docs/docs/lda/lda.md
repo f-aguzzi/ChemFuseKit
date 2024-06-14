@@ -31,7 +31,7 @@ LDA(settings: LDASettings, data: BaseDataModel)
 
 ## Methods
 
-- `lda(self)`: performs Linear Discriminant Analysis
+- `train(self)`: performs Linear Discriminant Analysis
 - `__print_prediction_graphs(self, y_test, y_pred)`: helper function to print
   graphs and stats about LDA predictions
 - `predict(self, x_data)`: performs LDA prediction once the model is trained.
@@ -45,5 +45,5 @@ from chemfusekit.lda import LDA
 
 # Initialize and run the LDA class
 lda = LDA(lldf.fused_data, settings)
-lda.lda()
+lda.train()
 ```

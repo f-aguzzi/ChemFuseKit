@@ -114,6 +114,11 @@ class BaseActionClass(ABC):
         self.data = data
         self.model: BaseEstimator | None = None
 
+    @abstractmethod
+    def train(self):
+        """Trains the estimator model."""
+        pass
+
     @classmethod
     def from_file(cls, settings, model_path):
         """Creates a classifier instance from file"""

@@ -42,7 +42,7 @@ class LDA(BaseClassifier, BaseReducer):
         if isinstance(data, PCADataModel):
             self.settings.components = data.components - 1
 
-    def lda(self):
+    def train(self):
         """Performs Linear Discriminant Analysis"""
 
         lda = LD(n_components=self.settings.components)  # N-1 where N are the classes
@@ -144,7 +144,7 @@ class LDA(BaseClassifier, BaseReducer):
             settings_backup = copy(self.settings)
             self.settings.output = GraphMode.NONE
             self.settings.test_split = False
-            self.lda()
+            self.train()
             self.settings = settings_backup
 
         x_data = pd.DataFrame(self.model.transform(self.data.x_data))

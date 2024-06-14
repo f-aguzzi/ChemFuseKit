@@ -1,6 +1,6 @@
 """This module contains the test cases for the LLDF module."""
 import unittest
-from chemfusekit.lldf import LLDFSettings, LLDF, GraphMode, Table
+from chemfusekit.df import DFSettings, DF, GraphMode, Table
 
 
 class TestLLDF(unittest.TestCase):
@@ -9,7 +9,7 @@ class TestLLDF(unittest.TestCase):
     def test_file_loading(self):
         """Test case against file loading errors."""
         # load a non-existent file on purpose
-        settings = LLDFSettings(
+        settings = DFSettings(
             output=GraphMode.NONE
         )
 
@@ -20,13 +20,13 @@ class TestLLDF(unittest.TestCase):
         )
 
         files = [table1]
-        lldf = LLDF(settings=settings, tables=files)
-        self.assertRaises(FileNotFoundError, lldf.lldf)
+        df = DF(settings=settings, tables=files)
+        self.assertRaises(FileNotFoundError, df.fuse)
 
     def test_preprocessing_techniques(self):
         """Test case against wrong preprocessing user input."""
         with self.assertRaises(SyntaxError):
-            settings = LLDFSettings(
+            settings = DFSettings(
                 output=GraphMode.NONE
             )
 
@@ -36,39 +36,39 @@ class TestLLDF(unittest.TestCase):
                 preprocessing='qpl'
             )
 
-            lldf = LLDF(settings, [table1])
-            lldf.lldf()
+            df = DF(settings, [table1])
+            df.fuse()
 
         # Now a correct value:
-        settings = LLDFSettings(output=GraphMode.NONE)
+        settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path='tests/qepas.xlsx',
             sheet_name='Sheet1',
             preprocessing='snv'
         )
-        lldf = LLDF(settings, [table1])
-        lldf.lldf()
+        df = DF(settings, [table1])
+        df.fuse()
 
     def test_export(self):
         """Test case against wrong export settings."""
-        settings = LLDFSettings(output=GraphMode.NONE)
+        settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path='tests/qepas.xlsx',
             sheet_name='Sheet1',
             preprocessing='snv'
         )
-        lldf = LLDF(settings, [table1])
+        df = DF(settings, [table1])
 
         # Try exporting data before data fusion
         with self.assertRaises(RuntimeError):
-            lldf.export_data('path')
+            df.export_data('path')
 
         # Perform data fusion
-        lldf.lldf()
+        df.fuse()
 
         # Try exporting data to an invalid path
         with self.assertRaises(ValueError):
-            lldf.export_data('$£=0\//|')
+            df.export_data('$£=0\//|')
 
 
 if __name__ == '__main__':

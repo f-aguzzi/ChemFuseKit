@@ -6,7 +6,7 @@ sidebar_position: 4
 
 Holds the information for a single table to import.
 
-The [`LLDF`](./lldf-class.md) object takes a list of `Table` as a parameter.
+The [`DF`](./df-class.md) object takes a list of `Table` as a parameter.
 
 ## Syntax
 
@@ -32,14 +32,14 @@ Table(
 ## Example
 
 ```python
-from chemfusekit.lldf import Table
+from chemfusekit.df import Table
 
 # Create a table
 table1 = Table(
     file_path='tests/qepas.xlsx',
     sheet_name='Sheet1',
-    preprocessing='snv', # normalization preprocessing; other options: savgol, both or none
+    preprocessing='snv',  # normalization preprocessing; other options: savgol, both or none
     class_column: 'substance',  # The column called 'substance' in the datase will be treated as the class column
-    index_column: 'sample'  # The column named 'index' in the dataset will be treated as the index column 
+index_column: 'sample'  # The column named 'index' in the dataset will be treated as the index column 
 )
 ```

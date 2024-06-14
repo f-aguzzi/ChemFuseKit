@@ -1,7 +1,7 @@
 """This module contains the test cases for the LDA module."""
 import unittest
 from chemfusekit.lda import LDASettings, LDA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, Table
+from chemfusekit.df import DFSettings, DF, Table
 
 
 class TestLDA(unittest.TestCase):
@@ -20,7 +20,7 @@ class TestLDA(unittest.TestCase):
         """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -31,8 +31,8 @@ class TestLDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         lda_settings = LDASettings()
 
@@ -42,19 +42,19 @@ class TestLDA(unittest.TestCase):
 
         # Then, construct the object with null settings:
         with self.assertRaises(TypeError):
-            LDA(None, lldf.fused_data)
+            LDA(None, df.fused_data)
 
         # Now, with both null:
         with self.assertRaises(TypeError):
             LDA(None, None)
 
         # Finally, with proper values:
-        LDA(lda_settings, lldf.fused_data)
+        LDA(lda_settings, df.fused_data)
 
     def test_lda(self):
         """Integration test case."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -65,34 +65,34 @@ class TestLDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Create an LDA object and train it, with graphical output
         lda_settings = LDASettings(output=GraphMode.GRAPHIC)
-        lda = LDA(lda_settings, lldf.fused_data)
-        lda.lda()
+        lda = LDA(lda_settings, df.fused_data)
+        lda.train()
 
         # Create an LDA object and train it, with text output
         lda_settings = LDASettings(output=GraphMode.TEXT)
-        lda = LDA(lda_settings, lldf.fused_data)
-        lda.lda()
+        lda = LDA(lda_settings, df.fused_data)
+        lda.train()
 
         # Create an LDA object and train it, with no output
         lda_settings = LDASettings(output=GraphMode.NONE)
-        lda = LDA(lda_settings, lldf.fused_data)
-        lda.lda()
+        lda = LDA(lda_settings, df.fused_data)
+        lda.train()
 
         # Create an LDA object and train it, with true output and split tests
         lda_settings = LDASettings(output=GraphMode.TEXT, test_split=True)
-        lda = LDA(lda_settings, lldf.fused_data)
-        lda.lda()
+        lda = LDA(lda_settings, df.fused_data)
+        lda.train()
 
     def test_lda_predict(self):
         """Test case against prediction parameter issues."""
 
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output=GraphMode.NONE)
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -103,15 +103,15 @@ class TestLDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Create an LDA object without training it
         lda_settings = LDASettings()
-        lda = LDA(lda_settings, lldf.fused_data)
+        lda = LDA(lda_settings, df.fused_data)
 
         # Pick a random sample for prediction
-        x_data_sample = lldf.fused_data.x_train.iloc[119]  # should be DMMP
+        x_data_sample = df.fused_data.x_train.iloc[119]  # should be DMMP
         x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
 
         # Run prediction with untrained model (should throw exception)
@@ -119,7 +119,7 @@ class TestLDA(unittest.TestCase):
             lda.predict(x_data_sample)
 
         # Train the LDA object
-        lda.lda()
+        lda.train()
 
         # Run prediction with empty data (should throw exception)
         with self.assertRaises(TypeError):
