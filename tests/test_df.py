@@ -70,6 +70,25 @@ class TestLLDF(unittest.TestCase):
         with self.assertRaises(ValueError):
             df.export_data('$£=0\//|')
 
+    def test_midlevel_data_fusion(self):
+        """Integration test case for mid-level data fusion."""
+        df_settings = DFSettings(output=GraphMode.GRAPHIC)
+        table1 = Table(
+            file_path='tests/qepas.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='snv',
+            feature_selection='pca'
+        )
+        table2 = Table(
+            file_path='tests/rt.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='none'
+        )
+
+        tables = [table1, table2]
+
+        df = DF(df_settings, tables)
+        df.fuse()
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,23 +8,28 @@ from scipy.signal import savgol_filter
 import matplotlib.pyplot as plt
 
 from .__base import GraphMode, BaseDataModel, BaseSettings
+from .pca import PCASettings, PCA
+from .plsda import PLSDASettings, PLSDA
 
 
 class Table:
     """Holds the path, preprocessing choice and sheet name for a single Excel table."""
-    def __init__(self, file_path: str, sheet_name: str, preprocessing: str, class_column: str = 'Substance',
-                 index_column: str | None = None):
+    def __init__(self, file_path: str, sheet_name: str, preprocessing: str, feature_selection: str | None = None,
+                 class_column: str = 'Substance', index_column: str | None = None):
         self.file_path = file_path
         self.sheet_name = sheet_name
         self.preprocessing = preprocessing
+        self.feature_selection = feature_selection
         self.class_column = class_column
         self.index_column = index_column
 
 
 class DFDataModel(BaseDataModel):
     """Models the output data from the DF operation"""
-    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray):
+    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray,
+                 tables: list[(Table, BaseDataModel)]):
         super().__init__(x_data, x_train, y)
+        self.tables = tables
 
 
 class DFSettings(BaseSettings):
@@ -57,6 +62,7 @@ class DF:
     def fuse(self):
         """Performs data fusion"""
         x_vector = []
+        individual_tables = []
         for table in self.tables:
             try:
                 # Autodetect the format based on the file extension
@@ -85,14 +91,16 @@ class DF:
 
             # select only numerical attributes
             if table.index_column is not None and table.index_column in table_data.columns:
-                x = table_data.drop(table.index_column, axis=1)
+                deindexed_table = table_data.drop(table.index_column, axis=1)
             else:
-                x = table_data.iloc[:, 1:]
+                deindexed_table = table_data
 
             if table.class_column in table_data.columns:
-                x = table_data.drop(table.class_column, axis=1)
+                x = deindexed_table.drop(table.class_column, axis=1)
+                y = deindexed_table[table.class_column]
             else:
-                x = x.iloc[:, 1:]
+                x = deindexed_table.iloc[:, 1:]
+                y = deindexed_table[:, 1]
 
             # It is necessary to convert the column names as string to select them
             x.columns = x.columns.astype(str)     # to make the colnames as text
@@ -115,6 +123,31 @@ class DF:
             else:
                 raise SyntaxError(
                     f"DF: this type of preprocessing does not exist ({table.preprocessing=})"
+                )
+            preprocessed_x = pd.DataFrame(preprocessed_x)
+
+            # Save the temporary table as a BaseDataModel
+            x_train = pd.concat([y, preprocessed_x], axis=1)
+            table_data_model = BaseDataModel(
+                x_data=preprocessed_x,
+                x_train=x_train,
+                y=np.asarray(y)
+            )
+
+            # Feature reduction
+            if table.feature_selection is None:
+                reduced_table_data_model = table_data_model
+            elif table.feature_selection == 'pca':
+                pca = PCA(PCASettings(), table_data_model)
+                pca.train()
+                reduced_table_data_model = pca.reduce(table_data_model)
+            elif table.feature_selection == 'plsda':
+                plsda = PLSDA(PLSDASettings(), table_data_model)
+                plsda.train()
+                reduced_table_data_model = plsda.reduce(table_data_model)
+            else:
+                raise SyntaxError(
+                    f"DF: this type of feature selection does not exist ({table.feature_selection=})"
                 )
 
             if self.settings.output is GraphMode.GRAPHIC:
@@ -148,7 +181,7 @@ class DF:
 
             # Create a new DataFrame with the processed numerical attributes
             processed_dataframe_x = pd.DataFrame(
-                preprocessed_x,
+                reduced_table_data_model.x_data,
                 columns=x.columns
             )
 
@@ -156,6 +189,7 @@ class DF:
             processed_dataframe_x = processed_dataframe_x.reset_index(drop=True)
 
             x_vector.append(processed_dataframe_x)
+            individual_tables.append((table, table_data_model))
 
         try:
             table_data = pd.read_excel(
@@ -182,7 +216,7 @@ class DF:
             axis=1
         )
 
-        self.fused_data = DFDataModel(x_data, x_train, y)
+        self.fused_data = DFDataModel(x_data, x_train, y, individual_tables)
 
     def export_data(self, export_path: str, sheet_name: str = 'Sheet1'):
         """Exports the data fusion artifacts to a file"""

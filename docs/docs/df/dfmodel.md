@@ -20,8 +20,11 @@ The first two are `Pandas` `DataFrame` objects:
 - `x_data`
 - `x_train`
 
-The last is a `NumPy` `ndarray`:
+The third is a `NumPy` `ndarray`:
 - `y`
+
+The last is a `list` of `tuple`s containing a `Table` and a `BaseDataModel`, representing the individual imported tables:
+- `tables`
 
 ## Methods
 
