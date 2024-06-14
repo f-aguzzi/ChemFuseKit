@@ -17,19 +17,18 @@ classDiagram
         __init__(x_data, x_train, y)
     }
 
-    class LLDFDataModel {
+    class DFDataModel {
         ...
         __init__(...)
     }
 
-    class PCADataModel {
-        +array_scores: ndarray
+    class ReducerDataModel {
         +components: int
         __init__(..., array_scores)
     }
 
-    BaseDataModel *-- LLDFDataModel
-    BaseDataModel *-- PCADataModel
+    BaseDataModel *-- DFDataModel
+    BaseDataModel *-- ReducerDataModel
 ```
 
 With the help of these classes, we can perform three fundamental data operations:
@@ -40,13 +39,13 @@ With the help of these classes, we can perform three fundamental data operations
 
 ## Dataset loading
 
-`ChemFuseKit` can import Excel, CSV and JSON tables into its `BaseDataModel`-derived classes. `BaseDataModel` and both its derived classes offer the ability to import a single datasheet, while only `LLDF` (the name stands for *Low Level Data Fusion*) can perform data fusion by importing multiple tables at once into a single, unified dataset:
+`ChemFuseKit` can import Excel, CSV and JSON tables into its `BaseDataModel`-derived classes. `BaseDataModel` and both its derived classes offer the ability to import a single datasheet, while only `DF` (the name stands for *Data Fusion*) can perform data fusion by importing multiple tables at once into a single, unified dataset:
 
 ```mermaid
 flowchart TD
     A[Import data] --> B{How many tables?}
     B --> |One| C[BaseDataModel\nand its\nderived classes]
-    B --> |Many| D[LLDF only]
+    B --> |Many| D[DF only]
 ```
 
 Let's say we have one single table, called `spectrometer_data.xlsx`, and we want to load it into our project, to then feed it to one of our classifiers.
@@ -145,7 +144,7 @@ Even though the header names are slightly different, the content of the first tw
 
 <br />
 
-The `LLDF` module allows us to join these two tables (the current and the one from the previous examples) to form a single dataset that contains both spectral data and retention times. Let's see how.
+The `DF` module allows us to join these two tables (the current and the one from the previous examples) to form a single dataset that contains both spectral data and retention times. Let's see how.
 
 ```python
 from chemfusekit.df import DFSettings, DF, GraphMode, Table
@@ -173,19 +172,19 @@ table2 = Table(
 tables = [Table1, Table2]
 
 # Let's pass the settings and the tables to the LLDF constructor
-lldf = DF(settings, tables)
+df = DF(settings, tables)
 
 # Let's finally perform data fusion with the lldf() method!
-lldf.lldf()
+df.fuse()
 ```
 
 At the end of this cycle of operations, we can find our fused data object inside the `fused_data` property of our low-level data fusion object:
 
 ```python
-lldf.fused_data
+df.fused_data
 ```
 
-The `fused_data` field is of class `LLDFDataModel`, which is derived from `BaseDataModel`, and contains the same fields (`x_data`, `x_train`, `y`).
+The `fused_data` field is of class `DFDataModel`, which is derived from `BaseDataModel`, and contains the same fields (`x_data`, `x_train`, `y`).
 
 <br />
 
@@ -225,10 +224,10 @@ This is the content of `y` (a NumPy ndarray):
 
 `BaseDataModel` and its derived classes have a `export_to_file` method that exports the complete table (class names and data columns) to an Excel, CSV or JSON file.
 
-Let's say we want to export the fused dataset from the previous example into a file called `fused dataset.xlsx`. Here's how to do it, using our `lldf` variable from the previous example (the one that contained an instance of the `LLDF` class, with which we joined the two tables):
+Let's say we want to export the fused dataset from the previous example into a file called `fused dataset.xlsx`. Here's how to do it, using our `df` variable from the previous example (the one that contained an instance of the `DF` class, with which we joined the two tables):
 
 ```python
-lldf.export_to_file(export_path='fused dataset.xlsx', sheet_name="Sheet 1")
+df.export_to_file(export_path='fused dataset.xlsx', sheet_name="Sheet 1")
 ```
 
 Et voila! Now we have a new file called `fused dataset.xlsx`, inside of which there is a sheet called "Sheet 1" with the following content:

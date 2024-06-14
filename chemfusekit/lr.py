@@ -6,8 +6,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
-from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier
-from .pca import PCADataModel
+from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier, ReducerDataModel
 
 
 class LRSettings(BaseClassifierSettings):
@@ -30,8 +29,8 @@ class LR(BaseClassifier):
     """Class to store the data, methods and artifacts for Logistic Regression"""
     def __init__(self, settings: LRSettings, data: BaseDataModel):
         super().__init__(settings, data)
-        if isinstance(data, PCADataModel):
-            self.array_scores = data.array_scores
+        if isinstance(data, ReducerDataModel):
+            self.array_scores = data.x_data
         else:
             self.array_scores = data.x_train.drop('Substance', axis=1).values
 

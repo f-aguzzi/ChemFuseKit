@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # BaseDataModel class
 
-This class models the output data for all data-outputting operations (currently, the [`LLDF`](../lldf/lldf-class.md) operation and the [`PCA`](../pca/pca.md) operation).
+This class models the output data for all data-outputting operations (currently, the [`DF`](../df/df-class.md), the [`LDA`](../lda/lda.md), [`PLSDA`](../plsda/plsda.md) and the [`PCA`](../pca/pca.md) operations).
 
 ## Syntax
 

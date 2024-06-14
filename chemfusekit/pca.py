@@ -12,17 +12,7 @@ import scipy.stats
 from sklearn.decomposition import PCA as PC
 
 from chemfusekit.__utils import print_table, GraphMode
-from .__base import BaseDataModel, BaseReducer, BaseSettings
-
-
-class PCADataModel(BaseDataModel):
-    """Data model for the PCA outputs."""
-
-    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray,
-                 components: int):
-        super().__init__(x_data, x_train, y)
-        self.array_scores = array_scores
-        self.components = components
+from .__base import BaseDataModel, BaseReducer, BaseSettings, ReducerDataModel
 
 
 class PCASettings(BaseSettings):
@@ -272,21 +262,20 @@ class PCA(BaseReducer):
 
         self.array_scores = array_scores
 
-    def export_data(self) -> PCADataModel:
+    def export_data(self) -> ReducerDataModel:
         """Export data artifacts."""
-        if self.model is None or self.array_scores is None:
+        if self.model is None:
             raise RuntimeError("Run both pca() and pca_stats() methods before exporting data!")
 
-        return PCADataModel(
+        return ReducerDataModel(
             self.data.x_data,
             self.data.x_train,
             self.data.y,
-            self.array_scores,
             self.components
         )
 
     @cached_property
-    def rescaled_data(self) -> PCADataModel:
+    def rescaled_data(self) -> ReducerDataModel:
         if self.model is None:
             settings_backup = copy(self.settings)
             self.settings.output = GraphMode.NONE
@@ -294,18 +283,17 @@ class PCA(BaseReducer):
             self.pca_stats()
             self.settings = settings_backup
 
-        x_data = pd.DataFrame(self.model.transform(self.data.x_data))
+        x_data = pd.DataFrame(self.array_scores)
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
         x_train = pd.concat(
             [y_dataframe, x_data],
             axis=1
         )
 
-        return PCADataModel(
+        return ReducerDataModel(
             x_data,
             x_train,
             self.data.y,
-            self.array_scores,
             self.components
         )
 

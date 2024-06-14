@@ -5,7 +5,8 @@ sidebar_position: 1
 # LDA class
 
 A class to store the data, methods and artifacts for _Linear Discriminant Analysis_.
-Inherits from [`BaseReducer`](../base/basereducer.md).
+
+It inherits from [`BaseClassifier`](../base/baseclassifier.md) and [`BaseReducer`](../base/basereducer.md), therefore it can perform both classification and feature selection.
 
 ## Syntax
 

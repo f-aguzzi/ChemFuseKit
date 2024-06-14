@@ -124,10 +124,9 @@ The classifiers themselves all inherit from a base class called [`BaseClassifier
 
 ```mermaid
 classDiagram
-    BaseDataModel <|-- LLDFDataModel
-    BaseDataModel <|-- ComponentDataModel
-    ComponentDataModel <|.. PCADataModel
-    ComponentDataModel <|.. LDADataModel
+    BaseDataModel <|-- DFDataModel
+    BaseDataModel <|-- ReducerDataModel
+    
     
     class BaseDataModel {
         x_data
@@ -137,20 +136,11 @@ classDiagram
         export_to_file()
     }
 
-    <<abstract>> ComponentDataModel
-    class ComponentDataModel {
+    class ReducerDataModel {
         n_components
     }
 
-    class PCADataModel {
-        array_scores
-    }
-
-    class LDADataModel {
-
-    }
-
-    class LLDFDataModel {
+    class DFDataModel {
         tables
     }
 
@@ -220,19 +210,18 @@ classDiagram
         __init__(x_data, x_train, y)
     }
 
-    class LLDFDataModel {
+    class DFDataModel {
         ...
         __init__(...)
     }
 
-    class PCADataModel {
-        +array_scores: ndarray
+    class ReducerDataModel {
         +components: int
         __init__(..., array_scores)
     }
 
-    BaseDataModel *-- LLDFDataModel
-    BaseDataModel *-- PCADataModel
+    BaseDataModel *-- DFDataModel
+    BaseDataModel *-- ReducerDataModel
 ```
 
 This allows all the classifiers to use the `LLDF` data, dimension-reduced `PCA` data, or any other type of data as long as it follows the `BaseDataModel` template.

@@ -16,10 +16,10 @@ class TestPLSDA(unittest.TestCase):
 
         # n_components parameter
         with self.assertRaises(ValueError):
-            PLSDASettings(n_components=-3)  # Negative value
+            PLSDASettings(components=-3)  # Negative value
         with self.assertRaises(ValueError):
-            PLSDASettings(n_components=0)  # Zero value
-        PLSDASettings(n_components=7)  # Correct value (shouldn't raise anything)
+            PLSDASettings(components=0)  # Zero value
+        PLSDASettings(components=7)  # Correct value (shouldn't raise anything)
 
         # output parameter
         with self.assertRaises(TypeError):

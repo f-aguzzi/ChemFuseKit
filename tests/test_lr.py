@@ -5,8 +5,9 @@ import numpy as np
 import pandas as pd
 
 from chemfusekit.df import DFSettings, DF, Table
-from chemfusekit.pca import PCASettings, PCA, PCADataModel
+from chemfusekit.pca import PCASettings, PCA
 from chemfusekit.lr import LRSettings, LR, GraphMode
+from chemfusekit.__base import ReducerDataModel
 
 
 class TestLR(unittest.TestCase):
@@ -54,11 +55,10 @@ class TestLR(unittest.TestCase):
 
     def test_lr_constructor(self):
         """Test case against constructor input errors."""
-        data_model = PCADataModel(
-            x_data=pd.DataFrame(),
+        data_model = ReducerDataModel(
+            x_data=pd.DataFrame([21.0, 3.44, 7.65]),
             x_train=pd.DataFrame(),
             y=np.asarray([7.854, 1.543, 93.55]),
-            array_scores=np.asarray([21.0, 3.44, 7.65]),
             components=5
         )
         # Should raise an exception when the inputs are null
@@ -138,11 +138,10 @@ class TestLR(unittest.TestCase):
         """Test case against prediction input errors."""
         # Set up the model
         lr_settings = LRSettings()
-        pca_data = PCADataModel(
-            x_data=pd.DataFrame(),
+        pca_data = ReducerDataModel(
+            x_data=pd.DataFrame([43.1, 0.06]),
             x_train=pd.DataFrame(),
             y=np.asarray([7.02, 8.11]),
-            array_scores=np.asarray([43.1, 0.06]),
             components=4
         )
         lr = LR(lr_settings, pca_data)

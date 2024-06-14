@@ -1,54 +1,82 @@
 """Partial Least Squares Discriminant Analysis module."""
 from copy import copy
+from functools import cached_property
 
 import numpy as np
 import pandas as pd
 import plotly.express as px
 from sklearn.cross_decomposition import PLSRegression as PLSR
+from sklearn.model_selection import cross_val_score
 
 from chemfusekit.__utils import GraphMode, print_table, print_confusion_matrix, run_split_test
-from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier
+from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier, BaseReducer, ReducerDataModel
 
 
 class PLSDASettings(BaseClassifierSettings):
     """Holds the settings for the PLSDA object."""
 
-    def __init__(self, n_components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, components: int = 5, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
-        if n_components < 1:
+        if components < 1:
             raise ValueError("Invalid n_components number: should be a positive integer.")
-        self.n_components = n_components
+        self.components = components
 
 
-class PLSDA(BaseClassifier):
+class PLSDA(BaseClassifier, BaseReducer):
     """
     Class to store the data, methods and artifacts for Partial Least Squares
     Discriminant Analysis
     """
 
+    def export_data(self) -> ReducerDataModel:
+        """Exports the artifacts of PLSDA dimensionality reduction."""
+        return ReducerDataModel(
+            x_data=self.data.x_data,
+            x_train=self.data.x_train,
+            y=self.data.y,
+            components=self.components
+        )
+
+    @cached_property
+    def rescaled_data(self) -> BaseDataModel:
+        """A read-only property that returns the rescaled data."""
+        data_model = self.reduce(self.data)
+        return data_model
+
     def __init__(self, settings: PLSDASettings, data: BaseDataModel):
         super().__init__(settings, data)
+        self.components = settings.components
 
     def train(self):
         """Performs Partial Least Squares Discriminant Analysis"""
         x = self.data.x_data
         y = self.data.x_train.Substance.astype('category').cat.codes
 
-        regr_pls = PLSR(n_components=self.settings.n_components)
-        regr_pls.fit_transform(x, y)
+        # Autoselect the number of components
+        max_comps = min(self.data.x_data.shape[1], self.settings.components)
+        n_components = np.arange(1, max_comps + 1)
+        cv_scores = []
+
+        for n in n_components:
+            plsda = PLSR(n_components=n)
+            scores = cross_val_score(plsda, x, y, cv=5)
+            cv_scores.append(scores.mean())
+
+        # Select the number of components that maximizes the cross-validated score
+        self.components = n_components[np.argmax(cv_scores)]
+
+        # Re-create the model
+        regr_pls = PLSR(n_components=self.components)
+        regr_pls.fit(x, y)
 
         # Save the model
         self.model = copy(regr_pls)
 
-        # Re-create the model
-        regr_pls_2 = PLSR(n_components=self.settings.n_components)
-        regr_pls_2.fit_transform(x, y)
-
         # Scores and loadings
-        lv_cols = [f"LV{i + 1}" for i in range(self.settings.n_components)]
-        scores = pd.DataFrame(regr_pls_2.x_scores_, columns=lv_cols)
+        lv_cols = [f"LV{i + 1}" for i in range(self.components)]
+        scores = pd.DataFrame(regr_pls.x_scores_, columns=lv_cols)
         scores.index = self.data.x_train.index
-        y = self.data.x_train.Substance
+        y = pd.DataFrame(self.data.y, columns=['Substance'])
         scores = pd.concat([scores, y], axis=1)
 
         print_table(
@@ -68,7 +96,7 @@ class PLSDA(BaseClassifier):
             self.settings.output
         )
 
-        if self.settings.output is GraphMode.GRAPHIC:
+        if self.settings.output is GraphMode.GRAPHIC and self.components >= 2:
             # Scores plot
             fig = px.scatter(scores, x="LV1", y="LV2", color="Substance", hover_data=['Substance'])
             fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
@@ -79,15 +107,16 @@ class PLSDA(BaseClassifier):
                 title_text='Scores Plot')
             fig.show()
 
-            # Plot 3D scores
-            fig = px.scatter_3d(scores, x='LV1', y='LV2', z='LV3',
-                                color='Substance', hover_data=['Substance'],
-                                hover_name=scores.index)
-            fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-            fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-            fig.update_layout(
-                title_text='Scores 3D Plot colored by Class using the raw data')
-            fig.show()
+            if self.components >= 3:
+                # Plot 3D scores
+                fig = px.scatter_3d(scores, x='LV1', y='LV2', z='LV3',
+                                    color='Substance', hover_data=['Substance'],
+                                    hover_name=scores.index)
+                fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
+                fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
+                fig.update_layout(
+                    title_text='Scores 3D Plot colored by Class using the raw data')
+                fig.show()
 
             # Loadings plot
             fig = px.scatter(loadings, x="LV1", y="LV2", text="Attributes")
@@ -102,21 +131,7 @@ class PLSDA(BaseClassifier):
 
             # Predictions
             pred = regr_pls.predict(x)
-            pred = np.int8(np.round(pred, decimals=0))
-            classes = np.unique(y)
-            for i in range(len(np.unique(pred)) - len(classes)):
-                classes = np.append(classes, f'Unknown substance {i}')
-            predicted_substances = [classes[p - 3] for p in pred]
-            print_table(
-                ["Sample number", "True", "Predicted"],
-                np.stack((
-                    [f"{i + 1}" for i in range(len(pred))],
-                    y,
-                    predicted_substances
-                )),
-                "True and predicted substances",
-                self.settings.output
-            )
+            pred = np.int8(np.abs((np.round(pred, decimals=0) - 3)))
 
             # Print confusion matrix
             y = self.data.x_train.Substance.astype('category').cat.codes
@@ -130,7 +145,7 @@ class PLSDA(BaseClassifier):
         if self.settings.output and self.settings.test_split:
             x = self.data.x_data
             y = self.data.x_train.Substance.astype('category').cat.codes
-            run_split_test(x, y, PLSR(self.settings.n_components), mode=self.settings.output)
+            run_split_test(x, y, PLSR(self.settings.components), mode=self.settings.output)
 
     def import_model(self, import_path: str):
         model_backup = copy(self.model)
@@ -138,4 +153,4 @@ class PLSDA(BaseClassifier):
         if not isinstance(self.model, PLSR):
             self.model = model_backup
             raise ImportError("The file you tried to import is not a PLSRegression classifier.")
-        self.settings.n_components = self.model.n_components
+        self.settings.components = self.model.n_components

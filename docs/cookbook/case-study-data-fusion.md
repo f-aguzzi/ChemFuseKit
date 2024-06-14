@@ -21,7 +21,7 @@ The complete pipeline, from data table to trained model, will go through the fol
 
 ```mermaid
 stateDiagram-v2
-    df: Data Fusion (LLDF)
+    df: Data Fusion (DF)
     pca: Principal Component Analysis (PCA)
     
     state "Logistic Regression" as lr {
@@ -126,10 +126,10 @@ table3 = Table(
 tables = [table1, table2, table3]
 
 # Let's pass the settings and the tables to the LLDF constructor
-lldf = DF(settings, tables)
+df = DF(settings, tables)
 
 # Let's finally perform data fusion with the lldf() method!
-lldf.lldf()
+df.fuse()
 ```
 
 ### Dimensionality reduction
@@ -144,7 +144,7 @@ In our case, we will set the PCA analysis to automatically select the number of 
 from chemfusekit.pca import PCASettings, PCA, GraphMode
 
 # Retrieve the fused data from the lldf object of the previous step
-fused_data = lldf.fused_data
+fused_data = df.fused_data
 
 # Initialize the settings for PCA with graph output
 pca_settings = PCASettings(
@@ -234,9 +234,9 @@ table3 = Table(
     index_column='Sample_id'
 )
 tables = [table1, table2, table3]
-lldf = DF(lldf_settings, tables)
-lldf.lldf()
-fused_data = lldf.fused_data
+df = DF(lldf_settings, tables)
+df.fuse()
+fused_data = df.fused_data
 
 # PCA
 pca_settings = PCASettings()

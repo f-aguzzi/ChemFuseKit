@@ -9,8 +9,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 
 from chemfusekit.__utils import graph_output, run_split_test
 from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
-from .__base import BaseDataModel, BaseClassifier, BaseClassifierSettings, BaseReducer
-from .pca import PCADataModel
+from .__base import BaseDataModel, BaseClassifier, BaseClassifierSettings, BaseReducer, ReducerDataModel
 
 
 class LDADataModel(BaseDataModel):
@@ -39,7 +38,7 @@ class LDA(BaseClassifier, BaseReducer):
         self.settings = settings
         self.data = data
         # Self-detect components if the data is from PCA
-        if isinstance(data, PCADataModel):
+        if isinstance(data, ReducerDataModel):
             self.settings.components = data.components - 1
 
     def train(self):
