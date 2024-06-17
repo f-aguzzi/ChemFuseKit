@@ -14,6 +14,7 @@ from .plsda import PLSDASettings, PLSDA
 
 class Table:
     """Holds the path, preprocessing choice and sheet name for a single Excel table."""
+
     def __init__(self, file_path: str, sheet_name: str, preprocessing: str, feature_selection: str | None = None,
                  class_column: str = 'Substance', index_column: str | None = None):
         self.file_path = file_path
@@ -26,14 +27,16 @@ class Table:
 
 class DFDataModel(BaseDataModel):
     """Models the output data from the DF operation"""
+
     def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray,
-                 tables: list[(Table, BaseDataModel)]):
+                 tables: list[tuple[Table, BaseDataModel]]):
         super().__init__(x_data, x_train, y)
         self.tables = tables
 
 
 class DFSettings(BaseSettings):
     """Holds the settings for the DF object."""
+
     def __init__(self, output: GraphMode = GraphMode.NONE):
         super().__init__(output)
 
@@ -43,10 +46,9 @@ def _snv(input_data: np.ndarray):
     # Define a new array and populate it with the corrected data
     output_data = np.zeros_like(input_data)
     for i in range(input_data.shape[0]):
-
         # Apply correction
         output_data[i, :] = (
-            (input_data[i, :] - np.mean(input_data[i, :])) / np.std(input_data[i, :])
+                (input_data[i, :] - np.mean(input_data[i, :])) / np.std(input_data[i, :])
         )
 
     return output_data
@@ -54,6 +56,7 @@ def _snv(input_data: np.ndarray):
 
 class DF:
     """Holds together all the data, methods and artifacts of the LLDF operation"""
+
     def __init__(self, settings: DFSettings, tables: List[Table]):
         self.settings = settings
         self.tables = tables
@@ -64,30 +67,7 @@ class DF:
         x_vector = []
         individual_tables = []
         for table in self.tables:
-            try:
-                # Autodetect the format based on the file extension
-                if table.file_path.endswith('.xlsx'):
-                    table_data = pd.read_excel(
-                        table.file_path,
-                        sheet_name=table.sheet_name,
-                        index_col=0,
-                        header=0
-                    )
-                elif table.file_path.endswith('.csv'):
-                    table_data = pd.read_csv(
-                        table.file_path,
-                        index_col=0,
-                        header=0
-                    )
-                elif table.file_path.endswith('.json'):
-                    table_data = pd.read_json(
-                        table.file_path,
-                        orient='table'  # or other orientations based on your json format
-                    )
-                else:
-                    raise ValueError(f"Unsupported file format: {table.file_path}")
-            except Exception as exc:
-                raise FileNotFoundError("Error opening the selected files.") from exc
+            table_data = self._import_table(table.file_path, table.sheet_name)
 
             # select only numerical attributes
             if table.index_column is not None and table.index_column in table_data.columns:
@@ -100,31 +80,15 @@ class DF:
                 y = deindexed_table[table.class_column]
             else:
                 x = deindexed_table.iloc[:, 1:]
-                y = deindexed_table[:, 1]
+                y = deindexed_table.iloc[:, 0]
 
             # It is necessary to convert the column names as string to select them
-            x.columns = x.columns.astype(str)     # to make the colnames as text
+            x.columns = x.columns.astype(str)  # to make the colnames as text
 
-            # Preprocessing
-            if table.preprocessing == 'snv':
-                # Compute the SNV on spectra
-                preprocessed_x = _snv(x.values)
-            elif table.preprocessing == 'savgol':
-                # Preprocessing with Savitzki-Golay
-                # smoothing, defining the window, the order and the use of derivatives
-                preprocessed_x = savgol_filter(x, 7, polyorder=2, deriv=0)
-            elif table.preprocessing == 'savgol+snv':
-                # We can also combine the preprocessing strategies together:
-                # Savitzki-Golay - smoothing + SNV
-                preprocessed_x = _snv(savgol_filter(x, 7, polyorder=2, deriv=0))
-            elif table.preprocessing == 'none':
-                # Skip preprocessing
-                preprocessed_x = x
-            else:
-                raise SyntaxError(
-                    f"DF: this type of preprocessing does not exist ({table.preprocessing=})"
-                )
-            preprocessed_x = pd.DataFrame(preprocessed_x)
+            preprocessed_x = self._preprocess_table(table, x)
+
+            y = pd.DataFrame(y, columns=['Substance'])
+            preprocessed_x = pd.DataFrame(preprocessed_x, columns=x.columns)
 
             # Save the temporary table as a BaseDataModel
             x_train = pd.concat([y, preprocessed_x], axis=1)
@@ -137,18 +101,8 @@ class DF:
             # Feature reduction
             if table.feature_selection is None:
                 reduced_table_data_model = table_data_model
-            elif table.feature_selection == 'pca':
-                pca = PCA(PCASettings(), table_data_model)
-                pca.train()
-                reduced_table_data_model = pca.reduce(table_data_model)
-            elif table.feature_selection == 'plsda':
-                plsda = PLSDA(PLSDASettings(), table_data_model)
-                plsda.train()
-                reduced_table_data_model = plsda.reduce(table_data_model)
             else:
-                raise SyntaxError(
-                    f"DF: this type of feature selection does not exist ({table.feature_selection=})"
-                )
+                reduced_table_data_model = self._perform_feature_selection(table, table_data_model)
 
             if self.settings.output is GraphMode.GRAPHIC:
                 numbers_string = [str(col) for col in x.columns]
@@ -182,7 +136,7 @@ class DF:
             # Create a new DataFrame with the processed numerical attributes
             processed_dataframe_x = pd.DataFrame(
                 reduced_table_data_model.x_data,
-                columns=x.columns
+                columns=reduced_table_data_model.x_data.columns
             )
 
             # Reset the index of the dataframe
@@ -191,17 +145,7 @@ class DF:
             x_vector.append(processed_dataframe_x)
             individual_tables.append((table, table_data_model))
 
-        try:
-            table_data = pd.read_excel(
-                self.tables[0].file_path,
-                sheet_name=self.tables[0].sheet_name,
-                index_col=0,
-                header=0
-            )
-        except Exception as exc:
-            raise FileNotFoundError("Error opening the selected files.") from exc
-
-        y = table_data.loc[:, self.tables[0].class_column].values
+        y = individual_tables[0][1].y
         y_dataframe = pd.DataFrame(y, columns=['Substance'])
 
         # Fused dataset
@@ -217,6 +161,75 @@ class DF:
         )
 
         self.fused_data = DFDataModel(x_data, x_train, y, individual_tables)
+
+    @staticmethod
+    def _preprocess_table(table, x):
+        # Preprocessing
+        if table.preprocessing == 'snv':
+            # Compute the SNV on spectra
+            preprocessed_x = _snv(x.values)
+        elif table.preprocessing == 'savgol':
+            # Preprocessing with Savitzki-Golay
+            # smoothing, defining the window, the order and the use of derivatives
+            preprocessed_x = savgol_filter(x, 7, polyorder=2, deriv=0)
+        elif table.preprocessing == 'savgol+snv':
+            # We can also combine the preprocessing strategies together:
+            # Savitzki-Golay - smoothing + SNV
+            preprocessed_x = _snv(savgol_filter(x, 7, polyorder=2, deriv=0))
+        elif table.preprocessing == 'none':
+            # Skip preprocessing
+            preprocessed_x = x
+        else:
+            raise SyntaxError(
+                f"DF: this type of preprocessing does not exist ({table.preprocessing=})"
+            )
+        return preprocessed_x
+
+    @staticmethod
+    def _perform_feature_selection(table: Table, data_model: BaseDataModel) -> BaseDataModel:
+        """Performs feature selection on a table"""
+        if table.feature_selection == 'pca':
+            pca = PCA(PCASettings(), data_model)
+            pca.train()
+            return pca.rescaled_data
+        elif table.feature_selection == 'plsda':
+            plsda = PLSDA(PLSDASettings(), data_model)
+            plsda.train()
+            return plsda.rescaled_data
+        else:
+            raise SyntaxError(
+                f"DF: this type of feature selection does not exist ({table.feature_selection=})"
+            )
+
+    @staticmethod
+    def _import_table(file_path, sheet_name) -> pd.DataFrame:
+        """Imports a table from a file"""
+        try:
+            # Autodetect the format based on the file extension
+            if file_path.endswith('.xlsx'):
+                table_data = pd.read_excel(
+                    file_path,
+                    sheet_name=sheet_name,
+                    index_col=0,
+                    header=0
+                )
+            elif file_path.endswith('.csv'):
+                table_data = pd.read_csv(
+                    file_path,
+                    index_col=0,
+                    header=0
+                )
+            elif file_path.endswith('.json'):
+                table_data = pd.read_json(
+                    file_path,
+                    orient='table'  # or other orientations based on your json format
+                )
+            else:
+                raise ValueError(f"Unsupported file format: {file_path}")
+        except Exception as exc:
+            raise FileNotFoundError("Error opening the selected files.") from exc
+
+        return table_data
 
     def export_data(self, export_path: str, sheet_name: str = 'Sheet1'):
         """Exports the data fusion artifacts to a file"""

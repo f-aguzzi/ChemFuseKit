@@ -153,7 +153,7 @@ class BaseClassifierSettings(BaseSettings):
         self.test_split = test_split
 
 
-class BaseClassifier(BaseActionClass):
+class BaseClassifier(BaseActionClass, ABC):
     """Parent class for all classifiers, containing basic shared utilities."""
 
     def __init__(self, settings: BaseClassifierSettings, data: BaseDataModel):

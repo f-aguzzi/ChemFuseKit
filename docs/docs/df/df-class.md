@@ -52,6 +52,15 @@ DF(df_settings: DFSettings, tables: List[Table])
     - `RuntimeError("Could not export data to the selected path.")` if any error
       happens during the export phase
 
+Private methods:
+
+- `@staticmethod _import_table(file_path, sheet_name) -> pd.DataFrame`: imports a table from file
+  - *raises*:
+    - `ValueError(f"Unsupported file format: {file_path}")` if the file is not a `CSV`, `XLSX` or `JSON`
+    - `FileNotFoundError("Error opening the selected files.")` if any other reading error occurs
+- `@staticmethod _perform_feature_selection(table: Table, data_model: BaseDataModel) -> BaseDataModel` performs feature selection through PCA or PLSDA on the selected table
+- `@staticmethod _preprocess_table(table, x)`: performs data preprocessing on the table
+
 
 ## Example
 

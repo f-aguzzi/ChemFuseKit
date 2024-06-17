@@ -282,12 +282,19 @@ class PCA(BaseReducer):
             self.train()
             self.pca_stats()
             self.settings = settings_backup
+        if self.model is not None and self.array_scores is None:
+            settings_backup = copy(self.settings)
+            self.settings.output = GraphMode.NONE
+            self.pca_stats()
+            self.settings = settings_backup
 
         x_data = pd.DataFrame(self.array_scores)
+        x_columns = [f"PC{i+1}" for i in range(len(x_data.columns))]
+        x_data.columns = x_columns
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
         x_train = pd.concat(
             [y_dataframe, x_data],
-            axis=1
+            axis=1,
         )
 
         return ReducerDataModel(

@@ -72,6 +72,8 @@ class TestLLDF(unittest.TestCase):
 
     def test_midlevel_data_fusion(self):
         """Integration test case for mid-level data fusion."""
+
+        # PCA
         df_settings = DFSettings(output=GraphMode.GRAPHIC)
         table1 = Table(
             file_path='tests/qepas.xlsx',
@@ -89,6 +91,27 @@ class TestLLDF(unittest.TestCase):
 
         df = DF(df_settings, tables)
         df.fuse()
+
+        # PLSDA
+        df_settings = DFSettings(output=GraphMode.GRAPHIC)
+        table1 = Table(
+            file_path='tests/qepas.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='snv',
+            feature_selection='plsda'
+        )
+        table2 = Table(
+            file_path='tests/rt.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='none'
+        )
+
+        tables = [table1, table2]
+
+        df = DF(df_settings, tables)
+        df.fuse()
+        print("BEGIN\n\n", df.fused_data.x_train, "\n\nEND")
+
 
 if __name__ == '__main__':
     unittest.main()
