@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/f-aguzzi/tesi/compare/v2.5.0...v2.5.1) (2024-06-17)
+
+
+### Bug Fixes
+
+* **LLDF:** format-specific reader in y column import ([84c6b5e](https://github.com/f-aguzzi/tesi/commit/84c6b5ee777a1549dfc067d80c131ff610865f61))
+
 ## [2.5.0](https://github.com/f-aguzzi/tesi/compare/v2.4.0...v2.5.0) (2024-06-13)
 
 
