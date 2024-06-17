@@ -91,7 +91,9 @@ class LLDF:
 
             if table.class_column in table_data.columns:
                 x = table_data.drop(table.class_column, axis=1)
+                y = table_data.loc[:, table.class_column].values
             else:
+                y = table_data.loc[:, 0].values
                 x = x.iloc[:, 1:]
 
             # It is necessary to convert the column names as string to select them
@@ -158,12 +160,27 @@ class LLDF:
             x_vector.append(processed_dataframe_x)
 
         try:
-            table_data = pd.read_excel(
-                self.tables[0].file_path,
-                sheet_name=self.tables[0].sheet_name,
-                index_col=0,
-                header=0
-            )
+            # Autodetect the format based on the file extension
+            if self.tables[0].file_path.endswith('.xlsx'):
+                table_data = pd.read_excel(
+                    self.tables[0].file_path,
+                    sheet_name=self.tables[0].sheet_name,
+                    index_col=0,
+                    header=0
+                )
+            elif self.tables[0].file_path.endswith('.csv'):
+                table_data = pd.read_csv(
+                    self.tables[0].file_path,
+                    index_col=0,
+                    header=0
+                )
+            elif self.tables[0].file_path.endswith('.json'):
+                table_data = pd.read_json(
+                    self.tables[0].file_path,
+                    orient='table'  # or other orientations based on your json format
+                )
+            else:
+                raise ValueError(f"Unsupported file format: {self.tables[0].file_path}")
         except Exception as exc:
             raise FileNotFoundError("Error opening the selected files.") from exc
 
