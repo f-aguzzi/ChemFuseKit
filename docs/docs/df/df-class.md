@@ -60,6 +60,8 @@ Private methods:
     - `FileNotFoundError("Error opening the selected files.")` if any other reading error occurs
 - `@staticmethod _perform_feature_selection(table: Table, data_model: BaseDataModel) -> BaseDataModel` performs feature selection through PCA or PLSDA on the selected table
 - `@staticmethod _preprocess_table(table, x)`: performs data preprocessing on the table
+  - *raises*:
+    - `Warning("The array is 1-dimensional, therefore it cannot be preprocessed.")` when trying to preprocess a 1D array
 
 
 ## Example

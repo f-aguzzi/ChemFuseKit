@@ -85,13 +85,22 @@ class DF:
             # It is necessary to convert the column names as string to select them
             x.columns = x.columns.astype(str)  # to make the colnames as text
 
-            preprocessed_x = self._preprocess_table(table, x)
+            try:
+                preprocessed_x = self._preprocess_table(table, x)
+            except Warning as w:
+                preprocessed_x = x
 
-            y = pd.DataFrame(y, columns=['Substance'])
+            # Rename the class column to 'Substance'
+            y.columns = ['Substance']
             preprocessed_x = pd.DataFrame(preprocessed_x, columns=x.columns)
+
+            # Reset table indices to prevent misalignment during concatenation
+            preprocessed_x.reset_index(drop=True, inplace=True)
+            y.reset_index(drop=True, inplace=True)
 
             # Save the temporary table as a BaseDataModel
             x_train = pd.concat([y, preprocessed_x], axis=1)
+            x_train.reset_index(drop=True, inplace=True)
             table_data_model = BaseDataModel(
                 x_data=preprocessed_x,
                 x_train=x_train,
@@ -139,11 +148,11 @@ class DF:
                 columns=reduced_table_data_model.x_data.columns
             )
 
-            # Reset the index of the dataframe
+            # Reset the index of the dataframe to avoid misalignment during concatenation
             processed_dataframe_x = processed_dataframe_x.reset_index(drop=True)
 
             x_vector.append(processed_dataframe_x)
-            individual_tables.append((table, table_data_model))
+            individual_tables.append((table, reduced_table_data_model))
 
         y = individual_tables[0][1].y
         y_dataframe = pd.DataFrame(y, columns=['Substance'])
@@ -164,6 +173,8 @@ class DF:
 
     @staticmethod
     def _preprocess_table(table, x):
+        if x.shape[1] == 1 and table.preprocessing != 'none':
+            raise Warning("The array is 1-dimensional, therefore it cannot be preprocessed.")
         # Preprocessing
         if table.preprocessing == 'snv':
             # Compute the SNV on spectra

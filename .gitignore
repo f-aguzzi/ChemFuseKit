@@ -13,8 +13,11 @@ site
 token.txt
 dist
 
-# rye lint
+## rye lint
 .ruff_cache
+
+# debug
+debug
 
 # docusaurus
 
@@ -38,5 +41,3 @@ case studies/*.sklearn
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-
