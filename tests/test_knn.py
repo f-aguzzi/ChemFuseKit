@@ -81,7 +81,7 @@ class TestKNN(unittest.TestCase):
         df.fuse()
 
         # settings parameter
-        wrong_settings = DFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
+        wrong_settings = DFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]), [])
         with self.assertRaises(TypeError):
             KNN(wrong_settings, df.fused_data)  # pass an object of the wrong class as settings
 
