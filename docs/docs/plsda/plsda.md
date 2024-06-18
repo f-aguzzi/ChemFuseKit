@@ -47,6 +47,7 @@ PLSDA(settings: PLSDASettings, data: BaseDataModel)
 - `reduce(self) -> BaseDataModel`: reduces the dimensionality of the data.
 	+ *raises*:
 		- `RuntimeError("The model hasn't been trained yet! You cannot use it to reduce data dimensionality.")` when run with an untrained `model`.
+- `_select_feature_number(x, y)`: auto-selects the number of features using 5-fold cross-validation
 
 ## Example
 

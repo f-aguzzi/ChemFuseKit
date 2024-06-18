@@ -1,5 +1,6 @@
 """A base class for all classifiers."""
 from abc import ABC, abstractmethod
+from typing import Optional
 
 import pandas as pd
 import numpy as np
@@ -182,6 +183,7 @@ class BaseReducer(BaseActionClass):
 
     def __init__(self, settings: BaseSettings, data: BaseDataModel):
         super().__init__(settings, data)
+        self.array_scores: Optional[np.ndarray] = None
     
     @abstractmethod
     def export_data(self) -> BaseDataModel:

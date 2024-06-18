@@ -15,7 +15,7 @@ from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier, BaseR
 class PLSDASettings(BaseClassifierSettings):
     """Holds the settings for the PLSDA object."""
 
-    def __init__(self, components: int = 5, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, components: int | None = None, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
         if components < 1:
             raise ValueError("Invalid n_components number: should be a positive integer.")
@@ -52,18 +52,9 @@ class PLSDA(BaseClassifier, BaseReducer):
         x = self.data.x_data
         y = self.data.x_train.Substance.astype('category').cat.codes
 
-        # Autoselect the number of components
-        max_comps = min(self.data.x_data.shape[1], self.settings.components)
-        n_components = np.arange(1, max_comps + 1)
-        cv_scores = []
-
-        for n in n_components:
-            plsda = PLSR(n_components=n)
-            scores = cross_val_score(plsda, x, y, cv=5)
-            cv_scores.append(scores.mean())
-
-        # Select the number of components that maximizes the cross-validated score
-        self.components = n_components[np.argmax(cv_scores)]
+        # Auto-select the number of components only if the current number is null
+        if self.components is None:
+            self._select_feature_number(x, y)
 
         # Re-create the model
         regr_pls = PLSR(n_components=self.components)
@@ -146,6 +137,18 @@ class PLSDA(BaseClassifier, BaseReducer):
             x = self.data.x_data
             y = self.data.x_train.Substance.astype('category').cat.codes
             run_split_test(x, y, PLSR(self.settings.components), mode=self.settings.output)
+
+    def _select_feature_number(self, x, y):
+        # Auto-select the number of components
+        max_comps = min(self.data.x_data.shape[1], self.settings.components)
+        n_components = np.arange(1, max_comps + 1)
+        cv_scores = []
+        for n in n_components:
+            plsda = PLSR(n_components=n)
+            scores = cross_val_score(plsda, x, y, cv=5)
+            cv_scores.append(scores.mean())
+        # Select the number of components that maximizes the cross-validated score
+        self.components = n_components[np.argmax(cv_scores)]
 
     def import_model(self, import_path: str):
         model_backup = copy(self.model)

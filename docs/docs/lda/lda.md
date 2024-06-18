@@ -38,6 +38,7 @@ LDA(settings: LDASettings, data: BaseDataModel)
 - `predict(self, x_data)`: performs LDA prediction once the model is trained.
   - *raises*:
     - `RuntimeError("The LDA model is not trained yet!")` if the LDA model hasn't been trained yet
+- `_select_feature_number(x, y)`: auto-selects the number of features using 5-fold cross-validation
 
 ## Example
 

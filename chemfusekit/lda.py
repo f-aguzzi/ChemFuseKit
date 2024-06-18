@@ -1,11 +1,13 @@
 """Linear Discriminant Analysis module"""
 from copy import copy
 from functools import cached_property
+from typing import Optional
 
 import numpy as np
 import pandas as pd
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
+from sklearn.model_selection import cross_val_score
 
 from chemfusekit.__utils import graph_output, run_split_test
 from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
@@ -23,7 +25,7 @@ class LDADataModel(BaseDataModel):
 class LDASettings(BaseClassifierSettings):
     """Holds the settings for the LDA object."""
 
-    def __init__(self, components: int = 3, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, components: int | None = None, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
         if components <= 2:
             raise ValueError("Invalid component number: must be a > 1 integer.")
@@ -40,17 +42,22 @@ class LDA(BaseClassifier, BaseReducer):
         # Self-detect components if the data is from PCA
         if isinstance(data, ReducerDataModel):
             self.settings.components = data.components - 1
+        self.array_scores: Optional[np.ndarray] = None
 
     def train(self):
         """Performs Linear Discriminant Analysis"""
 
-        lda = LD(n_components=self.settings.components)  # N-1 where N are the classes
-        scores_lda = lda.fit(self.data.x_data, self.data.y).transform(self.data.x_data)
+        # Auto-selection of the number of components if not specified
+        if self.components is None:
+            self._select_feature_number(self.data.x_data, self.data.y)
+
+        lda = LD(n_components=self.settings.components)
+        self.array_scores = lda.fit_transform(self.data.x_data, self.data.y)
         pred = lda.predict(self.data.x_data)
 
         print_table(
-            [f"LV{i + 1}" for i in range(scores_lda.shape[1])],
-            list(zip(*scores_lda)),
+            [f"LV{i + 1}" for i in range(self.array_scores.shape[1])],
+            list(zip(*self.array_scores)),
             "LDA scores",
             self.settings.output
         )
@@ -94,7 +101,7 @@ class LDA(BaseClassifier, BaseReducer):
         )
 
         lv_cols = [f'LV{i + 1}' for i in range(self.settings.components)]
-        scores = pd.DataFrame(data=scores_lda, columns=lv_cols)  # latent variables
+        scores = pd.DataFrame(data=self.array_scores, columns=lv_cols)  # latent variables
         scores.index = self.data.x_data.index
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
 
@@ -158,3 +165,15 @@ class LDA(BaseClassifier, BaseReducer):
             x_train,
             self.data.y
         )
+
+    def _select_feature_number(self, x, y):
+        # Auto-select the number of components
+        max_comps = min(self.data.x_data.shape[1], self.settings.components)
+        n_components = np.arange(1, max_comps + 1)
+        cv_scores = []
+        for n in n_components:
+            lda = LD(n_components=n)
+            scores = cross_val_score(lda, x, y, cv=5)
+            cv_scores.append(scores.mean())
+        # Select the number of components that maximizes the cross-validated score
+        self.components = n_components[np.argmax(cv_scores)]
