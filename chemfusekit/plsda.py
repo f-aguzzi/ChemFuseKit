@@ -17,7 +17,7 @@ class PLSDASettings(BaseClassifierSettings):
 
     def __init__(self, components: int | None = None, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
-        if components < 1:
+        if components is not None and components < 1:
             raise ValueError("Invalid n_components number: should be a positive integer.")
         self.components = components
 
@@ -140,7 +140,7 @@ class PLSDA(BaseClassifier, BaseReducer):
 
     def _select_feature_number(self, x, y):
         # Auto-select the number of components
-        max_comps = min(self.data.x_data.shape[1], self.settings.components)
+        max_comps = min(self.data.x_data.shape[1], 20)
         n_components = np.arange(1, max_comps + 1)
         cv_scores = []
         for n in n_components:

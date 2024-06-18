@@ -112,6 +112,24 @@ class TestLLDF(unittest.TestCase):
         df.fuse()
         print("BEGIN\n\n", df.fused_data.x_train, "\n\nEND")
 
+    def test_matmul_datafusion(self):
+        """Test case for outer product-based datafusion"""
+
+        table1 = Table(
+            file_path='tests/qepas.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='snv',
+            feature_selection='plsda'
+        )
+        table2 = Table(
+            file_path='tests/rt.xlsx',
+            sheet_name='Sheet1',
+            preprocessing='none'
+        )
+
+        df = DF(DFSettings(method='outer'), [table1, table2])
+        df.fuse()
+
 
 if __name__ == '__main__':
     unittest.main()

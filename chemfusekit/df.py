@@ -37,8 +37,11 @@ class DFDataModel(BaseDataModel):
 class DFSettings(BaseSettings):
     """Holds the settings for the DF object."""
 
-    def __init__(self, output: GraphMode = GraphMode.NONE):
+    def __init__(self, output: GraphMode = GraphMode.NONE, method: str = 'concat'):
         super().__init__(output)
+        if method not in ['concat', 'outer']:
+            raise ValueError("DF: invalid method: must be 'concat' or 'outer'")
+        self.method = method
 
 
 def _snv(input_data: np.ndarray):
@@ -158,10 +161,19 @@ class DF:
         y_dataframe = pd.DataFrame(y, columns=['Substance'])
 
         # Fused dataset
-        x_data = pd.concat(
-            x_vector,
-            axis=1
-        )
+        # Concatenation - based approach
+        if self.settings.method == 'concat' or len(x_vector) <= 1:
+            x_data = pd.concat(
+                x_vector,
+                axis=1
+            )
+        # Matrix multiplication - based approach
+        else:
+            x_data = x_vector[0]
+            for matrix in x_vector[1:]:
+                outer_product = np.einsum('ij,ik->ijk', x_data, matrix)
+                x_data = np.sum(outer_product, axis=2)
+            x_data = pd.DataFrame(x_data, columns=x_vector[0].columns)
 
         # X training set
         x_train = pd.concat(
