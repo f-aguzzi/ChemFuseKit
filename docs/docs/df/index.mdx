@@ -1,6 +1,6 @@
 import DocCardList from '@theme/DocCardList';
 
-# LLDF Module
+# DF Module
 
 A module for data fusion (low-level or mid-level).
 
@@ -28,20 +28,24 @@ classDiagram
         +DFSettings settings
         +Table[] tables
         +DFDataModel | None fused_data
-        lldf()
+        +fuse()
         -_snv()
         +export_data(export_path: str)
         __init__(settings, tables[])
+        -_perform_feature_selection(table: Table, data_model: BaseDataModel) BaseDataModel
+        -_preprocess_table(table, x)
     }
 
     class DFDataModel {
         +x_data: pd.DataFrame
         +x_train: pd.DataFrame
         +y: np.ndarray
+        +tables: list[tuple[table, BaseDataModel]]
         __init__(x_data, x_train, y)
     }
 
-    DF *-- DFModel
+    DF *-- DFDataModel
     DF *-- Table
     DF *-- DFSettings
+    DFDataModel *-- Table
 ```
