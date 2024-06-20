@@ -27,7 +27,7 @@ class LDASettings(BaseClassifierSettings):
 
     def __init__(self, components: int | None = None, output: GraphMode = GraphMode.NONE, test_split: bool = False):
         super().__init__(output, test_split)
-        if components <= 2:
+        if components is not None and components <= 2:
             raise ValueError("Invalid component number: must be a > 1 integer.")
         self.components = components
 
@@ -41,17 +41,17 @@ class LDA(BaseClassifier, BaseReducer):
         self.data = data
         # Self-detect components if the data is from PCA
         if isinstance(data, ReducerDataModel):
-            self.settings.components = data.components - 1
+            self.components = data.components - 1
         self.array_scores: Optional[np.ndarray] = None
 
     def train(self):
         """Performs Linear Discriminant Analysis"""
 
         # Auto-selection of the number of components if not specified
-        if self.components is None:
+        if self.settings.components is None and self.components is None:
             self._select_feature_number(self.data.x_data, self.data.y)
 
-        lda = LD(n_components=self.settings.components)
+        lda = LD(n_components=self.components)
         self.array_scores = lda.fit_transform(self.data.x_data, self.data.y)
         pred = lda.predict(self.data.x_data)
 
@@ -79,8 +79,8 @@ class LDA(BaseClassifier, BaseReducer):
         )
         print_table(
             ["Component"] + [f"Feature {i + 1}" for i in range(lda.coef_.shape[0])],
-            [[f"Component {i + 1}" for i in range(min(self.settings.components, lda.coef_.shape[1]))]] + [
-                list(lda.coef_[:self.settings.components, i]) for i in range(lda.coef_.shape[0])],
+            [[f"Component {i + 1}" for i in range(min(self.components, lda.coef_.shape[1]))]] + [
+                list(lda.coef_[:self.components, i]) for i in range(lda.coef_.shape[1])],
             "LDA Coefficients",
             self.settings.output
         )
@@ -100,7 +100,7 @@ class LDA(BaseClassifier, BaseReducer):
             mode=self.settings.output
         )
 
-        lv_cols = [f'LV{i + 1}' for i in range(self.settings.components)]
+        lv_cols = [f'LV{i + 1}' for i in range(self.components)]
         scores = pd.DataFrame(data=self.array_scores, columns=lv_cols)  # latent variables
         scores.index = self.data.x_data.index
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
@@ -123,7 +123,7 @@ class LDA(BaseClassifier, BaseReducer):
             run_split_test(
                 scores.drop('Substance', axis=1).values,
                 self.data.y,
-                LD(n_components=self.settings.components),
+                LD(n_components=self.components),
                 mode=self.settings.output
             )
 
@@ -134,6 +134,7 @@ class LDA(BaseClassifier, BaseReducer):
             self.model = model_backup
             raise ImportError("The file you tried to import is not a LinearDiscriminantAnalysis classifier.")
         self.settings.components = self.model.n_components
+        self.components = self.model.n_components
 
     def export_data(self) -> LDADataModel:
         """Export the data to an object."""
@@ -141,7 +142,7 @@ class LDA(BaseClassifier, BaseReducer):
             x_data=self.data.x_data,
             x_train=self.data.x_train,
             y=self.data.y,
-            components=self.settings.components
+            components=self.components
         )
 
     @cached_property
@@ -168,8 +169,9 @@ class LDA(BaseClassifier, BaseReducer):
 
     def _select_feature_number(self, x, y):
         # Auto-select the number of components
-        max_comps = min(self.data.x_data.shape[1], self.settings.components)
-        n_components = np.arange(1, max_comps + 1)
+        max_comps = min(self.data.x_data.shape[1], 20, len(np.unique(y)))
+        n_components = np.arange(1, max_comps)
+        print(n_components)
         cv_scores = []
         for n in n_components:
             lda = LD(n_components=n)

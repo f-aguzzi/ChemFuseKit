@@ -184,6 +184,7 @@ class BaseReducer(BaseActionClass):
     def __init__(self, settings: BaseSettings, data: BaseDataModel):
         super().__init__(settings, data)
         self.array_scores: Optional[np.ndarray] = None
+        self.components: Optional[int] = None
     
     @abstractmethod
     def export_data(self) -> BaseDataModel:
