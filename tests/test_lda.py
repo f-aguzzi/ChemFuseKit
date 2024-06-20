@@ -11,16 +11,16 @@ class TestLDA(unittest.TestCase):
         """Test case against settings errors."""
         # Check for negative component rejection
         with self.assertRaises(ValueError):
-            LDASettings(components=-3, output=GraphMode.TEXT)
+            LDASettings(components=-3, output='text')
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
-            LDASettings(output=GraphMode.NONE, test_split=True)
+            LDASettings(output='none', test_split=True)
 
     def test_lda_constructor(self):
         """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -54,7 +54,7 @@ class TestLDA(unittest.TestCase):
     def test_lda(self):
         """Integration test case."""
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -69,22 +69,22 @@ class TestLDA(unittest.TestCase):
         df.fuse()
 
         # Create an LDA object and train it, with graphical output
-        lda_settings = LDASettings(output=GraphMode.GRAPHIC)
+        lda_settings = LDASettings(output='graphical')
         lda = LDA(lda_settings, df.fused_data)
         lda.train()
 
         # Create an LDA object and train it, with text output
-        lda_settings = LDASettings(output=GraphMode.TEXT)
+        lda_settings = LDASettings(output='text')
         lda = LDA(lda_settings, df.fused_data)
         lda.train()
 
         # Create an LDA object and train it, with no output
-        lda_settings = LDASettings(output=GraphMode.NONE)
+        lda_settings = LDASettings(output='none')
         lda = LDA(lda_settings, df.fused_data)
         lda.train()
 
         # Create an LDA object and train it, with true output and split tests
-        lda_settings = LDASettings(output=GraphMode.TEXT, test_split=True)
+        lda_settings = LDASettings(output='text', test_split=True)
         lda = LDA(lda_settings, df.fused_data)
         lda.train()
 
@@ -92,7 +92,7 @@ class TestLDA(unittest.TestCase):
         """Test case against prediction parameter issues."""
 
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",

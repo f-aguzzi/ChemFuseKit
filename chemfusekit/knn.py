@@ -11,7 +11,7 @@ from .__base import BaseClassifierSettings, BaseClassifier, BaseDataModel
 class KNNSettings(BaseClassifierSettings):
     """Holds the settings for the kNN object."""
     def __init__(self, n_neighbors: int = 15, metric: str | Callable = 'euclidean', weights: str | Callable = 'uniform',
-                 algorithm: str = 'auto', output: GraphMode = GraphMode.NONE, test_split: bool = False):
+                 algorithm: str = 'auto', output: str = 'none', test_split: bool = False):
 
         super().__init__(output, test_split)
 
@@ -68,7 +68,7 @@ class KNN(BaseClassifier):
             self.settings.output
         )
 
-        if self.settings.test_split and self.settings.output:
+        if self.settings.test_split and self.settings.output is not GraphMode.NONE:
             knn_split = KNeighborsClassifier(
                 n_neighbors=self.settings.n_neighbors,
                 metric=self.settings.metric,

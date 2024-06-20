@@ -31,12 +31,12 @@ class TestPLSDA(unittest.TestCase):
 
         # output and test_split incompatibilities
         with self.assertRaises(Warning):
-            PLSDASettings(output=GraphMode.NONE, test_split=True)
+            PLSDASettings(output='none', test_split=True)
 
     def test_plsda_constructor(self):
         """Test case against constructor errors."""
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -64,7 +64,7 @@ class TestPLSDA(unittest.TestCase):
     def test_plsda(self):
         """Integration test case for the training function."""
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -84,29 +84,29 @@ class TestPLSDA(unittest.TestCase):
         plsda.train()
 
         # Set up and run PLSDA with text output
-        plsda_settings = PLSDASettings(output=GraphMode.TEXT)
+        plsda_settings = PLSDASettings(output='text')
         plsda = PLSDA(plsda_settings, df.fused_data)
         plsda.train()
 
         # Set up and run PLSDA with graphical output
-        plsda_settings = PLSDASettings(output=GraphMode.GRAPHIC)
+        plsda_settings = PLSDASettings(output='graphical')
         plsda = PLSDA(plsda_settings, df.fused_data)
         plsda.train()
 
         # Run with text output and split testing
-        plsda_settings = PLSDASettings(output=GraphMode.TEXT, test_split=True)
+        plsda_settings = PLSDASettings(output='text', test_split=True)
         plsda = PLSDA(plsda_settings, df.fused_data)
         plsda.train()
 
         # Run with graphical output and split testing
-        plsda_settings = PLSDASettings(output=GraphMode.GRAPHIC, test_split=True)
+        plsda_settings = PLSDASettings(output='graphical', test_split=True)
         plsda = PLSDA(plsda_settings, df.fused_data)
         plsda.train()
 
     def test_prediction(self):
         """Test case against prediction parameter issues."""
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",

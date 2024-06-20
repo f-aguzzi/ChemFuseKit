@@ -6,7 +6,7 @@ import pandas as pd
 
 from chemfusekit.df import DFSettings, DF, Table
 from chemfusekit.pca import PCASettings, PCA
-from chemfusekit.lr import LRSettings, LR, GraphMode
+from chemfusekit.lr import LRSettings, LR
 from chemfusekit.__base import ReducerDataModel
 
 
@@ -19,7 +19,7 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(ValueError):
             LRSettings(
                 algorithm='unknown',
-                output=GraphMode.NONE,
+                output='none',
                 test_split=False
             )
 
@@ -27,7 +27,7 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm=None,
-                output=GraphMode.NONE,
+                output='none',
                 test_split=True
             )
         with self.assertRaises(TypeError):
@@ -39,18 +39,18 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm='liblinear',
-                output=GraphMode.NONE,
+                output='none',
                 test_split=None
             )
 
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
-            LRSettings(output=GraphMode.NONE, test_split=True)
+            LRSettings(output='none', test_split=True)
 
         # Should not raise any exception when the input is correct
         LRSettings(
             algorithm='liblinear',
-            output=GraphMode.TEXT
+            output='text'
         )
 
     def test_lr_constructor(self):
@@ -82,7 +82,7 @@ class TestLR(unittest.TestCase):
     def test_lr(self):
         """Integration test case for LR training."""
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -109,23 +109,23 @@ class TestLR(unittest.TestCase):
         lr.train()
 
         # With text output
-        lr_settings = LRSettings(output=GraphMode.TEXT)
+        lr_settings = LRSettings(output='text')
         lr = LR(lr_settings, pca_data)
         lr.train()
 
         # With graph output
         # With text output
-        lr_settings = LRSettings(output=GraphMode.GRAPHIC)
+        lr_settings = LRSettings(output='graphical')
         lr = LR(lr_settings, pca_data)
         lr.train()
 
         # With text output and split tests
-        lr_settings = LRSettings(output=GraphMode.TEXT, test_split=True)
+        lr_settings = LRSettings(output='text', test_split=True)
         lr = LR(lr_settings, pca_data)
         lr.train()
 
         # With graph output and split tests
-        lr_settings = LRSettings(output=GraphMode.GRAPHIC, test_split=True)
+        lr_settings = LRSettings(output='graphical', test_split=True)
         lr = LR(lr_settings, pca_data)
         lr.train()
 

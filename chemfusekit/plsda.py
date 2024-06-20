@@ -8,14 +8,14 @@ import plotly.express as px
 from sklearn.cross_decomposition import PLSRegression as PLSR
 from sklearn.model_selection import cross_val_score
 
-from chemfusekit.__utils import GraphMode, print_table, print_confusion_matrix, run_split_test
+from chemfusekit.__utils import print_table, print_confusion_matrix, run_split_test, GraphMode
 from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier, BaseReducer, ReducerDataModel
 
 
 class PLSDASettings(BaseClassifierSettings):
     """Holds the settings for the PLSDA object."""
 
-    def __init__(self, components: int | None = None, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, components: int | None = None, output: str = 'none', test_split: bool = False):
         super().__init__(output, test_split)
         if components is not None and components < 1:
             raise ValueError("Invalid n_components number: should be a positive integer.")
@@ -136,7 +136,7 @@ class PLSDA(BaseClassifier, BaseReducer):
         if self.settings.output and self.settings.test_split:
             x = self.data.x_data
             y = self.data.x_train.Substance.astype('category').cat.codes
-            run_split_test(x, y, PLSR(self.settings.components), mode=self.settings.output)
+            run_split_test(x, y, PLSR(self.components), mode=self.settings.output)
 
     def _select_feature_number(self, x, y):
         # Auto-select the number of components

@@ -20,9 +20,9 @@ KNN(settings: KNNSettings, data: LLDFModel)
 
 ## Fields
 
-- `settings`: object of type [`KNNSettings`](/tesi/docs/knn/knnsettings). Contains the settings for
+- `settings`: object of type [`KNNSettings`](./knnsettings.md). Contains the settings for
   the `KNN` object. 
-- `data`: onject of type ['DFModel`](/tesi/docs/df/dfmodel). Contains the
+- `data`: onject of type ['DFModel`](../df/dfmodel.md). Contains the
   artifacts from the data fusion process.
 - `model`: a `KNeighborsClassifier` model from `scikit-learn`. Defaults to `None`.
 

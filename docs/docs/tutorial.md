@@ -15,19 +15,19 @@ pip install chemfusekit
 
 ## First step: data fusion
 
-We will load the `LLDFSettings` with the paths to some Excel datasheets, containing
+We will load the `DFSettings` with the paths to some Excel datasheets, containing
 respectively the data from a QEPAS spectrometer and a GC chromatographer.
 
 We will pick normalization as the preprocessing technique for the data.
 
-The `LLDF` class will take these settings and perform low-level data fusion on the
+The `DF` class will take these settings and perform low-level data fusion on the
 two Excel tables we picked.
 
 ```python
 from chemfusekit.df import DFSettings, DF
 
 # Initialize the settings for low-level data fusion
-lldf_settings = DFSettings(
+df_settings = DFSettings(
     qepas_path='tests/qepas.xlsx',
     qepas_sheet='Sheet1',
     rt_path='tests/rt.xlsx',
@@ -36,15 +36,15 @@ lldf_settings = DFSettings(
 )
 
 # Initialize and run low-level data fusion
-lldf = DF(lldf_settings)
-lldf.lldf()
+df = DF(df_settings)
+df.train()
 ```
 
 Optionally, we can export the fused data into a new, single Excel datasheet:
 
 ```python
 # (optional) export the LLDF data to an Excel file
-lldf.export_data('output_file.xlsx')
+df.export_data('output_file.xlsx')
 ```
 
 ## Second step: PCA
@@ -62,11 +62,11 @@ pca_settings = PCASettings(
     target_variance=0.99,  # the minimum acceptable level of cumulative explained covariance
     confidence_level=0.05,  # the desired level of confidence
     initial_components=10,  # the initial amount of components for the iterative analysis
-    output=GraphMode.GRAPHIC  # graphs will be printed
+    output='graphical'  # graphs will be printed
 )
 
 # Initialize and run the PCA class
-pca = PCA(lldf.fused_data, pca_settings)
+pca = PCA(df.fused_data, pca_settings)
 pca.train()
 
 # Print the number of components and the statistics
@@ -84,12 +84,12 @@ from chemfusekit.lda import LDASettings, LDA
 
 settings = LDASettings(
     components=(pca.components - 1),  # one less component than the number determined by PCA
-    output=GraphMode.GRAPHIC,  # graphs will be printed
+    output='graphical',     # graphs will be printed
     test_split=True  # Split testing is enabled
 )
 
 # Initialize and run the LDA class
-lda = LDA(lldf.fused_data, settings)
+lda = LDA(df.fused_data, settings)
 lda.train()
 ```
 
@@ -100,8 +100,7 @@ can identify it correctly.
 
 ```python
 # Let's pick a random sample from the dataset and see if it gets recognized correctly:
-x_data_sample = lldf.fused_data.x_train.iloc[119] # should be DMMP
-x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
+x_data_sample = lldf.fused_data[119] #   should be DMMP
 
 # Let's run the prediction:
 predictions = lda.predict(x_data_sample)

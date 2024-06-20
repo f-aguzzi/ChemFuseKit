@@ -5,9 +5,9 @@ sidebar-position: 6
 
 # ReducerDataModel class
 
-This class models the output data for all dimensionality reduction operations (currently, the [`LDA`](../lda/lda), the [`PLSDA`](../plsda/plsda.md) and the [`PCA`](../pca/pca.md) operations).
+This class models the output data for all dimensionality reduction operations (currently, the [`LDA`](../lda/lda.md), the [`PLSDA`](../plsda/plsda.md) and the [`PCA`](../pca/pca.md) operations).
 
-It inherits from [`BaseDataModel`](../base/basedatamodel.md).
+It inherits from [`BaseDataModel`](./basedatamodel.md).
 
 ## Syntax
 

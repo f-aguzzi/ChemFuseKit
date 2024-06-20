@@ -21,7 +21,7 @@ PCA(settings: PCASettings, data: BaseDataModel)
 
 ## Fields
 
-- `data`: object of type [`BaseDataModel`](../base/basedatamodel.md.md). Contains the data to be analyzed.
+- `data`: object of type [`BaseDataModel`](../base/basedatamodel.md). Contains the data to be analyzed.
 - `components`: Number of components for the PCA analysis. Defaults to 0.
 - `model`: A `PCA` model from `scikit-learn`. Defaults to `None`.
 - `settings`: object of type [`PCASettings`](./pcasettings.md). Contains the settings for

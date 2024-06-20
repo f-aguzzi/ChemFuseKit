@@ -7,7 +7,8 @@ from scipy.signal import savgol_filter
 
 import matplotlib.pyplot as plt
 
-from .__base import GraphMode, BaseDataModel, BaseSettings
+from .__base import BaseDataModel, BaseSettings
+from .__utils import GraphMode
 from .pca import PCASettings, PCA
 from .plsda import PLSDASettings, PLSDA
 
@@ -37,7 +38,7 @@ class DFDataModel(BaseDataModel):
 class DFSettings(BaseSettings):
     """Holds the settings for the DF object."""
 
-    def __init__(self, output: GraphMode = GraphMode.NONE, method: str = 'concat'):
+    def __init__(self, output: str = 'none', method: str = 'concat'):
         super().__init__(output)
         if method not in ['concat', 'outer']:
             raise ValueError("DF: invalid method: must be 'concat' or 'outer'")

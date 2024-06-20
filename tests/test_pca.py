@@ -1,7 +1,7 @@
 """This module contains the test cases for the PCA module."""
 import unittest
 import copy
-from chemfusekit.pca import PCASettings, PCA, GraphMode
+from chemfusekit.pca import PCASettings, PCA
 from chemfusekit.df import DFSettings, DF, Table
 from chemfusekit.lr import LRSettings, LR
 
@@ -28,14 +28,14 @@ class TestPCA(unittest.TestCase):
             target_variance=0.98,
             confidence_level=0.9,
             initial_components=8,
-            output=GraphMode.GRAPHIC
+            output='graphical'
         )
 
     def test_pca_constructor(self):
         """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -72,7 +72,7 @@ class TestPCA(unittest.TestCase):
         whether the output is set to true or false
         """
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -87,7 +87,7 @@ class TestPCA(unittest.TestCase):
         df.fuse()
 
         # Set up and execute PCA (graph output)
-        pca_settings = PCASettings(output=GraphMode.GRAPHIC)
+        pca_settings = PCASettings(output='graphical')
         pca = PCA(pca_settings, df.fused_data)
         pca.train()
 
@@ -96,7 +96,7 @@ class TestPCA(unittest.TestCase):
         result_true_array_scores = copy.deepcopy(pca.array_scores)
 
         # Set up and execute PCA (again)
-        pca_settings = PCASettings(output=GraphMode.NONE)
+        pca_settings = PCASettings(output='none')
         pca = PCA(pca_settings, df.fused_data)
         pca.train()
 
@@ -108,7 +108,7 @@ class TestPCA(unittest.TestCase):
         self.assertEqual(result_true_array_scores, result_false_array_scores)
 
         # Set up and execute PCA (text output)
-        pca_settings = PCASettings(output=GraphMode.GRAPHIC)
+        pca_settings = PCASettings(output='graphical')
         pca = PCA(pca_settings, df.fused_data)
         pca.train()
 
@@ -117,7 +117,7 @@ class TestPCA(unittest.TestCase):
         result_true_array_scores = copy.deepcopy(pca.array_scores)
 
         # Set up and execute PCA (again)
-        pca_settings = PCASettings(output=GraphMode.NONE)
+        pca_settings = PCASettings(output='none')
         pca = PCA(pca_settings, df.fused_data)
         pca.train()
 
@@ -132,7 +132,7 @@ class TestPCA(unittest.TestCase):
         """Integration test for PCA+LR"""
 
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -159,7 +159,7 @@ class TestPCA(unittest.TestCase):
     def test_pca_import_export(self):
         """Test case for the import and export of PCA models."""
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -198,7 +198,7 @@ class TestPCA(unittest.TestCase):
     def test_pca_reduce(self):
         """Test case for data dimensionality reduction."""
         # Perform preliminary data fusion
-        df_settings = DFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",

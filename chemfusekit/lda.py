@@ -9,8 +9,8 @@ import pandas as pd
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 from sklearn.model_selection import cross_val_score
 
-from chemfusekit.__utils import graph_output, run_split_test
-from chemfusekit.__utils import print_confusion_matrix, print_table, GraphMode
+from chemfusekit.__utils import graph_output, run_split_test, GraphMode
+from chemfusekit.__utils import print_confusion_matrix, print_table
 from .__base import BaseDataModel, BaseClassifier, BaseClassifierSettings, BaseReducer, ReducerDataModel
 
 
@@ -25,7 +25,7 @@ class LDADataModel(BaseDataModel):
 class LDASettings(BaseClassifierSettings):
     """Holds the settings for the LDA object."""
 
-    def __init__(self, components: int | None = None, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, components: int | None = None, output: str = 'none', test_split: bool = False):
         super().__init__(output, test_split)
         if components is not None and components <= 2:
             raise ValueError("Invalid component number: must be a > 1 integer.")

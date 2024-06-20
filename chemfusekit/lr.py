@@ -5,13 +5,13 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
-from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table, GraphMode
+from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table
 from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier, ReducerDataModel
 
 
 class LRSettings(BaseClassifierSettings):
     """Holds the settings for the LR object."""
-    def __init__(self, algorithm: str = 'liblinear', output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, algorithm: str = 'liblinear', output: str = 'none', test_split: bool = False):
         super().__init__(output, test_split)
         if algorithm not in [
             'lbfgs',

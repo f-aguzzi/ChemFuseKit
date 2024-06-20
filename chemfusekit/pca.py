@@ -18,9 +18,8 @@ from .__base import BaseDataModel, BaseReducer, BaseSettings, ReducerDataModel
 class PCASettings(BaseSettings):
     """Holds the settings for the PCA object."""
 
-    def __init__(self, target_variance: float = 0.95,
-                 confidence_level: float = 0.05,
-                 initial_components: int = 10, output: GraphMode = GraphMode.NONE):
+    def __init__(self, target_variance: float = 0.95, confidence_level: float = 0.05, initial_components: int = 10,
+                 output: str = 'none'):
         super().__init__(output)
         if target_variance < 0:
             raise ValueError("Target variance should be positive or null.")

@@ -24,7 +24,7 @@ PLSDA(settings: PLSDASettings, data: BaseDataModel)
 
 - `settings`: object of type [`PLSDASettings`](./plsdasettings.md). Contains the settings for
   the `PLSDA` object. 
-- `data`: object of type [`BaseDataModel`](../base/basedatamodel.md.md). Contains the data to be analyzed.
+- `data`: object of type [`BaseDataModel`](../base/basedatamodel.md). Contains the data to be analyzed.
 - `model`: a `PLSRegression` model from `scikit-learn`. Defaults to `None`.
 
 ## Methods

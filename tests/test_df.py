@@ -1,6 +1,6 @@
 """This module contains the test cases for the LLDF module."""
 import unittest
-from chemfusekit.df import DFSettings, DF, GraphMode, Table
+from chemfusekit.df import DFSettings, DF, Table
 
 
 class TestLLDF(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestLLDF(unittest.TestCase):
         """Test case against file loading errors."""
         # load a non-existent file on purpose
         settings = DFSettings(
-            output=GraphMode.NONE
+            output='none'
         )
 
         table1 = Table(
@@ -27,7 +27,7 @@ class TestLLDF(unittest.TestCase):
         """Test case against wrong preprocessing user input."""
         with self.assertRaises(SyntaxError):
             settings = DFSettings(
-                output=GraphMode.NONE
+                output='none'
             )
 
             table1 = Table(
@@ -40,7 +40,7 @@ class TestLLDF(unittest.TestCase):
             df.fuse()
 
         # Now a correct value:
-        settings = DFSettings(output=GraphMode.NONE)
+        settings = DFSettings(output='none')
         table1 = Table(
             file_path='tests/qepas.xlsx',
             sheet_name='Sheet1',
@@ -51,7 +51,7 @@ class TestLLDF(unittest.TestCase):
 
     def test_export(self):
         """Test case against wrong export settings."""
-        settings = DFSettings(output=GraphMode.NONE)
+        settings = DFSettings(output='none')
         table1 = Table(
             file_path='tests/qepas.xlsx',
             sheet_name='Sheet1',
@@ -74,7 +74,7 @@ class TestLLDF(unittest.TestCase):
         """Integration test case for mid-level data fusion."""
 
         # PCA
-        df_settings = DFSettings(output=GraphMode.GRAPHIC)
+        df_settings = DFSettings(output='graphical')
         table1 = Table(
             file_path='tests/qepas.xlsx',
             sheet_name='Sheet1',
@@ -93,7 +93,7 @@ class TestLLDF(unittest.TestCase):
         df.fuse()
 
         # PLSDA
-        df_settings = DFSettings(output=GraphMode.GRAPHIC)
+        df_settings = DFSettings(output='graphical')
         table1 = Table(
             file_path='tests/qepas.xlsx',
             sheet_name='Sheet1',

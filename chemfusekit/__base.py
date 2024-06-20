@@ -92,8 +92,15 @@ class BaseDataModel:
 class BaseSettings:
     """Holds the settings for all objects with settings."""
 
-    def __init__(self, output: GraphMode = GraphMode.NONE):
-        self.output = output
+    def __init__(self, output: str = 'none'):
+        if output == 'none':
+            self.output = GraphMode.NONE
+        elif output == 'graphical':
+            self.output = GraphMode.GRAPHIC
+        elif output == 'text':
+            self.output = GraphMode.TEXT
+        else:
+            raise ValueError("The output mode should be 'none', 'graphical' or 'text'.")
 
 
 class BaseActionClass(ABC):
@@ -145,9 +152,9 @@ class BaseActionClass(ABC):
 class BaseClassifierSettings(BaseSettings):
     """Holds the settings for the BaseClassifier object."""
 
-    def __init__(self, output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, output: str = 'none', test_split: bool = False):
         super().__init__(output)
-        if test_split is True and output is GraphMode.NONE:
+        if test_split is True and self.output is GraphMode.NONE:
             raise Warning(
                 "You selected test_split but it won't run because you disabled the output."
             )
