@@ -38,7 +38,7 @@ class PCA(BaseReducer):
 
     def __init__(self, settings: PCASettings, data: BaseDataModel):
         super().__init__(settings, data)
-        self.components = 0
+        self.components: Optional[int] = None
         self.model: Optional[PC] = None
         self.array_scores: Optional[np.ndarray] = None
 
@@ -48,8 +48,8 @@ class PCA(BaseReducer):
         # Read from the data fusion object
         x_data = self.data.x_data
 
-        # Run PCA producing the reduced variable Xreg and select the first 10 components
-        pca = PC(self.settings.initial_components)
+        # Run PCA and select the first n components
+        pca = PC(min(self.settings.initial_components, x_data.shape[1]))
         pca.fit(x_data)
 
         # Define the class vector (discrete/categorical variable)
@@ -57,47 +57,48 @@ class PCA(BaseReducer):
         # classes = y_dataframe.astype('category') (a cosa serve?)
         out_sum = np.cumsum(pca.explained_variance_ratio_)
 
-        # Autoselect the number of components
-        for i, x in enumerate(out_sum):
-            if x >= self.settings.target_variance:
-                self.components = i
-                break
-        self.components = max(self.components, 3)
+        # Auto-select the number of components (if necessary)
+        if self.components is None:
+            for i, x in enumerate(out_sum):
+                if x >= self.settings.target_variance:
+                    self.components = i
+                    break
+            self.components = max(self.components, 3)
 
-        compsexpv = [[(i + 1), pca.explained_variance_ratio_[i]] for i in np.arange(pca.n_components_)]
-        comps, expv = zip(*compsexpv)
-        print_table(
-            ["Components", "Explained Variance"],
-            [comps, expv],
-            "Proportion of Variance Explained",
-            mode=self.settings.output
-        )
+            compsexpv = [[(i + 1), pca.explained_variance_ratio_[i]] for i in np.arange(pca.n_components_)]
+            comps, expv = zip(*compsexpv)
+            print_table(
+                ["Components", "Explained Variance"],
+                [comps, expv],
+                "Proportion of Variance Explained",
+                mode=self.settings.output
+            )
 
-        if self.settings.output is GraphMode.GRAPHIC:
-            # PCA scree plot
-            pc_values = np.arange(pca.n_components_) + 1
-            plt.plot(pc_values, pca.explained_variance_ratio_, 'ro-', linewidth=2)
-            plt.title('Scree Plot')
-            plt.xlabel('Principal Component')
-            plt.ylabel('Proportion of Variance Explained')
-            plt.show()
+            if self.settings.output is GraphMode.GRAPHIC:
+                # PCA scree plot
+                pc_values = np.arange(pca.n_components_) + 1
+                plt.plot(pc_values, pca.explained_variance_ratio_, 'ro-', linewidth=2)
+                plt.title('Scree Plot')
+                plt.xlabel('Principal Component')
+                plt.ylabel('Proportion of Variance Explained')
+                plt.show()
 
-        compsexpv = [[(i + 1), out_sum[i]] for i in np.arange(pca.n_components_)]
-        comps, expv = zip(*compsexpv)
-        print_table(
-            ["Components", "Cumulative Explained Variance"],
-            [comps, expv],
-            "Cumulative Proportion of Variance Explained",
-            mode=self.settings.output
-        )
+            compsexpv = [[(i + 1), out_sum[i]] for i in np.arange(pca.n_components_)]
+            comps, expv = zip(*compsexpv)
+            print_table(
+                ["Components", "Cumulative Explained Variance"],
+                [comps, expv],
+                "Cumulative Proportion of Variance Explained",
+                mode=self.settings.output
+            )
 
-        if self.settings.output is GraphMode.GRAPHIC:
-            # Cumulative explained variance ratio
-            plt.plot(pc_values, out_sum, 'ro-', linewidth=2)
-            plt.title('Scree Plot (cumulative)')
-            plt.xlabel('Principal Component')
-            plt.ylabel('Cumulative Proportional Variance Explained')
-            plt.show()
+            if self.settings.output is GraphMode.GRAPHIC:
+                # Cumulative explained variance ratio
+                plt.plot(pc_values, out_sum, 'ro-', linewidth=2)
+                plt.title('Scree Plot (cumulative)')
+                plt.xlabel('Principal Component')
+                plt.ylabel('Cumulative Proportional Variance Explained')
+                plt.show()
 
         # Run PCA producing the model with a proper number of components
         pca = PC(n_components=self.components)
