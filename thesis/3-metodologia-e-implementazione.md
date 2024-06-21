@@ -1,7 +1,1 @@
-# Analisi tecnica
-
-## Metodologia di ricerca
-
-## Metodo di lavoro
-
-## Dettagli implementativi
+# Metodologia, processi e implementazione
