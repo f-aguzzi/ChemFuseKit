@@ -9,7 +9,8 @@ header-includes: |
 
 
 \begin{center}
-    \includegraphics[width=0.6\textwidth]{thesis/logo-unibg.png}
+    \renewcommand{\baselinestretch}{1}
+    \includegraphics[width=0.6\textwidth]{logo-unibg.png}
     
     {
     \Large
