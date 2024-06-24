@@ -7,30 +7,32 @@ header-includes: |
  \usepackage{microtype}
 ---
 
-
+\vspace{-5cm}
+\thispagestyle{empty}
 \begin{center}
     \renewcommand{\baselinestretch}{1}
-    \normalsize
-    \includegraphics[width=0.6\textwidth]{logo-unibg.png}
+    \includegraphics[width=0.55\textwidth]{logo-unibg.png}
+
+    \vspace{-1.4cm}
     
     {
-    \Large
+    \large
     Scuola di Ingegneria \\~\\
     Dipartimento di Ingegneria dell'Informazione, della Gestione e della Produzione \\~\\
     Classe n. L-8 -  Classe delle lauree in Ingegneria dell'Informazione
     }
 
-    \vspace{1.3cm}
-    
-    {
-    \huge
-    \textbf{Realizzazione di una libreria Python su cloud per la fusione e l'analisi dei dati dalla scena del crimine}
-    }
-
-    \vspace{1.3cm}
+    \vspace{1cm}
     
     {
     \Large
+    \textbf{Realizzazione di una libreria Python su cloud per la fusione e l'analisi dei dati dalla scena del crimine}
+    }
+
+    \vspace{1cm}
+    
+    {
+    \large
     \textbf{Federico Aguzzi}
         
     \vfill
@@ -47,5 +49,3 @@ header-includes: |
         
 \end{center}
 
-
-\renewcommand{\baselinestretch}{1.5}

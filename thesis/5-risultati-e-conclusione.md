@@ -26,3 +26,4 @@ Esistono casi in cui utilizzare soluzioni alternative risulta più conveniente. 
 - **limitazioni causate da Jupyter Notebook**: nonostante sia possibile utilizzare la libreria in puro `python`, l'output grafico risulta scomodo e limitato se utilizzato al di fuori di `Jupyter Notebook`, rendendone l'uso una scelta quasi obbligata, con tutte le limitazioni che ne conseguono.
 
 In conclusione, la costruzione diretta di script basati su librerie più elementari, ad esempio quelle che lo stesso ChemFuseKit usa come dipendenze, può risultare più flessibile e personalizzabile per gli utenti esperti.
+
