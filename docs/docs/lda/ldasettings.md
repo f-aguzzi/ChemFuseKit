@@ -11,13 +11,13 @@ Inherits from [`BaseSettings`](../base/basesettings.md).
 ## Syntax
 
 ```python
-LDASettings(components: int, output: GraphMode, split_test: bool)
+LDASettings(components: int, output: str, split_test: bool)
 ```
 
 ## Fields and constructor parameters
 
 - `components`: the amount of components to be used in the LDA model. Defaults to 3.
-- `output`: toggles graph output. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
+- `output`: toggles graph output. Defaults to [`none`] (other options: 'graphical', 'text'). Gets implicitly converted to a [`GraphMode` enum](../utils/graphmode.md).
 - `test_split`: toggles split testing. Defaults to `False`.
 
 
@@ -29,11 +29,11 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.lda import LDASettings, GraphMode
+from chemfusekit.lda import LDASettings
 
 settings = LDASettings(
     components=(pca.components - 1),    # one less component than the number determined by PCA
-    output=GraphMode.GRAPHIC, # graphs will be printed
-    test_split=True # split testing is enabled
+    output='graphical',   # graphs will be printed
+    test_split=True   # split testing is enabled
 )
 ```

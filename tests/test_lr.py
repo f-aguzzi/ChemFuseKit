@@ -4,9 +4,10 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from chemfusekit.lldf import LLDFSettings, LLDF, Table
-from chemfusekit.pca import PCASettings, PCA, PCADataModel
-from chemfusekit.lr import LRSettings, LR, GraphMode
+from chemfusekit.df import DFSettings, DF, Table
+from chemfusekit.pca import PCASettings, PCA
+from chemfusekit.lr import LRSettings, LR
+from chemfusekit.__base import ReducerDataModel
 
 
 class TestLR(unittest.TestCase):
@@ -18,7 +19,7 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(ValueError):
             LRSettings(
                 algorithm='unknown',
-                output=GraphMode.NONE,
+                output='none',
                 test_split=False
             )
 
@@ -26,7 +27,7 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm=None,
-                output=GraphMode.NONE,
+                output='none',
                 test_split=True
             )
         with self.assertRaises(TypeError):
@@ -38,27 +39,26 @@ class TestLR(unittest.TestCase):
         with self.assertRaises(TypeError):
             LRSettings(
                 algorithm='liblinear',
-                output=GraphMode.NONE,
+                output='none',
                 test_split=None
             )
 
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
-            LRSettings(output=GraphMode.NONE, test_split=True)
+            LRSettings(output='none', test_split=True)
 
         # Should not raise any exception when the input is correct
         LRSettings(
             algorithm='liblinear',
-            output=GraphMode.TEXT
+            output='text'
         )
 
     def test_lr_constructor(self):
         """Test case against constructor input errors."""
-        data_model = PCADataModel(
-            x_data=pd.DataFrame(),
+        data_model = ReducerDataModel(
+            x_data=pd.DataFrame([21.0, 3.44, 7.65]),
             x_train=pd.DataFrame(),
             y=np.asarray([7.854, 1.543, 93.55]),
-            array_scores=np.asarray([21.0, 3.44, 7.65]),
             components=5
         )
         # Should raise an exception when the inputs are null
@@ -82,7 +82,7 @@ class TestLR(unittest.TestCase):
     def test_lr(self):
         """Integration test case for LR training."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -93,12 +93,12 @@ class TestLR(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         pca_settings = PCASettings()
-        pca = PCA(pca_settings, lldf.fused_data)
-        pca.pca()
+        pca = PCA(pca_settings, df.fused_data)
+        pca.train()
         pca.pca_stats()
 
         pca_data = pca.export_data()
@@ -106,43 +106,42 @@ class TestLR(unittest.TestCase):
         # With no output
         lr_settings = LRSettings()
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With text output
-        lr_settings = LRSettings(output=GraphMode.TEXT)
+        lr_settings = LRSettings(output='text')
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With graph output
         # With text output
-        lr_settings = LRSettings(output=GraphMode.GRAPHIC)
+        lr_settings = LRSettings(output='graphical')
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With text output and split tests
-        lr_settings = LRSettings(output=GraphMode.TEXT, test_split=True)
+        lr_settings = LRSettings(output='text', test_split=True)
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
         # With graph output and split tests
-        lr_settings = LRSettings(output=GraphMode.GRAPHIC, test_split=True)
+        lr_settings = LRSettings(output='graphical', test_split=True)
         lr = LR(lr_settings, pca_data)
-        lr.lr()
+        lr.train()
 
-        # A final test with just the LLDF data:
+        # A final test with just the df data:
         lr_settings = LRSettings()
-        lr = LR(lr_settings, lldf.fused_data)
-        lr.lr()
+        lr = LR(lr_settings, df.fused_data)
+        lr.train()
 
     def test_lr_predict(self):
         """Test case against prediction input errors."""
         # Set up the model
         lr_settings = LRSettings()
-        pca_data = PCADataModel(
-            x_data=pd.DataFrame(),
+        pca_data = ReducerDataModel(
+            x_data=pd.DataFrame([43.1, 0.06]),
             x_train=pd.DataFrame(),
             y=np.asarray([7.02, 8.11]),
-            array_scores=np.asarray([43.1, 0.06]),
             components=4
         )
         lr = LR(lr_settings, pca_data)

@@ -1,7 +1,7 @@
 """This module contains the test cases for the SVM module."""
 import unittest
-from chemfusekit.svm import SVMSettings, SVM, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, Table
+from chemfusekit.svm import SVMSettings, SVM
+from chemfusekit.df import DFSettings, DF, Table
 
 
 class TestSVM(unittest.TestCase):
@@ -11,29 +11,29 @@ class TestSVM(unittest.TestCase):
         """Test case against settings errors."""
         # Test against null type
         with self.assertRaises(TypeError):
-            SVMSettings(None, GraphMode.NONE, False)
+            SVMSettings(None, 'none', False)
         # Test against null output selector
         with self.assertRaises(TypeError):
             SVMSettings('linear', None, False)
         # Test against null test_split selector
         with self.assertRaises(TypeError):
-            SVMSettings('linear', GraphMode.NONE, None)
+            SVMSettings('linear', 'none', None)
         # Test against non-existent kernels
         with self.assertRaises(ValueError):
-            SVMSettings('non-existent', GraphMode.NONE, False)
+            SVMSettings('non-existent', 'none', False)
 
         # Check if split tests with no output cause warnings:
         with self.assertRaises(Warning):
-            SVMSettings(output=GraphMode.NONE, test_split=True)
+            SVMSettings(output='none', test_split=True)
 
         # Now call with proper values:
-        SVMSettings(kernel='gaussian', output=GraphMode.GRAPHIC, test_split=False)
+        SVMSettings(kernel='gaussian', output='graphical', test_split=False)
 
     def test_svm_constructor(self):
         """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -44,8 +44,8 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         svm_settings = SVMSettings()
 
@@ -55,20 +55,20 @@ class TestSVM(unittest.TestCase):
 
         # Then, construct the object with null settings:
         with self.assertRaises(TypeError):
-            SVM(None, lldf.fused_data)
+            SVM(None, df.fused_data)
 
         # Now, with both null:
         with self.assertRaises(TypeError):
             SVM(None, None)
 
         # Finally, with proper values:
-        SVM(svm_settings, lldf.fused_data)
+        SVM(svm_settings, df.fused_data)
 
     def test_svm(self):
         """Integration test case."""
 
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -79,29 +79,29 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Create an SVM object and train it, with no output
-        svm_settings = SVMSettings(output=GraphMode.NONE)
-        svm = SVM(svm_settings, lldf.fused_data)
-        svm.svm()
+        svm_settings = SVMSettings(output='none')
+        svm = SVM(svm_settings, df.fused_data)
+        svm.train()
 
         # Create an SVM object and train it, with graphical output
-        svm_settings = SVMSettings(output=GraphMode.GRAPHIC)
-        svm = SVM(svm_settings, lldf.fused_data)
-        svm.svm()
+        svm_settings = SVMSettings(output='graphical')
+        svm = SVM(svm_settings, df.fused_data)
+        svm.train()
 
         # Create an SVM object and train it, with text output
-        svm_settings = SVMSettings(output=GraphMode.TEXT)
-        svm = SVM(svm_settings, lldf.fused_data)
-        svm.svm()
+        svm_settings = SVMSettings(output='text')
+        svm = SVM(svm_settings, df.fused_data)
+        svm.train()
 
     def test_svm_predict(self):
         """Test case against prediction parameter issues."""
 
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -112,15 +112,15 @@ class TestSVM(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Create an SVM object without training it
         svm_settings = SVMSettings()
-        svm = SVM(svm_settings, lldf.fused_data)
+        svm = SVM(svm_settings, df.fused_data)
 
         # Pick a random sample for prediction
-        x_data_sample = lldf.fused_data.x_train.iloc[119]  # should be DMMP
+        x_data_sample = df.fused_data.x_train.iloc[119]  # should be DMMP
         x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
 
         # Run prediction with untrained model (should throw exception)
@@ -128,7 +128,7 @@ class TestSVM(unittest.TestCase):
             svm.predict(x_data_sample)
 
         # Train the SVM object
-        svm.svm()
+        svm.train()
 
         # Run prediction with empty data (should throw exception)
         with self.assertRaises(TypeError):

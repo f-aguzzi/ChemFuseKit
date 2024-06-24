@@ -1,5 +1,6 @@
 """A base class for all classifiers."""
 from abc import ABC, abstractmethod
+from typing import Optional
 
 import pandas as pd
 import numpy as np
@@ -91,20 +92,15 @@ class BaseDataModel:
 class BaseSettings:
     """Holds the settings for all objects with settings."""
 
-    def __init__(self, output: GraphMode = GraphMode.NONE):
-        self.output = output
-
-
-class BaseClassifierSettings(BaseSettings):
-    """Holds the settings for the BaseClassifier object."""
-
-    def __init__(self, output: GraphMode = GraphMode.NONE, test_split: bool = False):
-        super().__init__(output)
-        if test_split is True and output is GraphMode.NONE:
-            raise Warning(
-                "You selected test_split but it won't run because you disabled the output."
-            )
-        self.test_split = test_split
+    def __init__(self, output: str = 'none'):
+        if output == 'none':
+            self.output = GraphMode.NONE
+        elif output == 'graphical':
+            self.output = GraphMode.GRAPHIC
+        elif output == 'text':
+            self.output = GraphMode.TEXT
+        else:
+            raise ValueError("The output mode should be 'none', 'graphical' or 'text'.")
 
 
 class BaseActionClass(ABC):
@@ -113,6 +109,11 @@ class BaseActionClass(ABC):
         self.settings = settings
         self.data = data
         self.model: BaseEstimator | None = None
+
+    @abstractmethod
+    def train(self):
+        """Trains the estimator model."""
+        pass
 
     @classmethod
     def from_file(cls, settings, model_path):
@@ -148,7 +149,19 @@ class BaseActionClass(ABC):
             raise RuntimeError("You haven't trained the model yet! You cannot export it now.")
 
 
-class BaseClassifier(BaseActionClass):
+class BaseClassifierSettings(BaseSettings):
+    """Holds the settings for the BaseClassifier object."""
+
+    def __init__(self, output: str = 'none', test_split: bool = False):
+        super().__init__(output)
+        if test_split is True and self.output is GraphMode.NONE:
+            raise Warning(
+                "You selected test_split but it won't run because you disabled the output."
+            )
+        self.test_split = test_split
+
+
+class BaseClassifier(BaseActionClass, ABC):
     """Parent class for all classifiers, containing basic shared utilities."""
 
     def __init__(self, settings: BaseClassifierSettings, data: BaseDataModel):
@@ -165,11 +178,20 @@ class BaseClassifier(BaseActionClass):
         return y_pred
 
 
+class ReducerDataModel(BaseDataModel):
+    """Contains the artifacts for dimensionality reduction."""
+    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, components: int):
+        super().__init__(x_data, x_train, y)
+        self.components = components
+
+
 class BaseReducer(BaseActionClass):
     """Parent class for all reducers (decomposition-performing classes), containing basic shared utilities."""
 
     def __init__(self, settings: BaseSettings, data: BaseDataModel):
         super().__init__(settings, data)
+        self.array_scores: Optional[np.ndarray] = None
+        self.components: Optional[int] = None
     
     @abstractmethod
     def export_data(self) -> BaseDataModel:

@@ -44,7 +44,7 @@ from chemfusekit.lr import LR
 
 # Initialize and train the LR class
 lr = LR(settings, array_scores, y)
-lr.lr()
+lr.train()
 
 # Perform prediction
 lr.predict(x_sample)

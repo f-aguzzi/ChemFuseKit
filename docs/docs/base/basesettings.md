@@ -10,11 +10,11 @@ Holds the settings for all classifier object. It's not meant for direct usage, o
 ## Syntax
 
 ```python
-BaseSettings(output: GraphMode, test_split: false)
+BaseSettings(output: str, test_split: false)
 ```
 
 ## Fields and constructor parameters
-- `output`: toggles graph output mode. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
+- `output`: toggles graph output. Defaults to [`none`] (other options: 'graphical', 'text'). Gets implicitly converted to a [`GraphMode` enum](../utils/graphmode.md).
 - `test_split`: toggles the training split test phase. Defaults to `False`. Requires `output` to be set to `True` to work.
 
 The constructor raises:

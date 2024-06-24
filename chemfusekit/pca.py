@@ -12,25 +12,14 @@ import scipy.stats
 from sklearn.decomposition import PCA as PC
 
 from chemfusekit.__utils import print_table, GraphMode
-from .__base import BaseDataModel, BaseReducer, BaseSettings
-
-
-class PCADataModel(BaseDataModel):
-    """Data model for the PCA outputs."""
-
-    def __init__(self, x_data: pd.DataFrame, x_train: pd.DataFrame, y: np.ndarray, array_scores: np.ndarray,
-                 components: int):
-        super().__init__(x_data, x_train, y)
-        self.array_scores = array_scores
-        self.components = components
+from .__base import BaseDataModel, BaseReducer, BaseSettings, ReducerDataModel
 
 
 class PCASettings(BaseSettings):
     """Holds the settings for the PCA object."""
 
-    def __init__(self, target_variance: float = 0.95,
-                 confidence_level: float = 0.05,
-                 initial_components: int = 10, output: GraphMode = GraphMode.NONE):
+    def __init__(self, target_variance: float = 0.95, confidence_level: float = 0.05, initial_components: int = 10,
+                 output: str = 'none'):
         super().__init__(output)
         if target_variance < 0:
             raise ValueError("Target variance should be positive or null.")
@@ -48,18 +37,18 @@ class PCA(BaseReducer):
 
     def __init__(self, settings: PCASettings, data: BaseDataModel):
         super().__init__(settings, data)
-        self.components = 0
+        self.components: Optional[int] = None
         self.model: Optional[PC] = None
         self.array_scores: Optional[np.ndarray] = None
 
-    def pca(self):
+    def train(self):
         """Performs Principal Component Analysis."""
 
         # Read from the data fusion object
         x_data = self.data.x_data
 
-        # Run PCA producing the reduced variable Xreg and select the first 10 components
-        pca = PC(self.settings.initial_components)
+        # Run PCA and select the first n components
+        pca = PC(min(self.settings.initial_components, x_data.shape[1]))
         pca.fit(x_data)
 
         # Define the class vector (discrete/categorical variable)
@@ -67,47 +56,48 @@ class PCA(BaseReducer):
         # classes = y_dataframe.astype('category') (a cosa serve?)
         out_sum = np.cumsum(pca.explained_variance_ratio_)
 
-        # Autoselect the number of components
-        for i, x in enumerate(out_sum):
-            if x >= self.settings.target_variance:
-                self.components = i
-                break
-        self.components = max(self.components, 3)
+        # Auto-select the number of components (if necessary)
+        if self.components is None:
+            for i, x in enumerate(out_sum):
+                if x >= self.settings.target_variance:
+                    self.components = i
+                    break
+            self.components = max(self.components, 3)
 
-        compsexpv = [[(i + 1), pca.explained_variance_ratio_[i]] for i in np.arange(pca.n_components_)]
-        comps, expv = zip(*compsexpv)
-        print_table(
-            ["Components", "Explained Variance"],
-            [comps, expv],
-            "Proportion of Variance Explained",
-            mode=self.settings.output
-        )
+            compsexpv = [[(i + 1), pca.explained_variance_ratio_[i]] for i in np.arange(pca.n_components_)]
+            comps, expv = zip(*compsexpv)
+            print_table(
+                ["Components", "Explained Variance"],
+                [comps, expv],
+                "Proportion of Variance Explained",
+                mode=self.settings.output
+            )
 
-        if self.settings.output is GraphMode.GRAPHIC:
-            # PCA scree plot
-            pc_values = np.arange(pca.n_components_) + 1
-            plt.plot(pc_values, pca.explained_variance_ratio_, 'ro-', linewidth=2)
-            plt.title('Scree Plot')
-            plt.xlabel('Principal Component')
-            plt.ylabel('Proportion of Variance Explained')
-            plt.show()
+            if self.settings.output is GraphMode.GRAPHIC:
+                # PCA scree plot
+                pc_values = np.arange(pca.n_components_) + 1
+                plt.plot(pc_values, pca.explained_variance_ratio_, 'ro-', linewidth=2)
+                plt.title('Scree Plot')
+                plt.xlabel('Principal Component')
+                plt.ylabel('Proportion of Variance Explained')
+                plt.show()
 
-        compsexpv = [[(i + 1), out_sum[i]] for i in np.arange(pca.n_components_)]
-        comps, expv = zip(*compsexpv)
-        print_table(
-            ["Components", "Cumulative Explained Variance"],
-            [comps, expv],
-            "Cumulative Proportion of Variance Explained",
-            mode=self.settings.output
-        )
+            compsexpv = [[(i + 1), out_sum[i]] for i in np.arange(pca.n_components_)]
+            comps, expv = zip(*compsexpv)
+            print_table(
+                ["Components", "Cumulative Explained Variance"],
+                [comps, expv],
+                "Cumulative Proportion of Variance Explained",
+                mode=self.settings.output
+            )
 
-        if self.settings.output is GraphMode.GRAPHIC:
-            # Cumulative explained variance ratio
-            plt.plot(pc_values, out_sum, 'ro-', linewidth=2)
-            plt.title('Scree Plot (cumulative)')
-            plt.xlabel('Principal Component')
-            plt.ylabel('Cumulative Proportional Variance Explained')
-            plt.show()
+            if self.settings.output is GraphMode.GRAPHIC:
+                # Cumulative explained variance ratio
+                plt.plot(pc_values, out_sum, 'ro-', linewidth=2)
+                plt.title('Scree Plot (cumulative)')
+                plt.xlabel('Principal Component')
+                plt.ylabel('Cumulative Proportional Variance Explained')
+                plt.show()
 
         # Run PCA producing the model with a proper number of components
         pca = PC(n_components=self.components)
@@ -272,40 +262,45 @@ class PCA(BaseReducer):
 
         self.array_scores = array_scores
 
-    def export_data(self) -> PCADataModel:
+    def export_data(self) -> ReducerDataModel:
         """Export data artifacts."""
-        if self.model is None or self.array_scores is None:
+        if self.model is None:
             raise RuntimeError("Run both pca() and pca_stats() methods before exporting data!")
 
-        return PCADataModel(
+        return ReducerDataModel(
             self.data.x_data,
             self.data.x_train,
             self.data.y,
-            self.array_scores,
             self.components
         )
 
     @cached_property
-    def rescaled_data(self) -> PCADataModel:
+    def rescaled_data(self) -> ReducerDataModel:
         if self.model is None:
             settings_backup = copy(self.settings)
             self.settings.output = GraphMode.NONE
-            self.pca()
+            self.train()
+            self.pca_stats()
+            self.settings = settings_backup
+        if self.model is not None and self.array_scores is None:
+            settings_backup = copy(self.settings)
+            self.settings.output = GraphMode.NONE
             self.pca_stats()
             self.settings = settings_backup
 
-        x_data = pd.DataFrame(self.model.transform(self.data.x_data))
+        x_data = pd.DataFrame(self.array_scores)
+        x_columns = [f"PC{i+1}" for i in range(len(x_data.columns))]
+        x_data.columns = x_columns
         y_dataframe = pd.DataFrame(self.data.y, columns=['Substance'])
         x_train = pd.concat(
             [y_dataframe, x_data],
-            axis=1
+            axis=1,
         )
 
-        return PCADataModel(
+        return ReducerDataModel(
             x_data,
             x_train,
             self.data.y,
-            self.array_scores,
             self.components
         )
 

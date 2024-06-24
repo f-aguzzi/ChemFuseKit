@@ -11,7 +11,7 @@ Inherits from [`BaseSettings`](../base/basesettings.md).
 ## Syntax
 
 ```python
-SVMSettings(kernel: str, output: GraphMode, test_split: bool)
+SVMSettings(kernel: str, output: str, test_split: bool)
 ```
 
 ## Fields and constructor parameters
@@ -22,7 +22,7 @@ SVMSettings(kernel: str, output: GraphMode, test_split: bool)
   - `gaussian`
   - `sigmoid`
   Defaults to `linear`.
-- `output`: toggles graph output. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
+- `output`: toggles graph output. Defaults to [`none`] (other options: 'graphical', 'text'). Gets implicitly converted to a [`GraphMode` enum](../utils/graphmode.md).
 - `test_split`: toggles split testing. Defaults to `False`.
 
 The constructor raises:
@@ -32,12 +32,12 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.svm import SVMSettings, GraphMode
+from chemfusekit.svm import SVMSettings
 
 # Initialize the settings for Support Vector Machine
 svm_settings = SVMSettings(
     type='linear',
-    output=GraphMode.GRAPHIC,   # graphs will be printed
-    test_split=True # split testing is enabled
+    output='graphical',   # graphs will be printed
+    test_split=True  # split testing is enabled
 )
 ```

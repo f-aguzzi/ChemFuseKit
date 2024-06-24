@@ -3,13 +3,13 @@ from copy import copy
 
 from sklearn.svm import SVC
 
-from chemfusekit.__utils import GraphMode, run_split_test, print_confusion_matrix
+from chemfusekit.__utils import run_split_test, print_confusion_matrix
 from .__base import BaseClassifierSettings, BaseClassifier, BaseDataModel
 
 
 class SVMSettings(BaseClassifierSettings):
     """Holds the settings for the SVM object."""
-    def __init__(self, kernel: str = 'linear', output: GraphMode = GraphMode.NONE, test_split: bool = False):
+    def __init__(self, kernel: str = 'linear', output: str = 'none', test_split: bool = False):
         super().__init__(output, test_split)
         if kernel not in ['linear', 'poly', 'gaussian', 'sigmoid']:
             raise ValueError("Invalid type: must be linear, poly, gaussian or sigmoid")
@@ -21,7 +21,7 @@ class SVM(BaseClassifier):
     def __init__(self, settings: SVMSettings, data: BaseDataModel):
         super().__init__(settings, data)
 
-    def svm(self):
+    def train(self):
         """Performs Support Vector Machine analysis"""
 
         # Linear kernel

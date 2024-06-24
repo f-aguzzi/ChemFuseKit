@@ -49,23 +49,25 @@ def graph_output(scores, model, name: str, mode: GraphMode = GraphMode.GRAPHIC):
             f"{name} Scores"
         )
 
-        # Scores plot
-        fig = px.scatter(scores, x="LV1", y="LV2", color="Substance", hover_data=['Substance'])
-        fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-        fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
-        fig.update_layout(
-            height=600,
-            width=800,
-            title_text='Scores Plot')
-        fig.show()
+        if model.n_components >= 2:
+            # Scores plot
+            fig = px.scatter(scores, x="LV1", y="LV2", color="Substance", hover_data=['Substance'])
+            fig.update_xaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
+            fig.update_yaxes(zeroline=True, zerolinewidth=1, zerolinecolor='Black')
+            fig.update_layout(
+                height=600,
+                width=800,
+                title_text='Scores Plot')
+            fig.show()
 
-        # Plot 3D scores
-        fig = px.scatter_3d(scores, x='LV1', y='LV2', z='LV3',
-                            color='Substance', hover_data=['Substance'],
-                            hover_name=scores.index
-                            )
-        fig.update_layout(title_text=f"3D colored by Substance for {name}")
-        fig.show()
+        if model.n_components >= 3:
+            # Plot 3D scores
+            fig = px.scatter_3d(scores, x='LV1', y='LV2', z='LV3',
+                                color='Substance', hover_data=['Substance'],
+                                hover_name=scores.index
+                                )
+            fig.update_layout(title_text=f"3D colored by Substance for {name}")
+            fig.show()
 
 
 def print_table(header_values, cell_values, title: str, mode: GraphMode = GraphMode.GRAPHIC):

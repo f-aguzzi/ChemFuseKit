@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from chemfusekit.plsda import PLSDASettings, PLSDA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, LLDFDataModel, Table
+from chemfusekit.df import DFSettings, DF, DFDataModel, Table
 
 
 class TestPLSDA(unittest.TestCase):
@@ -16,10 +16,10 @@ class TestPLSDA(unittest.TestCase):
 
         # n_components parameter
         with self.assertRaises(ValueError):
-            PLSDASettings(n_components=-3)  # Negative value
+            PLSDASettings(components=-3)  # Negative value
         with self.assertRaises(ValueError):
-            PLSDASettings(n_components=0)  # Zero value
-        PLSDASettings(n_components=7)  # Correct value (shouldn't raise anything)
+            PLSDASettings(components=0)  # Zero value
+        PLSDASettings(components=7)  # Correct value (shouldn't raise anything)
 
         # output parameter
         with self.assertRaises(TypeError):
@@ -31,12 +31,12 @@ class TestPLSDA(unittest.TestCase):
 
         # output and test_split incompatibilities
         with self.assertRaises(Warning):
-            PLSDASettings(output=GraphMode.NONE, test_split=True)
+            PLSDASettings(output='none', test_split=True)
 
     def test_plsda_constructor(self):
         """Test case against constructor errors."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -47,24 +47,24 @@ class TestPLSDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # settings parameter
-        wrong_settings = LLDFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]))
+        wrong_settings = DFDataModel(pd.DataFrame([1]), pd.DataFrame([1]), np.asarray([1]), [])
         with self.assertRaises(TypeError):
-            PLSDA(wrong_settings, lldf.fused_data)  # pass an object of the wrong class as settings
+            PLSDA(wrong_settings, df.fused_data)  # pass an object of the wrong class as settings
 
         # fused_data parameter
         knn_settings = PLSDASettings()
-        wrong_fused_data = lldf_settings
+        wrong_fused_data = df_settings
         with self.assertRaises(TypeError):
             PLSDA(knn_settings, wrong_fused_data)  # pass an object of the wrong class as fused_data
 
     def test_plsda(self):
         """Integration test case for the training function."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -75,38 +75,38 @@ class TestPLSDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up and run PLSDA (no output)
         plsda_settings = PLSDASettings()
-        plsda = PLSDA(plsda_settings, lldf.fused_data)
-        plsda.plsda()
+        plsda = PLSDA(plsda_settings, df.fused_data)
+        plsda.train()
 
         # Set up and run PLSDA with text output
-        plsda_settings = PLSDASettings(output=GraphMode.TEXT)
-        plsda = PLSDA(plsda_settings, lldf.fused_data)
-        plsda.plsda()
+        plsda_settings = PLSDASettings(output='text')
+        plsda = PLSDA(plsda_settings, df.fused_data)
+        plsda.train()
 
         # Set up and run PLSDA with graphical output
-        plsda_settings = PLSDASettings(output=GraphMode.GRAPHIC)
-        plsda = PLSDA(plsda_settings, lldf.fused_data)
-        plsda.plsda()
+        plsda_settings = PLSDASettings(output='graphical')
+        plsda = PLSDA(plsda_settings, df.fused_data)
+        plsda.train()
 
         # Run with text output and split testing
-        plsda_settings = PLSDASettings(output=GraphMode.TEXT, test_split=True)
-        plsda = PLSDA(plsda_settings, lldf.fused_data)
-        plsda.plsda()
+        plsda_settings = PLSDASettings(output='text', test_split=True)
+        plsda = PLSDA(plsda_settings, df.fused_data)
+        plsda.train()
 
         # Run with graphical output and split testing
-        plsda_settings = PLSDASettings(output=GraphMode.GRAPHIC, test_split=True)
-        plsda = PLSDA(plsda_settings, lldf.fused_data)
-        plsda.plsda()
+        plsda_settings = PLSDASettings(output='graphical', test_split=True)
+        plsda = PLSDA(plsda_settings, df.fused_data)
+        plsda.train()
 
     def test_prediction(self):
         """Test case against prediction parameter issues."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -117,15 +117,15 @@ class TestPLSDA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up KNN without training it
         plsda_settings = PLSDASettings()
-        plsda = PLSDA(plsda_settings, lldf.fused_data)
+        plsda = PLSDA(plsda_settings, df.fused_data)
 
         # Pick a random sample for prediction
-        x_data_sample = lldf.fused_data.x_train.iloc[119]  # should be DMMP
+        x_data_sample = df.fused_data.x_train.iloc[119]  # should be DMMP
         x_data_sample = x_data_sample.iloc[1:].to_frame().transpose()
 
         # Run prediction with untrained model (should throw exception)
@@ -133,7 +133,7 @@ class TestPLSDA(unittest.TestCase):
             plsda.predict(x_data_sample)
 
         # Run training
-        plsda.plsda()
+        plsda.train()
 
         # Run prediction with empty data (should throw exception)
         with self.assertRaises(TypeError):

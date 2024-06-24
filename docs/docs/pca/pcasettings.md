@@ -13,7 +13,7 @@ PCASettings(
   target_variance: float,
   confidence_level: float,
   initial_components: int,
-  output: GraphMode
+  output: str 
 )
 ```
 
@@ -24,18 +24,18 @@ PCASettings(
 - `confidence_level`: the confidence level for statistical tests. Defaults to 0.05.
 - `initial_components`: the minimum amount of components to be used in the PCA model.
   Defaults to 10.
-- `output`: toggles graph output. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
+- `output`: toggles graph output. Defaults to [`none`] (other options: 'graphical', 'text'). Gets implicitly converted to a [`GraphMode` enum](../utils/graphmode.md).
 
 ## Example
 
 ```python
-from chemfusekit.pca import PCASettings, GraphMode
+from chemfusekit.pca import PCASettings
 
 # Initialize the settings for Principal Component Analysis
 pca_settings = PCASettings(
     target_variance=0.99,
     confidence_level=0.05,
     initial_components=10,
-    output=GraphMode.GRAPHIC  # graphs will be printed
+    output='graphical'  # graphs will be printed
 )
 ```

@@ -2,6 +2,7 @@
 *.pyc
 **/.ipynb_checkpoints
 **/__pycache__/
+script.sh
 
 # rye
 target
@@ -13,8 +14,11 @@ site
 token.txt
 dist
 
-# rye lint
+## rye lint
 .ruff_cache
+
+# debug
+debug
 
 # docusaurus
 
@@ -39,4 +43,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
+# thesis
+thesis/*.pdf

@@ -11,7 +11,7 @@ Inherits from [`BaseSettings`](../base/basesettings.md).
 ## Syntax
 
 ```python
-LRSettings(algorithm: str, output: GraphMode, test_split: bool)
+LRSettings(algorithm: str, output: str, test_split: bool)
 ```
 
 ## Fields and constructor parameters
@@ -23,7 +23,7 @@ LRSettings(algorithm: str, output: GraphMode, test_split: bool)
     - `newton-cholesky`
     - `sag`
     - `saga`
-- `output`: toggles graph output. Defaults to [`GraphMode.NONE`](../utils/graphmode.md).
+- `output`: toggles graph output. Defaults to [`none`] (other options: 'graphical', 'text'). Gets implicitly converted to a [`GraphMode` enum](../utils/graphmode.md).
 - `test_split`: toggles split testing. Defaults to `False`.
 
 The constructor raises:
@@ -34,11 +34,11 @@ The constructor raises:
 ## Example
 
 ```python
-from chemfusekit.lr import LRSettings, GraphMode
+from chemfusekit.lr import LRSettings
 
 settings = LRSettings(
     algorithm='newton-cg',
-    output=GraphMode.GRAPHIC,   # graphs will be printed
-    test_split=True # split testing is enabled
+    output='graphical',   # graphs will be printed
+    test_split=True   # split testing is enabled
 )
 ```
