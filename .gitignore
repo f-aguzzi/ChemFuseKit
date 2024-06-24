@@ -2,6 +2,7 @@
 *.pyc
 **/.ipynb_checkpoints
 **/__pycache__/
+script.sh
 
 # rye
 target
@@ -41,3 +42,6 @@ case studies/*.sklearn
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# thesis
+thesis/*.pdf

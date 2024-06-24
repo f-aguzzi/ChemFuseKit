@@ -10,6 +10,7 @@ header-includes: |
 
 \begin{center}
     \renewcommand{\baselinestretch}{1}
+    \normalsize
     \includegraphics[width=0.6\textwidth]{logo-unibg.png}
     
     {
