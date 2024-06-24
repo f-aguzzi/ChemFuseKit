@@ -1,3 +1,40 @@
+## [3.0.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.5.0...v3.0.0-beta.1) (2024-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* substitute GraphMode enum with string in API
+* **PLSDA:** PLSDA is now also a reducer
+* give train() function to BaseActionClass and children
+
+### Features
+
+* feature number autoselection in PLSDA and LDA ([a4f8983](https://github.com/f-aguzzi/tesi/commit/a4f89833fd69f796e0fcad61f745faf77b53c85e))
+* **DF:** mid-level data fusion support ([45a3ea4](https://github.com/f-aguzzi/tesi/commit/45a3ea46e80920a56b5f39a2c73b85c5729e0585))
+* **DF:** outer matrix multiplication data fusion ([5415a6f](https://github.com/f-aguzzi/tesi/commit/5415a6ff98acc9c395069c9997d3ce23666ab12f))
+* **PLSDA:** PLSDA is now also a reducer ([cf67a1a](https://github.com/f-aguzzi/tesi/commit/cf67a1a9366c046e49ce2683e9830d793ab03fa5))
+* substitute GraphMode enum with string in API ([34068a4](https://github.com/f-aguzzi/tesi/commit/34068a4c4a5a0213712ae6ee99793dd807d612f9))
+
+
+### Bug Fixes
+
+* **PCA:** component autoselect issues ([f827b2d](https://github.com/f-aguzzi/tesi/commit/f827b2d2fd835b29a104c7f3527b62a52eb4a671))
+* **LDA, BaseReducer:** components bug ([0f87962](https://github.com/f-aguzzi/tesi/commit/0f879621786c7eddfd04c3b6fbaceb297d650800))
+* **DF:** indexing issues when concatenating ([6b29b45](https://github.com/f-aguzzi/tesi/commit/6b29b457d5ca88bfc3ba934cfc936e54f1f7b97a))
+* **tests:** KNN and PLSDA test update ([858f560](https://github.com/f-aguzzi/tesi/commit/858f56029cc16fe25795a16997d0d2c28be79ba1))
+
+
+### Docs
+
+* **DF:** mid-level data fusion case study ([f9e3431](https://github.com/f-aguzzi/tesi/commit/f9e343108f4e1023e269c36fff8503fb20cda96f))
+* new case study ([35cf415](https://github.com/f-aguzzi/tesi/commit/35cf4158efeec9da7d083f891fbba8f77cf01084))
+
+
+### Refactor
+
+* give train() function to BaseActionClass and children ([2e836bc](https://github.com/f-aguzzi/tesi/commit/2e836bcb2ed7034873d8bf5cb8b61917ab08303c))
+* **DF:** mid-level data fusion overhaul ([b6ba68b](https://github.com/f-aguzzi/tesi/commit/b6ba68bbc0ab25f653f57266e4590e76a8750e85))
+
 ## [2.5.0](https://github.com/f-aguzzi/tesi/compare/v2.4.0...v2.5.0) (2024-06-13)
 
 
