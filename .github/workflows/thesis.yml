@@ -36,7 +36,7 @@ jobs:
       - name: Run Pandoc
         run: |
           cd thesis
-          pandoc -H disable_float.tex -o tesi_federico_aguzzi.tex all_files.md --variable=linestretch=1.5 -V fontsize=12pt -s
+          pandoc -H disable_float.tex -o tesi_federico_aguzzi.tex all_files.md --variable=linestretch=1.5 -V fontsize=12pt -V lang=it -s
 
       - uses: xu-cheng/latex-action@v3
         with:
