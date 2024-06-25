@@ -1,3 +1,10 @@
+## [3.0.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2024-06-25)
+
+
+### Bug Fixes
+
+* upgrade package versions ([d88c87c](https://github.com/f-aguzzi/tesi/commit/d88c87c921775ed5f57ce7c9136fda5974169420))
+
 ## [3.0.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.5.0...v3.0.0-beta.1) (2024-06-24)
 
 
