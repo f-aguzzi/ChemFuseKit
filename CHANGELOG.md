@@ -1,3 +1,10 @@
+## [3.0.0-beta.9](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.8...v3.0.0-beta.9) (2024-06-26)
+
+
+### Bug Fixes
+
+* (hoping it will work) remove double dependency ([f4b7cb4](https://github.com/f-aguzzi/tesi/commit/f4b7cb4e29320fd242935945447d6f01c5e93015))
+
 ## [3.0.0-beta.8](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.7...v3.0.0-beta.8) (2024-06-26)
 
 
