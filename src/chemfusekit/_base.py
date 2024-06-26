@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 import joblib
 
+from sklearn.base import BaseEstimator
+
 from ._utils import GraphMode
 
 
@@ -106,7 +108,7 @@ class BaseActionClass(ABC):
     def __init__(self, settings: BaseSettings, data: BaseDataModel):
         self.settings = settings
         self.data = data
-        self.model = None
+        self.model: BaseEstimator | None = None
 
     @abstractmethod
     def train(self):
@@ -135,6 +137,8 @@ class BaseActionClass(ABC):
             model = joblib.load(import_path)
         except Exception as exc:
             raise ImportError("The file you tried importing is not a valid Python object!") from exc
+        if not isinstance(model, BaseEstimator):
+            raise ImportError("The file you tried importing is not a sklearn model!")
         self.model = model
 
     def export_model(self, export_path: str):
