@@ -11,4 +11,4 @@ from . import lr
 from . import pca
 from . import plsda
 from . import svm
-from . import utils
+from . import _utils
