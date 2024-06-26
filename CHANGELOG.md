@@ -1,3 +1,10 @@
+## [3.0.0-beta.14](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.13...v3.0.0-beta.14) (2024-06-26)
+
+
+### Bug Fixes
+
+* revert to original 2.5 requirements ([63021c2](https://github.com/f-aguzzi/tesi/commit/63021c2f4361400dd1a2c4ade43691fc63f6def3))
+
 ## [3.0.0-beta.13](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.12...v3.0.0-beta.13) (2024-06-26)
 
 
