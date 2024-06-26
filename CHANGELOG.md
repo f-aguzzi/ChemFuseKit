@@ -1,3 +1,10 @@
+## [3.0.0-beta.6](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.5...v3.0.0-beta.6) (2024-06-26)
+
+
+### Bug Fixes
+
+* third round of import debugging ([6d2ad44](https://github.com/f-aguzzi/tesi/commit/6d2ad448016d78c6fc34319ec4386f6bc921425a))
+
 ## [3.0.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2024-06-26)
 
 
