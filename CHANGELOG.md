@@ -1,3 +1,10 @@
+## [3.0.0-beta.7](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2024-06-26)
+
+
+### Bug Fixes
+
+* downgrade python to version compatible with Colab ([292d782](https://github.com/f-aguzzi/tesi/commit/292d78249b8a0a4b9b7e32ee3b05ffa04ad2cf5a))
+
 ## [3.0.0-beta.6](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.5...v3.0.0-beta.6) (2024-06-26)
 
 
