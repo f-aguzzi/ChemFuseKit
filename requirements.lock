@@ -75,7 +75,7 @@ rpds-py==0.18.1
     # via referencing
 scikit-learn==1.5.0
     # via chemfusekit
-scipy==1.14.0
+scipy==1.13.0
     # via chemfusekit
     # via scikit-learn
 seaborn==0.13.2
