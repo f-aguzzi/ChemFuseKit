@@ -1,3 +1,10 @@
+## [3.0.0-beta.8](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.7...v3.0.0-beta.8) (2024-06-26)
+
+
+### Bug Fixes
+
+* downgrade scipy (I'm desperate, please work) ([62b8ef5](https://github.com/f-aguzzi/tesi/commit/62b8ef5ccbf5aba6051e067756f4722bd15df7cc))
+
 ## [3.0.0-beta.7](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2024-06-26)
 
 
