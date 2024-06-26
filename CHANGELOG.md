@@ -1,3 +1,10 @@
+## [3.0.0-beta.13](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.12...v3.0.0-beta.13) (2024-06-26)
+
+
+### Bug Fixes
+
+* **base:** remove bug-causing BaseEstimator check ([4e9d3b9](https://github.com/f-aguzzi/tesi/commit/4e9d3b9eed9c5fc5f208d5fab82a84225cf03b6b))
+
 ## [3.0.0-beta.12](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.11...v3.0.0-beta.12) (2024-06-26)
 
 
