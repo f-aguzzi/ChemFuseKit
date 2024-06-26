@@ -1,3 +1,10 @@
+## [3.0.0-beta.12](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.11...v3.0.0-beta.12) (2024-06-26)
+
+
+### Bug Fixes
+
+* downgrade scikit-learn ([ad9af1e](https://github.com/f-aguzzi/tesi/commit/ad9af1efa8d6893be89e17f1a81b4795fc3a9530))
+
 ## [3.0.0-beta.11](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.10...v3.0.0-beta.11) (2024-06-26)
 
 
