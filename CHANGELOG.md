@@ -1,3 +1,5 @@
+## [3.0.0-beta.16](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.15...v3.0.0-beta.16) (2024-06-26)
+
 ## [3.0.0-beta.15](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.14...v3.0.0-beta.15) (2024-06-26)
 
 
