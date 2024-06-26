@@ -6,12 +6,13 @@ authors = [
     { name = "Federico Aguzzi", email = "62149513+f-aguzzi@users.noreply.github.com" }
 ]
 dependencies = [
-    "numpy>=2.0.0",
-    "matplotlib>=3.9.0",
-    "pandas>=2.2.2",
+    "numpy==1.25.0",
+    "scipy>=1.13.0",
+    "matplotlib>=3.8.4",
+    "pandas==2.0.3",
     "seaborn>=0.13.2",
-    "openpyxl>=3.1.4",
-    "scikit-learn==1.4.2",
+    "openpyxl>=3.1.2",
+    "scikit-learn>=1.4.2",
     "plotly>=5.22.0",
     "beartype>=0.18.5",
     "nbformat>=4.2.0",
