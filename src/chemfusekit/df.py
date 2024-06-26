@@ -140,7 +140,10 @@ class DF:
                 else:
                     # Let's plot the different datasets we preprocessed
                     fig, ax1 = plt.subplots(1, figsize=(15, 15))
-                    ax1.plot(wl, x.T)
+                    if x.shape[1] == 1:
+                        ax1.plot(x)
+                    else:
+                        ax1.plot(wl, x.T)
                     if table.file_path.endswith('.xlsx'):
                         fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path} (no preprocessing)')
                     else:

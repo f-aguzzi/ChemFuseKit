@@ -109,8 +109,7 @@ class TestLLDF(unittest.TestCase):
         tables = [table1, table2]
 
         df = DF(df_settings, tables)
-        df.fuse()
-        print("BEGIN\n\n", df.fused_data.x_train, "\n\nEND")
+        df.fuse() 
 
     def test_matmul_datafusion(self):
         """Test case for outer product-based datafusion"""
