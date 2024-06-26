@@ -51,7 +51,7 @@ openpyxl==3.1.4
 packaging==24.1
     # via matplotlib
     # via plotly
-pandas==2.0.3
+pandas==2.2.2
     # via chemfusekit
     # via seaborn
 pillow==10.3.0
