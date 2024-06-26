@@ -1,3 +1,16 @@
+## [3.0.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2024-06-26)
+
+
+### Bug Fixes
+
+* **DF:** unidimensional time series graphing bug ([a8d5132](https://github.com/f-aguzzi/tesi/commit/a8d5132f237c926fbd084aaa925bf4d38b7e5d7f))
+
+
+### chore
+
+* make src PEP-compliant ([24e8513](https://github.com/f-aguzzi/tesi/commit/24e8513358ea48b682108eb4a2346f95fede4d1d))
+* upgrade dependencies ([5657251](https://github.com/f-aguzzi/tesi/commit/5657251e1c2d9b407159c006613bdcb2f6c470c4))
+
 ## [3.0.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2024-06-25)
 
 
