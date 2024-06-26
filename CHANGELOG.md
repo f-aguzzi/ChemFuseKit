@@ -1,3 +1,10 @@
+## [3.0.0-beta.15](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.14...v3.0.0-beta.15) (2024-06-26)
+
+
+### Bug Fixes
+
+* please work. I need this to work. ([43199e9](https://github.com/f-aguzzi/tesi/commit/43199e971ad7bee1808cab9040427bc2fec2761e))
+
 ## [3.0.0-beta.14](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.13...v3.0.0-beta.14) (2024-06-26)
 
 
