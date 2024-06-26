@@ -1,3 +1,15 @@
+## [3.0.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2024-06-26)
+
+
+### Bug Fixes
+
+* base-level imports ([8143f74](https://github.com/f-aguzzi/tesi/commit/8143f74698cabd77e70e9f11c754b74ef3d677d5))
+
+
+### chore
+
+* update CI scripts ([264b153](https://github.com/f-aguzzi/tesi/commit/264b153e5e0f1ca7055e97899e52a93de7f89f81))
+
 ## [3.0.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2024-06-26)
 
 
