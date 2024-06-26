@@ -1,3 +1,10 @@
+## [3.0.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2024-06-26)
+
+
+### Bug Fixes
+
+* module exports ([f302243](https://github.com/f-aguzzi/tesi/commit/f302243d4b24c291061a4a0d52ebaed6b36a1d42))
+
 ## [3.0.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2024-06-26)
 
 
