@@ -1,6 +1,6 @@
 """This module contains the test cases for the LDA module."""
 import unittest
-from chemfusekit.lda import LDASettings, LDA, GraphMode
+from chemfusekit.lda import LDASettings, LDA
 from chemfusekit.df import DFSettings, DF, Table
 
 

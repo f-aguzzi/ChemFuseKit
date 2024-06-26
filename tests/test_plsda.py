@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from chemfusekit.plsda import PLSDASettings, PLSDA, GraphMode
+from chemfusekit.plsda import PLSDASettings, PLSDA
 from chemfusekit.df import DFSettings, DF, DFDataModel, Table
 
 

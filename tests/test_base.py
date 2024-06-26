@@ -6,7 +6,7 @@ import os
 import numpy as np
 
 from chemfusekit.df import DFSettings, DF, Table
-from chemfusekit.__base import BaseDataModel
+from chemfusekit.base import BaseDataModel
 from chemfusekit.lda import LDASettings, LDA
 
 
