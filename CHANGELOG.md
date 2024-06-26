@@ -1,3 +1,10 @@
+## [3.0.0-beta.10](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.9...v3.0.0-beta.10) (2024-06-26)
+
+
+### Bug Fixes
+
+* last attempt ([7973dc7](https://github.com/f-aguzzi/tesi/commit/7973dc74067da56ac437510aead3c887900a7cc4))
+
 ## [3.0.0-beta.9](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.8...v3.0.0-beta.9) (2024-06-26)
 
 
