@@ -1,3 +1,10 @@
+## [3.0.0-beta.18](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.17...v3.0.0-beta.18) (2024-06-26)
+
+
+### Bug Fixes
+
+* upgrade pandas ([0a7d627](https://github.com/f-aguzzi/tesi/commit/0a7d627ccb2d59fde50df4656725f9c568619571))
+
 ## [3.0.0-beta.17](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.16...v3.0.0-beta.17) (2024-06-26)
 
 
