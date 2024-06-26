@@ -1,3 +1,10 @@
+## [3.0.0-beta.17](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.16...v3.0.0-beta.17) (2024-06-26)
+
+
+### Bug Fixes
+
+* upgrade numpy to non-devtools version ([9c28adc](https://github.com/f-aguzzi/tesi/commit/9c28adcd30e6b62b83a6372662eacc20f17f3eab))
+
 ## [3.0.0-beta.16](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.15...v3.0.0-beta.16) (2024-06-26)
 
 ## [3.0.0-beta.15](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.14...v3.0.0-beta.15) (2024-06-26)
