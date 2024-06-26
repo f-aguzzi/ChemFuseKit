@@ -11,8 +11,8 @@ import plotly.express as px
 import scipy.stats
 from sklearn.decomposition import PCA as PC
 
-from chemfusekit.__utils import print_table, GraphMode
-from .__base import BaseDataModel, BaseReducer, BaseSettings, ReducerDataModel
+from .utils import print_table, GraphMode
+from .base import BaseDataModel, BaseReducer, BaseSettings, ReducerDataModel
 
 
 class PCASettings(BaseSettings):

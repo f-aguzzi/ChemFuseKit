@@ -3,8 +3,8 @@ from copy import copy
 
 from sklearn.svm import SVC
 
-from chemfusekit.__utils import run_split_test, print_confusion_matrix
-from .__base import BaseClassifierSettings, BaseClassifier, BaseDataModel
+from .utils import run_split_test, print_confusion_matrix
+from .base import BaseClassifierSettings, BaseClassifier, BaseDataModel
 
 
 class SVMSettings(BaseClassifierSettings):

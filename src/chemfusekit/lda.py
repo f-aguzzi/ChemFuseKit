@@ -9,9 +9,9 @@ import pandas as pd
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LD
 from sklearn.model_selection import cross_val_score
 
-from chemfusekit.__utils import graph_output, run_split_test, GraphMode
-from chemfusekit.__utils import print_confusion_matrix, print_table
-from .__base import BaseDataModel, BaseClassifier, BaseClassifierSettings, BaseReducer, ReducerDataModel
+from .utils import graph_output, run_split_test, GraphMode
+from .utils import print_confusion_matrix, print_table
+from .base import BaseDataModel, BaseClassifier, BaseClassifierSettings, BaseReducer, ReducerDataModel
 
 
 class LDADataModel(BaseDataModel):

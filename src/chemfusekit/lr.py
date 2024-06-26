@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
-from chemfusekit.__utils import run_split_test, print_confusion_matrix, print_table
-from .__base import BaseClassifierSettings, BaseDataModel, BaseClassifier, ReducerDataModel
+from chemfusekit.utils import run_split_test, print_confusion_matrix, print_table
+from .base import BaseClassifierSettings, BaseDataModel, BaseClassifier, ReducerDataModel
 
 
 class LRSettings(BaseClassifierSettings):
