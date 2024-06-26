@@ -21,7 +21,7 @@ dependencies = [
 readme = "readme.md"
 repository = "https://github.com/f-aguzzi/tesi"
 documentation = "https://f-aguzzi.github.io/tesi/"
-requires-python = ">= 3.11"
+requires-python = ">= 3.10"
 
 [build-system]
 requires = ["hatchling"]
