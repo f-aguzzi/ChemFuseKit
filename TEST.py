@@ -1,4 +1,0 @@
-import chemfusekit
-
-
-print("VITELLO")

@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
-from .utils import run_split_test, print_confusion_matrix, print_table
-from .base import BaseClassifierSettings, BaseDataModel, BaseClassifier, ReducerDataModel
+from ._utils import run_split_test, print_confusion_matrix, print_table
+from ._base import BaseClassifierSettings, BaseDataModel, BaseClassifier, ReducerDataModel
 
 
 class LRSettings(BaseClassifierSettings):

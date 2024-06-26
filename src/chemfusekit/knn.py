@@ -4,8 +4,8 @@ from beartype.typing import Callable
 
 from sklearn.neighbors import KNeighborsClassifier
 
-from .utils import run_split_test, print_confusion_matrix, print_table, GraphMode
-from .base import BaseClassifierSettings, BaseClassifier, BaseDataModel
+from ._utils import run_split_test, print_confusion_matrix, print_table, GraphMode
+from ._base import BaseClassifierSettings, BaseClassifier, BaseDataModel
 
 
 class KNNSettings(BaseClassifierSettings):

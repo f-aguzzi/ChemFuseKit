@@ -11,8 +11,8 @@ import plotly.express as px
 import scipy.stats
 from sklearn.decomposition import PCA as PC
 
-from .utils import print_table, GraphMode
-from .base import BaseDataModel, BaseReducer, BaseSettings, ReducerDataModel
+from ._utils import print_table, GraphMode
+from ._base import BaseDataModel, BaseReducer, BaseSettings, ReducerDataModel
 
 
 class PCASettings(BaseSettings):

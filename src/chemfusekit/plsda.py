@@ -8,8 +8,8 @@ import plotly.express as px
 from sklearn.cross_decomposition import PLSRegression as PLSR
 from sklearn.model_selection import cross_val_score
 
-from .utils import print_table, print_confusion_matrix, run_split_test, GraphMode
-from .base import BaseClassifierSettings, BaseDataModel, BaseClassifier, BaseReducer, ReducerDataModel
+from ._utils import print_table, print_confusion_matrix, run_split_test, GraphMode
+from ._base import BaseClassifierSettings, BaseDataModel, BaseClassifier, BaseReducer, ReducerDataModel
 
 
 class PLSDASettings(BaseClassifierSettings):

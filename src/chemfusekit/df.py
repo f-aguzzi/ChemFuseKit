@@ -7,8 +7,8 @@ from scipy.signal import savgol_filter
 
 import matplotlib.pyplot as plt
 
-from .base import BaseDataModel, BaseSettings
-from .utils import GraphMode
+from ._base import BaseDataModel, BaseSettings
+from ._utils import GraphMode
 from .pca import PCASettings, PCA
 from .plsda import PLSDASettings, PLSDA
 

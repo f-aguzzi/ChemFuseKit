@@ -7,7 +7,7 @@ import pandas as pd
 from chemfusekit.df import DFSettings, DF, Table
 from chemfusekit.pca import PCASettings, PCA
 from chemfusekit.lr import LRSettings, LR
-from chemfusekit.base import ReducerDataModel
+from chemfusekit._base import ReducerDataModel
 
 
 class TestLR(unittest.TestCase):
