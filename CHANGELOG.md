@@ -1,3 +1,10 @@
+## [3.0.0-beta.11](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.10...v3.0.0-beta.11) (2024-06-26)
+
+
+### Bug Fixes
+
+* wrong import in init file ([726ab66](https://github.com/f-aguzzi/tesi/commit/726ab661060ed369cc532c2a82ea50ba8d9a9653))
+
 ## [3.0.0-beta.10](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.9...v3.0.0-beta.10) (2024-06-26)
 
 
