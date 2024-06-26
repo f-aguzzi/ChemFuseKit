@@ -8,7 +8,7 @@ import joblib
 
 from sklearn.base import BaseEstimator
 
-from .__utils import GraphMode
+from .utils import GraphMode
 
 
 class BaseDataModel:
