@@ -5,8 +5,8 @@ import os
 
 import numpy as np
 
-from chemfusekit.lldf import LLDFSettings, LLDF, Table
-from chemfusekit.__base import BaseDataModel
+from chemfusekit.df import DFSettings, DF, Table
+from chemfusekit._base import BaseDataModel
 from chemfusekit.lda import LDASettings, LDA
 
 
@@ -15,7 +15,7 @@ class TestBase(unittest.TestCase):
         """Test case for table import and export."""
 
         # Import and fuse data from tables
-        lldf_settings = LLDFSettings()
+        df_settings = DFSettings()
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -27,11 +27,11 @@ class TestBase(unittest.TestCase):
             preprocessing="none"
         )
         tables = [table1, table2]
-        lldf = LLDF(lldf_settings, tables)
-        lldf.lldf()
+        df = DF(df_settings, tables)
+        df.fuse()
 
         # Export the fused dataset to file
-        lldf.export_data("export_test.xlsx")
+        df.export_data("export_test.xlsx")
 
         # Import the fused dataset from file
         imported_data = BaseDataModel.load_from_file("export_test.xlsx", "Sheet1")
@@ -41,11 +41,11 @@ class TestBase(unittest.TestCase):
         tolerance = 1e-6
         self.assertTrue(
             # Compare the DataFrames using numpy.allclose(): true if they match within tolerance
-            np.allclose(lldf.fused_data.x_data.values, imported_data.x_data.values, atol=tolerance)
+            np.allclose(df.fused_data.x_data.values, imported_data.x_data.values, atol=tolerance)
         )
         self.assertTrue(
             # The comparison between ndarrays returns an array of booleans, collapsed by "all()"
-            (lldf.fused_data.y == imported_data.y).all()
+            (df.fused_data.y == imported_data.y).all()
         )
 
         # Second phase: re-export and re-import from BaseDataModel
@@ -53,8 +53,8 @@ class TestBase(unittest.TestCase):
         reimported_data = BaseDataModel.load_from_file("export_test_2.xlsx")
 
         # Assert the equality between the re-exported data and the re-reimported data
-        self.assertTrue(np.allclose(lldf.fused_data.x_data.values, imported_data.x_data.values, atol=tolerance))
-        self.assertTrue((lldf.fused_data.y == reimported_data.y).all())
+        self.assertTrue(np.allclose(df.fused_data.x_data.values, imported_data.x_data.values, atol=tolerance))
+        self.assertTrue((df.fused_data.y == reimported_data.y).all())
 
         # Clean up
         os.remove("export_test.xlsx")
@@ -63,7 +63,7 @@ class TestBase(unittest.TestCase):
     def test_model_import(self):
         """Integration test for model dumping and reloading."""
         # Let's start by creating and training an LDA model
-        lldf_settings = LLDFSettings()
+        lldf_settings = DFSettings()
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -75,17 +75,17 @@ class TestBase(unittest.TestCase):
             preprocessing="none"
         )
         tables = [table1, table2]
-        lldf = LLDF(lldf_settings, tables)
-        lldf.lldf()
+        df = DF(lldf_settings, tables)
+        df.fuse()
         lda_settings = LDASettings()
-        lda = LDA(lda_settings, lldf.fused_data)
-        lda.lda()
+        lda = LDA(lda_settings, df.fused_data)
+        lda.train()
 
         # Dump the model to file
         lda.export_model("modelfile.sklearn")
 
         # Reload the model
-        lda2 = LDA(lda_settings, lldf.fused_data)
+        lda2 = LDA(lda_settings, df.fused_data)
         lda2.import_model("modelfile.sklearn")
 
         # Check whether the imported model is the same as the exported model
@@ -98,7 +98,7 @@ class TestBase(unittest.TestCase):
         """Test case for classifier import from file"""
         '''Integration test for model dumping and reloading.'''
         # Let's start by creating and training an LDA model
-        lldf_settings = LLDFSettings()
+        df_settings = DFSettings()
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -110,11 +110,11 @@ class TestBase(unittest.TestCase):
             preprocessing="none"
         )
         tables = [table1, table2]
-        lldf = LLDF(lldf_settings, tables)
-        lldf.lldf()
+        df = DF(df_settings, tables)
+        df.fuse()
         lda_settings = LDASettings()
-        lda = LDA(lda_settings, lldf.fused_data)
-        lda.lda()
+        lda = LDA(lda_settings, df.fused_data)
+        lda.train()
 
         # Dump the model to file
         lda.export_model("modelfile.sklearn")

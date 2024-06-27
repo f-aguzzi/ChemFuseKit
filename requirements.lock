@@ -19,9 +19,9 @@ cycler==0.12.1
     # via matplotlib
 et-xmlfile==1.1.0
     # via openpyxl
-fastjsonschema==2.19.1
+fastjsonschema==2.20.0
     # via nbformat
-fonttools==4.51.0
+fonttools==4.53.0
     # via matplotlib
 joblib==1.4.2
     # via scikit-learn
@@ -33,12 +33,12 @@ jupyter-core==5.7.2
     # via nbformat
 kiwisolver==1.4.5
     # via matplotlib
-matplotlib==3.8.4
+matplotlib==3.9.0
     # via chemfusekit
     # via seaborn
 nbformat==5.10.4
     # via chemfusekit
-numpy==1.26.4
+numpy==2.0.0
     # via chemfusekit
     # via contourpy
     # via matplotlib
@@ -46,9 +46,9 @@ numpy==1.26.4
     # via scikit-learn
     # via scipy
     # via seaborn
-openpyxl==3.1.2
+openpyxl==3.1.4
     # via chemfusekit
-packaging==24.0
+packaging==24.1
     # via matplotlib
     # via plotly
 pandas==2.2.2
@@ -73,7 +73,7 @@ referencing==0.35.1
 rpds-py==0.18.1
     # via jsonschema
     # via referencing
-scikit-learn==1.4.2
+scikit-learn==1.5.0
     # via chemfusekit
 scipy==1.13.0
     # via chemfusekit
@@ -84,7 +84,7 @@ six==1.16.0
     # via python-dateutil
 tabulate==0.9.0
     # via chemfusekit
-tenacity==8.3.0
+tenacity==8.4.2
     # via plotly
 threadpoolctl==3.5.0
     # via scikit-learn

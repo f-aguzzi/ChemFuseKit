@@ -2,7 +2,7 @@ name: Linting
 on:
   push:
       paths:
-        - 'chemfusekit/**'
+        - 'src/chemfusekit/**'
         - '.github/workflows/pylint.yml'
 
 jobs:

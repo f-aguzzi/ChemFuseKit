@@ -1,9 +1,171 @@
-## [2.5.1](https://github.com/f-aguzzi/tesi/compare/v2.5.0...v2.5.1) (2024-06-17)
+## [3.0.0-beta.18](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.17...v3.0.0-beta.18) (2024-06-26)
 
 
 ### Bug Fixes
 
+* upgrade pandas ([0a7d627](https://github.com/f-aguzzi/tesi/commit/0a7d627ccb2d59fde50df4656725f9c568619571))
+
+## [3.0.0-beta.17](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.16...v3.0.0-beta.17) (2024-06-26)
+
+
+### Bug Fixes
+
+* upgrade numpy to non-devtools version ([9c28adc](https://github.com/f-aguzzi/tesi/commit/9c28adcd30e6b62b83a6372662eacc20f17f3eab))
+
+## [3.0.0-beta.16](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.15...v3.0.0-beta.16) (2024-06-26)
+
+## [3.0.0-beta.15](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.14...v3.0.0-beta.15) (2024-06-26)
+
+
+### Bug Fixes
+
+* please work. I need this to work. ([43199e9](https://github.com/f-aguzzi/tesi/commit/43199e971ad7bee1808cab9040427bc2fec2761e))
+
+## [3.0.0-beta.14](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.13...v3.0.0-beta.14) (2024-06-26)
+
+
+### Bug Fixes
+
+* revert to original 2.5 requirements ([63021c2](https://github.com/f-aguzzi/tesi/commit/63021c2f4361400dd1a2c4ade43691fc63f6def3))
+
+## [3.0.0-beta.13](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.12...v3.0.0-beta.13) (2024-06-26)
+
+
+### Bug Fixes
+
+* **base:** remove bug-causing BaseEstimator check ([4e9d3b9](https://github.com/f-aguzzi/tesi/commit/4e9d3b9eed9c5fc5f208d5fab82a84225cf03b6b))
+
+## [3.0.0-beta.12](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.11...v3.0.0-beta.12) (2024-06-26)
+
+
+### Bug Fixes
+
+* downgrade scikit-learn ([ad9af1e](https://github.com/f-aguzzi/tesi/commit/ad9af1efa8d6893be89e17f1a81b4795fc3a9530))
+
+## [3.0.0-beta.11](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.10...v3.0.0-beta.11) (2024-06-26)
+
+
+### Bug Fixes
+
+* wrong import in init file ([726ab66](https://github.com/f-aguzzi/tesi/commit/726ab661060ed369cc532c2a82ea50ba8d9a9653))
+
+## [3.0.0-beta.10](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.9...v3.0.0-beta.10) (2024-06-26)
+
+
+### Bug Fixes
+
+* last attempt ([7973dc7](https://github.com/f-aguzzi/tesi/commit/7973dc74067da56ac437510aead3c887900a7cc4))
+
+## [3.0.0-beta.9](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.8...v3.0.0-beta.9) (2024-06-26)
+
+
+### Bug Fixes
+
+* (hoping it will work) remove double dependency ([f4b7cb4](https://github.com/f-aguzzi/tesi/commit/f4b7cb4e29320fd242935945447d6f01c5e93015))
+
+## [3.0.0-beta.8](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.7...v3.0.0-beta.8) (2024-06-26)
+
+
+### Bug Fixes
+
+* downgrade scipy (I'm desperate, please work) ([62b8ef5](https://github.com/f-aguzzi/tesi/commit/62b8ef5ccbf5aba6051e067756f4722bd15df7cc))
+
+## [3.0.0-beta.7](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2024-06-26)
+
+
+### Bug Fixes
+
+* downgrade python to version compatible with Colab ([292d782](https://github.com/f-aguzzi/tesi/commit/292d78249b8a0a4b9b7e32ee3b05ffa04ad2cf5a))
+
+## [3.0.0-beta.6](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.5...v3.0.0-beta.6) (2024-06-26)
+
+
+### Bug Fixes
+
+* third round of import debugging ([6d2ad44](https://github.com/f-aguzzi/tesi/commit/6d2ad448016d78c6fc34319ec4386f6bc921425a))
+
+## [3.0.0-beta.5](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2024-06-26)
+
+
+### Bug Fixes
+
+* base-level imports ([8143f74](https://github.com/f-aguzzi/tesi/commit/8143f74698cabd77e70e9f11c754b74ef3d677d5))
+
+
+### chore
+
+* update CI scripts ([264b153](https://github.com/f-aguzzi/tesi/commit/264b153e5e0f1ca7055e97899e52a93de7f89f81))
+
+## [3.0.0-beta.4](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2024-06-26)
+
+
+### Bug Fixes
+
+* module exports ([f302243](https://github.com/f-aguzzi/tesi/commit/f302243d4b24c291061a4a0d52ebaed6b36a1d42))
+
+## [3.0.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2024-06-26)
+
+
+### Bug Fixes
+
+* **DF:** unidimensional time series graphing bug ([a8d5132](https://github.com/f-aguzzi/tesi/commit/a8d5132f237c926fbd084aaa925bf4d38b7e5d7f))
+
+
+### chore
+
+* make src PEP-compliant ([24e8513](https://github.com/f-aguzzi/tesi/commit/24e8513358ea48b682108eb4a2346f95fede4d1d))
+* upgrade dependencies ([5657251](https://github.com/f-aguzzi/tesi/commit/5657251e1c2d9b407159c006613bdcb2f6c470c4))
+
+## [3.0.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2024-06-25)
+
+
+### Bug Fixes
+
+* upgrade package versions ([d88c87c](https://github.com/f-aguzzi/tesi/commit/d88c87c921775ed5f57ce7c9136fda5974169420))
+
+## [3.0.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v2.5.0...v3.0.0-beta.1) (2024-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* substitute GraphMode enum with string in API
+* **PLSDA:** PLSDA is now also a reducer
+* give train() function to BaseActionClass and children
+
+### Features
+
+* feature number autoselection in PLSDA and LDA ([a4f8983](https://github.com/f-aguzzi/tesi/commit/a4f89833fd69f796e0fcad61f745faf77b53c85e))
+* **DF:** mid-level data fusion support ([45a3ea4](https://github.com/f-aguzzi/tesi/commit/45a3ea46e80920a56b5f39a2c73b85c5729e0585))
+* **DF:** outer matrix multiplication data fusion ([5415a6f](https://github.com/f-aguzzi/tesi/commit/5415a6ff98acc9c395069c9997d3ce23666ab12f))
+* **PLSDA:** PLSDA is now also a reducer ([cf67a1a](https://github.com/f-aguzzi/tesi/commit/cf67a1a9366c046e49ce2683e9830d793ab03fa5))
+* substitute GraphMode enum with string in API ([34068a4](https://github.com/f-aguzzi/tesi/commit/34068a4c4a5a0213712ae6ee99793dd807d612f9))
+
+
+### Bug Fixes
+
+* **PCA:** component autoselect issues ([f827b2d](https://github.com/f-aguzzi/tesi/commit/f827b2d2fd835b29a104c7f3527b62a52eb4a671))
+* **LDA, BaseReducer:** components bug ([0f87962](https://github.com/f-aguzzi/tesi/commit/0f879621786c7eddfd04c3b6fbaceb297d650800))
+* **DF:** indexing issues when concatenating ([6b29b45](https://github.com/f-aguzzi/tesi/commit/6b29b457d5ca88bfc3ba934cfc936e54f1f7b97a))
+* **tests:** KNN and PLSDA test update ([858f560](https://github.com/f-aguzzi/tesi/commit/858f56029cc16fe25795a16997d0d2c28be79ba1))
+
+
+### Docs
+
+* **DF:** mid-level data fusion case study ([f9e3431](https://github.com/f-aguzzi/tesi/commit/f9e343108f4e1023e269c36fff8503fb20cda96f))
+* new case study ([35cf415](https://github.com/f-aguzzi/tesi/commit/35cf4158efeec9da7d083f891fbba8f77cf01084))
+
+
+### Refactor
+
+* give train() function to BaseActionClass and children ([2e836bc](https://github.com/f-aguzzi/tesi/commit/2e836bcb2ed7034873d8bf5cb8b61917ab08303c))
+* **DF:** mid-level data fusion overhaul ([b6ba68b](https://github.com/f-aguzzi/tesi/commit/b6ba68bbc0ab25f653f57266e4590e76a8750e85))
+
+## [2.5.1](https://github.com/f-aguzzi/tesi/compare/v2.5.0...v2.5.1) (2024-06-17)
+
+### Bug Fixes
+
 * **LLDF:** format-specific reader in y column import ([84c6b5e](https://github.com/f-aguzzi/tesi/commit/84c6b5ee777a1549dfc067d80c131ff610865f61))
+
 
 ## [2.5.0](https://github.com/f-aguzzi/tesi/compare/v2.4.0...v2.5.0) (2024-06-13)
 

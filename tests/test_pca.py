@@ -1,8 +1,8 @@
 """This module contains the test cases for the PCA module."""
 import unittest
 import copy
-from chemfusekit.pca import PCASettings, PCA, GraphMode
-from chemfusekit.lldf import LLDFSettings, LLDF, Table
+from chemfusekit.pca import PCASettings, PCA
+from chemfusekit.df import DFSettings, DF, Table
 from chemfusekit.lr import LRSettings, LR
 
 
@@ -28,14 +28,14 @@ class TestPCA(unittest.TestCase):
             target_variance=0.98,
             confidence_level=0.9,
             initial_components=8,
-            output=GraphMode.GRAPHIC
+            output='graphical'
         )
 
     def test_pca_constructor(self):
         """Test case against constructor parameter issues."""
 
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -46,8 +46,8 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         lda_settings = PCASettings()
 
@@ -57,14 +57,14 @@ class TestPCA(unittest.TestCase):
 
         # Then, construct the object with null settings:
         with self.assertRaises(TypeError):
-            PCA(None, lldf.fused_data)
+            PCA(None, df.fused_data)
 
         # Now, with both null:
         with self.assertRaises(TypeError):
             PCA(None, None)
 
         # Finally, with proper values:
-        PCA(lda_settings, lldf.fused_data)
+        PCA(lda_settings, df.fused_data)
 
     def test_pca(self):
         """
@@ -72,7 +72,7 @@ class TestPCA(unittest.TestCase):
         whether the output is set to true or false
         """
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -83,22 +83,22 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up and execute PCA (graph output)
-        pca_settings = PCASettings(output=GraphMode.GRAPHIC)
-        pca = PCA(pca_settings, lldf.fused_data)
-        pca.pca()
+        pca_settings = PCASettings(output='graphical')
+        pca = PCA(pca_settings, df.fused_data)
+        pca.train()
 
         # Save the results
         result_true_components = copy.deepcopy(pca.components)
         result_true_array_scores = copy.deepcopy(pca.array_scores)
 
         # Set up and execute PCA (again)
-        pca_settings = PCASettings(output=GraphMode.NONE)
-        pca = PCA(pca_settings, lldf.fused_data)
-        pca.pca()
+        pca_settings = PCASettings(output='none')
+        pca = PCA(pca_settings, df.fused_data)
+        pca.train()
 
         # Save the results
         result_false_components = pca.components
@@ -108,18 +108,18 @@ class TestPCA(unittest.TestCase):
         self.assertEqual(result_true_array_scores, result_false_array_scores)
 
         # Set up and execute PCA (text output)
-        pca_settings = PCASettings(output=GraphMode.GRAPHIC)
-        pca = PCA(pca_settings, lldf.fused_data)
-        pca.pca()
+        pca_settings = PCASettings(output='graphical')
+        pca = PCA(pca_settings, df.fused_data)
+        pca.train()
 
         # Save the results
         result_true_components = copy.deepcopy(pca.components)
         result_true_array_scores = copy.deepcopy(pca.array_scores)
 
         # Set up and execute PCA (again)
-        pca_settings = PCASettings(output=GraphMode.NONE)
-        pca = PCA(pca_settings, lldf.fused_data)
-        pca.pca()
+        pca_settings = PCASettings(output='none')
+        pca = PCA(pca_settings, df.fused_data)
+        pca.train()
 
         # Save the results
         result_false_components = pca.components
@@ -132,7 +132,7 @@ class TestPCA(unittest.TestCase):
         """Integration test for PCA+LR"""
 
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -143,23 +143,23 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up PCA and get the rescaled_data property directly
         pca_settings = PCASettings()
-        pca = PCA(pca_settings, lldf.fused_data)
+        pca = PCA(pca_settings, df.fused_data)
         rescaled_data = pca.rescaled_data
 
         # Set up and execute LR
         lr_settings = LRSettings()
         lr = LR(lr_settings, rescaled_data)
-        lr.lr()
+        lr.train()
 
     def test_pca_import_export(self):
         """Test case for the import and export of PCA models."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -170,19 +170,19 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up PCA
         pca_settings = PCASettings()
-        pca = PCA(pca_settings, lldf.fused_data)
+        pca = PCA(pca_settings, df.fused_data)
 
         # Try exporting the model before executing pca()
         with self.assertRaises(RuntimeError):
             pca.export_model('pca_model.sklearn')
 
         # Execute PCA and retry exporting
-        pca.pca()
+        pca.train()
         pca.export_model('pca_model.sklearn')
 
         # Try creating a new PCA object from the wrong type of file
@@ -198,7 +198,7 @@ class TestPCA(unittest.TestCase):
     def test_pca_reduce(self):
         """Test case for data dimensionality reduction."""
         # Perform preliminary data fusion
-        lldf_settings = LLDFSettings(output=GraphMode.NONE)
+        df_settings = DFSettings(output='none')
         table1 = Table(
             file_path="tests/qepas.xlsx",
             sheet_name="Sheet1",
@@ -209,20 +209,20 @@ class TestPCA(unittest.TestCase):
             sheet_name="Sheet1",
             preprocessing="none"
         )
-        lldf = LLDF(lldf_settings, [table1, table2])
-        lldf.lldf()
+        df = DF(df_settings, [table1, table2])
+        df.fuse()
 
         # Set up PCA
         pca_settings = PCASettings()
-        pca = PCA(pca_settings, lldf.fused_data)
+        pca = PCA(pca_settings, df.fused_data)
 
         # Try rescaling data before training the model
         with self.assertRaises(RuntimeError):
-            pca.reduce(lldf.fused_data)
+            pca.reduce(df.fused_data)
 
         # Execute PCA and then rescale
-        pca.pca()
-        reduced_data = pca.reduce(lldf.fused_data)
+        pca.train()
+        reduced_data = pca.reduce(df.fused_data)
 
         # Check that the dimensionality (number of columns) is reduced
-        self.assertLess(reduced_data.x_data.shape[1], lldf.fused_data.x_data.shape[1])
+        self.assertLess(reduced_data.x_data.shape[1], df.fused_data.x_data.shape[1])
