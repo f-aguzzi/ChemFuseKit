@@ -11,8 +11,12 @@
             "id": "d87282dcd05850e5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "References/Discriminant analysis of vegetable oils by thermogravimetric-gas chromatography-mass spectrometry combined with data fusion and chemometrics without sample pretreatment.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -89,6 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "References/Discriminant analysis of vegetable oils by thermogravimetric-gas chromatography-mass spectrometry combined with data fusion and chemometrics without sample pretreatment.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,6 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "References/Discriminant analysis of vegetable oils by thermogravimetric-gas chromatography-mass spectrometry combined with data fusion and chemometrics without sample pretreatment.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +132,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "References/Discriminant analysis of vegetable oils by thermogravimetric-gas chromatography-mass spectrometry combined with data fusion and chemometrics without sample pretreatment.md"
+              }
             }
           }
         ]
@@ -149,15 +157,16 @@
   "active": "d87282dcd05850e5",
   "lastOpenFiles": [
     "References/FT-IR and Raman spectroscopy data fusion with chemometrics for simultaneous determination of chemical quality indices of edible oils during thermal oxidation.md",
-    "References/Discriminant analysis of vegetable oils by thermogravimetric-gas chromatography-mass spectrometry combined with data fusion and chemometrics without sample pretreatment.md",
-    "A Novel Forensic Tool for the Characterization and Comparison of Printing Ink Evidence.. Development and Evaluation of a Searchable Database Using Data Fusion of Spectrochemical Methods.md",
     "References/Data fusion methodologies for food and beverage authentication and quality assessment – A review,.md",
-    "References/Assessment of premium organic orange juices authenticity using HPLC-HR-MS and HS-SPME-GC-MS combining data fusion and chemometrics,Food Control.md",
-    "References/Assessing the varietal origin of extra-virgin olive oil using liquid chromatography fingerprints of phenolic compound, data fusion and chemometrics.md",
-    "References/A Review of Data Fusion Techniques.md",
+    "References/Discriminant analysis of vegetable oils by thermogravimetric-gas chromatography-mass spectrometry combined with data fusion and chemometrics without sample pretreatment.md",
+    "References/Outer product analysis of electronic nose and visible spectra, application to the measurement of peach fruit characteristics.md",
     "References/Data fusion.md",
+    "References/Assessment of premium organic orange juices authenticity using HPLC-HR-MS and HS-SPME-GC-MS combining data fusion and chemometrics,Food Control.md",
+    "References/A Review of Data Fusion Techniques.md",
     "References/An introduction to multisensor data fusion.md",
+    "References/Assessing the varietal origin of extra-virgin olive oil using liquid chromatography fingerprints of phenolic compound, data fusion and chemometrics.md",
     "References/Springer Handbook of Robotics, Multisensor Data Fusion.md",
+    "A Novel Forensic Tool for the Characterization and Comparison of Printing Ink Evidence.. Development and Evaluation of a Searchable Database Using Data Fusion of Spectrochemical Methods.md",
     "To do.md",
     "References",
     "UML/Components.md",
