@@ -14,7 +14,7 @@ KNN(settings: KNNSettings, data: LLDFModel)
 
 ## Constructor parameters
 
-- `settings`: object of type [`KNNSettings`](knnsettings.md). Contains the settings for
+- `settings`: object of type [`KNNSettings`](./knnsettings.md). Contains the settings for
   the `KNN` object.
 - `data`: object of type [`BaseDataModel`](../base/basedatamodel.md). Contains the data to be analyzed.
 

@@ -12,6 +12,10 @@ In this cookbook page, you will be shown how the project is structured, and the 
 chemfusekit
  │
  ├── base
+ |    ├── BaseActionClass
+ |    ├── BaseClassifier
+ |    ├── BaseReducer
+ |    ├── ReducerDataModel
  │    └── BaseDataModel
  │
  ├── lda
@@ -28,8 +32,7 @@ chemfusekit
  │ 
  ├── pca
  │    ├── PCASettings
- │    ├── PCA
- │    └── PCADataModel
+ │    └── PCA
  │
  ├── lldf
  │    ├── LLDFSettings
@@ -80,7 +83,7 @@ The training method is always called like its container class, but in lower case
 
 ### Modular settings
 
-The settings for all classifiers (that is, all classes except `LLDF` and `PCA`) inherit from a base class called [`BaseSettings`](/docs/base/basesettings) in the `base` module:
+The settings for all classifiers (that is, all classes except `LLDF` and `PCA`) inherit from a base class called `BaseSettings` in the `base` module:
 
 ```mermaid
 classDiagram
@@ -120,7 +123,7 @@ classDiagram
 
 ### Modular classifiers
 
-The classifiers themselves all inherit from a base class called [`BaseClassifier`](/docs/base/baseclassifier) in the `base` module:
+The classifiers themselves all inherit from a base class called `BaseClassifier` in the `base` module:
 
 ```mermaid
 classDiagram
@@ -199,7 +202,7 @@ classDiagram
 
 ### Modular data types
 
-The data types are modular and interexchangeable too. Both [`LLDFDataModel`](/docs/lldf/lldfmodel) and [`PCADataModel`](/docs/pca/pcadatamodel) inherit from [`BaseDataModel`](/docs/base/basedatamodel) as shown in the following diagram:
+The data types are modular and interexchangeable too. Both `DFDataModel` and `PCADataModel` inherit from `BaseDataModel` as shown in the following diagram:
 
 ```mermaid
 classDiagram
@@ -224,15 +227,15 @@ classDiagram
     BaseDataModel *-- ReducerDataModel
 ```
 
-This allows all the classifiers to use the `LLDF` data, dimension-reduced `PCA` data, or any other type of data as long as it follows the `BaseDataModel` template.
+This allows all the classifiers to use the `DF` data, dimension-reduced `PCA` data, or any other type of data as long as it follows the `BaseDataModel` template.
 
 
 ## File import and export
 
-All the data models (`BaseDataModel`, and its derived, `LLDFDataModel` and `PCADataModel`) can export their content to Excel tables.
+All the data models (`BaseDataModel`, and its derived, `DFDataModel` and `PCADataModel`) can export their content to Excel tables.
 
 All classes derived from `BaseActionClass` (that is, all which derive from `BaseClassifier`, `BaseReducer`, or both) can import and export their sklearn data model from and to file.
 
 All classifiers derived from `BaseClassifier` (`KNN`, `LDA`, `LR`, `PLSDA`, `SVM`) can perform training and inference.
 
-All reducers derived from `BaseReducer` (`LDA`, `PCA`) can perform dimensionality reduction.
+All reducers derived from `BaseReducer` (`LDA`, `PCA`, `PLSDA`) can perform dimensionality reduction.

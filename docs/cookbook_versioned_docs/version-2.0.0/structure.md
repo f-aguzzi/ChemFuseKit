@@ -47,7 +47,7 @@ As you can see, each module contains a class with the same name of the module, a
 
 ## Modular design features
 
-The settings for all classifiers (that is, all classes except `LLDF` and `PCA`) inherit from a base class called [`BaseSettings`](/docs/base/basesettings) in the `base` module:
+The settings for all classifiers (that is, all classes except `LLDF` and `PCA`) inherit from a base class called `BaseSettings` in the `base` module:
 
 ```mermaid
 classDiagram
@@ -86,7 +86,7 @@ classDiagram
 
 \
 \
-The classifiers themselves all inherit from a base class called [`BaseClassifier`](/docs/base/baseclassifier) in the `base` module:
+The classifiers themselves all inherit from a base class called `BaseClassifier` in the `base` module:
 
 ```mermaid
 classDiagram
@@ -130,7 +130,7 @@ classDiagram
 
 \
 \
-The data types are modular and interexchangeable too. Both [`LLDFDataModel`](/docs/lldf/lldfmodel) and [`PCADataModel`](/docs/pca/pcadatamodel) inherit from [`BaseDataModel`](/docs/base/basedatamodel) as shown in the following diagram:
+The data types are modular and interexchangeable too. Both `LLDFDataModel` and `PCADataModel` inherit from `BaseDataModel` as shown in the following diagram:
 
 ```mermaid
 classDiagram
