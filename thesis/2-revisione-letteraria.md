@@ -1,6 +1,10 @@
 # Revisione letteraria
 
-INSERIRE INTRODUZIONE
+La presente revisione letteraria introduce il concetto di fusione di dati. Sono presentate alcune diverse definizioni del termine, insieme alla storia della tecnica e ad alcune considerazioni generali sui suoi vantaggi, svantaggi e difficoltà principali. Successivamente è presentato un confronto tra alcuni dei principali studi sulla sua applicazione in ambito chemiometrico. I diversi documenti di ricerca presentano definizioni spesso simili di fusione di dati, ma con variazioni proceduali significative. Alcune di esse hanno fornito lo spunto per lo sviluppo di nuove opzioni di fusione in ChemFuseKit. In questa sezione verranno confrontati sei studi rilevanti, evidenziando le diverse tecniche di fusione utilizzate, i livelli di fusione (basso, medio e alto) e le applicazioni specifiche.
+
+## La fusione di dati
+
+INSERIRE PARAGRAFO RIORDINATO
 
 ## Stato dell'arte della fusione dei dati
 

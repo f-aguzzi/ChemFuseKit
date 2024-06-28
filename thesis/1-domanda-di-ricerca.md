@@ -2,8 +2,8 @@
 
 In questo documento di tesi sono analizzati i seguenti punti:
 
-- come si posiziona `ChemFuseKit` rispetto ad altre librerie in termini di prestazioni, precisione e utilizzabilità?
-- è possibile dimostrare l'efficacia di `ChemFuseKit` nella risoluzione di problemi specifici legati alla chemiometria (fusione di dati, classificazione, inferenza, ..)?
+- come si posiziona ChemFuseKit rispetto ad altre librerie in termini di prestazioni, precisione e utilizzabilità?
+- è possibile dimostrare l'efficacia di ChemFuseKit nella risoluzione di problemi specifici legati alla chemiometria (fusione di dati, classificazione, inferenza, ..)?
 - quali sono le problematiche più evidenti nel progetto e nell'implementazione della libreria, e in quali aree può essere migliorata in futuro?
 
 Si cerca anche di rispondere alle seguenti domande di ricerca:
