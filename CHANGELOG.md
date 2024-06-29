@@ -1,3 +1,10 @@
+## [3.1.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v3.1.0-beta.2...v3.1.0-beta.3) (2024-06-29)
+
+
+### Features
+
+* **DF:** add direct file blob import ([6ea358c](https://github.com/f-aguzzi/tesi/commit/6ea358c99b612fdd2bc79fb7de62cdb85bbf8d1c))
+
 ## [3.1.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v3.1.0-beta.1...v3.1.0-beta.2) (2024-06-29)
 
 
