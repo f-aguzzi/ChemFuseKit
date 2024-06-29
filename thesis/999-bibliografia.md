@@ -1,3 +1,5 @@
+\newpage
+
 # Bibliografia
 
 Bajoub, A., Medina-Rodríguez, S., Gómez-Romero, M., El Amine, A., Bagur-González, M. G., Fernández-Gutiérrez, A., Carrasco-Pancorbo, A. (2017). Assessing the varietal origin of extra-virgin olive oil using liquid chromatography fingerprints of phenolic compound, data fusion and chemometrics. *Food Chemistry*, 215, 245-255.
