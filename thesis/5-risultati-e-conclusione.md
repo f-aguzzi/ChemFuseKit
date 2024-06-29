@@ -1,6 +1,10 @@
 # Risultati e discussione
 
+INSERIRE INTRODUZIONE
+
 ## Risultati importanti nei casi di studio
+
+COMPLETARE
 
 ## Perché usare ChemFuseKit?
 
