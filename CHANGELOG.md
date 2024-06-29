@@ -1,3 +1,10 @@
+## [3.1.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v3.1.0-beta.1...v3.1.0-beta.2) (2024-06-29)
+
+
+### Features
+
+* add support for BytesIO inputs ([bab82e8](https://github.com/f-aguzzi/tesi/commit/bab82e8cfc208062a66dee871f28ca32835c951d))
+
 ## [3.1.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v3.0.0...v3.1.0-beta.1) (2024-06-29)
 
 
