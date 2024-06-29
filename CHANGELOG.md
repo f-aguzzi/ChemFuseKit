@@ -1,3 +1,16 @@
+## [3.0.0-beta.19](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.18...v3.0.0-beta.19) (2024-06-29)
+
+
+### Bug Fixes
+
+* **pyproject:** change pandas version, add license ([d640d92](https://github.com/f-aguzzi/tesi/commit/d640d9248b8285e5dd1e26e226cb11a76a4e6b58))
+
+
+### chore
+
+* add version 3.0.0 to docs ([d7da7b7](https://github.com/f-aguzzi/tesi/commit/d7da7b7e707a241fddb141a0a599404da26c24eb))
+* upgrade all examples and case studies ([c084b78](https://github.com/f-aguzzi/tesi/commit/c084b78e8bd9e71e46b080491a39121e4848e651))
+
 ## [3.0.0-beta.18](https://github.com/f-aguzzi/tesi/compare/v3.0.0-beta.17...v3.0.0-beta.18) (2024-06-26)
 
 
