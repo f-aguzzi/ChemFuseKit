@@ -7,7 +7,8 @@ header-includes: |
  \usepackage{microtype}
 ---
 
-\vspace{-5cm}
+\newpage
+
 \thispagestyle{empty}
 \begin{center}
     \renewcommand{\baselinestretch}{1}

@@ -1,10 +1,27 @@
 # Risultati e discussione
 
-INSERIRE INTRODUZIONE
+Nella presente sezione sono presentati e discussi i risultati sia dello sviluppo di ChemFuseKit, che dei casi di studio della sezione precedente. Il tentativo è di rispondere alle domande di ricerca poste all'inizio di questa tesi. Valutando attentamente le informazioni emerse, dovrebbe essere possibile trarre conclusioni significative e formulare nuove domande di ricerca per approfondimenti futuri.
 
 ## Risultati importanti nei casi di studio
 
-COMPLETARE
+*Come si posiziona ChemFuseKit rispetto ad altre librerie in termini di prestazioni, precisione e utilizzabilità?*
+
+ChemFuseKit si posiziona favorevolmente rispetto ad altre librerie open source in termini di semplicità, utilizzabilità e capacità di fusione di dati. Essa riduce notevolmente la complessità rispetto all'uso diretto di Scikit-learn, richiedendo meno righe di codice per effettuare le stesse operazioni. Inoltre, la libreria offre un'interfaccia intuitiva, uniforme e interoperabile, semplificando l'accesso agli algoritmi di alta qualità provenienti da Scikit-learn. Le prestazioni sono le medesime di quest'ultima nell'addestramento e nella classificazione. Il modulo di fusione di dati, unico nel suo genere, non è confrontabile.
+
+
+*Quali sono le problematiche più evidenti nel progetto e nell'implementazione della libreria, e in quali aree può essere migliorata in futuro?*
+
+La problematica più evidente nella libreria è la sua struttura altamente specifica. Il sistema è stato pensato per permettere la massima agevolezza nel flusso interno di dati, e garantire la massima modularità. In pratica, questo si traduce in un flusso di dati altamente specifico e non sempre intuitivo, per quanto ben documentato ed esemplificato. Inoltre, l'*output* grafico è difficilmente utilizzabile al di fuori di Jupyter Notebook. Un'altra problematica evidente nell'implementazione della libreria potrebbe essere la necessità di una corretta strutturazione della fase di selezione delle caratteristiche per ogni tabella nella fusione a medio livello. L'operazione potrebbe richiedere una certa esperienza e conoscenza dei dati. ChemFuseKit parzialmente risolve questo problema con l'introduzione di un sistema automatico del numero ottimale di caratteristiche, anche se esso non è direttamente configurabile dall'utente. Infine, le librerie utilizzate come dipendenze da ChemFuseKit richiedono di essere installate in versioni molto specifiche, per evitare conflitti esterni. Su alcuni sistemi, questo può provocare anche conflitti esterni con le librerie preinstallate. Questo obbliga l'utente ad impiegare la libreria in un ambiente Python isolato.
+
+
+*È possibile, utilizzando le tecniche dell'ingegneria del software, costruire una libreria semplice da espandere, utilizzare e mantenere, anche da parte di non-ingegneri?*
+
+Nonostante l'intenzione iniziale fosse dimostrare la possibilità di questa idea, purtroppo la risposta finale è *no*. Il lavoro di *design* iterativo, i *refactor*, le modularizzazioni e i sistemi automatizzati di *testing* e CI/CD, per quanto abbiano significativamente semplificato la gestione del progetto, non sono bastati per ridurre la complessità del progetto ai livelli sperati. ChemFuseKit rimane un sistea complesso e difficile da gestire, perfino per chi l'ha progettato. Non ci si può ragionevolmente aspettare, dunque che un non-programmatore, non-ingegnere sia in grado di aggiungere nuove funzionalità o di modificare le esistenti, se non in minimissima parte. Da ingegnere informatico, è stato difficoltoso comprendere i meccanismi dell'analisi chemiometrica. Questo dimostra l'importanza dello studio della chimica e della statistica nei corsi di ingegneria e, specularmente, l'insegnamento della programmazione di base in tutti i corsi scientifici.
+
+
+*Può una libreria come ChemFuseKit colmare il divario tra il software chemiometrico commerciale e le soluzioni* open source *disponibili al momento, fornendo un'interfaccia utente flessibile e intuitiva e aggiungendo le funzionalità mancanti alle librerie attuali?*
+
+Non è possibile determinare come si posizioni ChemFuseKit rispetto al *software* chemiometico commerciale, non avendone a disposizione. È però possibile determinare che, rispetto alle librerie chemiometriche *open source* disponibili al momento, ChemFuseKit offra un'interfaccia utente flessibile e intuitiva, e aggiunga funzionalità mancanti alle soluzioni attuali, come la fusione di dati e la riduzione automatica della dimensionalità.
 
 ## Perché usare ChemFuseKit?
 
