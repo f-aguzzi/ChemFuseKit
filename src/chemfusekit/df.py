@@ -1,5 +1,6 @@
 """Performs low-level data fusion on input arrays, outputs the results"""
 from typing import Optional, List, IO
+from io import BytesIO
 
 import numpy as np
 import pandas as pd
@@ -16,7 +17,7 @@ from .plsda import PLSDASettings, PLSDA
 class Table:
     """Holds the path, preprocessing choice and sheet name for a single Excel table."""
 
-    def __init__(self, file_path: str | IO, sheet_name: str, preprocessing: str, feature_selection: str | None = None,
+    def __init__(self, file_path: str | IO | BytesIO, sheet_name: str, preprocessing: str, feature_selection: str | None = None,
                  class_column: str = 'Substance', index_column: str | None = None):
         self.file_path = file_path
         self.sheet_name = sheet_name
