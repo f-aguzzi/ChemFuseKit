@@ -1,0 +1,35 @@
+@startuml
+rectangle "Libreria Python" {
+	(Imparare la chemiometria)
+	(Classificare i dati dalla scena del crimine)
+	(Fondere i dati)
+	(Importare ed esportare i dati)
+	(Creare grafici)
+}
+
+rectangle "Ambiente Colab" {
+	(Utilizzare la libreria da Colab)
+}
+
+rectangle "Applicazione grafica" {
+	(Utilizzare l'applicazione grafica)
+}
+
+(Aggiungere nuove funzionalità)
+
+"Studente" --> (Imparare la chemiometria)
+"Analista forense" --> (Classificare i dati dalla scena del crimine)
+"Chiunque" --> (Fondere i dati)
+"Chiunque" --> (Importare ed esportare i dati)
+"Chiunque" --> (Creare grafici)
+"Chiunque" -up-> (Utilizzare l'applicazione grafica)
+"Utente di Colab" --> (Utilizzare la libreria da Colab)
+"Gestore del sistema" -up-> (Aggiungere nuove funzionalità)
+"Programmatore esterno" -down-> (Applicazione grafica) : <<implementa>>
+
+"Ambiente Colab" ..|> "Libreria Python" : <<usa>>
+"Applicazione grafica" ..|> "Libreria Python" : <<basato su>>
+
+(Aggiungere nuove funzionalità) -up-|> "Ambiente Colab"
+(Aggiungere nuove funzionalità) -up-|> "Libreria Python"
+@enduml

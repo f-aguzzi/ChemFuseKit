@@ -1,5 +1,6 @@
 """Performs low-level data fusion on input arrays, outputs the results"""
-from typing import Optional, List
+from typing import Optional, List, IO
+from io import BytesIO
 
 import numpy as np
 import pandas as pd
@@ -16,7 +17,7 @@ from .plsda import PLSDASettings, PLSDA
 class Table:
     """Holds the path, preprocessing choice and sheet name for a single Excel table."""
 
-    def __init__(self, file_path: str, sheet_name: str, preprocessing: str, feature_selection: str | None = None,
+    def __init__(self, file_path: str | IO | BytesIO, sheet_name: str, preprocessing: str, feature_selection: str | None = None,
                  class_column: str = 'Substance', index_column: str | None = None):
         self.file_path = file_path
         self.sheet_name = sheet_name
@@ -133,10 +134,13 @@ class DF:
                     ax1.set_title(f'Original data')
                     ax2.plot(wl, preprocessed_x.T)
                     ax2.set_title(f'Processed table with {table.preprocessing}')
-                    if table.file_path.endswith('.xlsx'):
-                        fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path}')
+                    if isinstance(table.file_path, str):
+                        if table.file_path.endswith('.xlsx'):
+                            fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path}')
+                        else:
+                            fig.suptitle(f'Imported table: {table.file_path}')
                     else:
-                        fig.suptitle(f'Imported table: {table.file_path}')
+                        fig.suptitle(f'Imported table: ')
                 else:
                     # Let's plot the different datasets we preprocessed
                     fig, ax1 = plt.subplots(1, figsize=(15, 15))
@@ -144,10 +148,13 @@ class DF:
                         ax1.plot(x)
                     else:
                         ax1.plot(wl, x.T)
-                    if table.file_path.endswith('.xlsx'):
-                        fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path} (no preprocessing)')
+                    if isinstance(table.file_path, str):
+                        if table.file_path.endswith('.xlsx'):
+                            fig.suptitle(f'Imported table: {table.sheet_name} from {table.file_path} (no preprocessing')
+                        else:
+                            fig.suptitle(f'Imported table: {table.file_path}  (no preprocessing)')
                     else:
-                        fig.suptitle(f'Imported table: {table.file_path} (no preprocessing)')
+                        fig.suptitle(f'Imported table (no preprocessing):')
 
             # Create a new DataFrame with the processed numerical attributes
             processed_dataframe_x = pd.DataFrame(
@@ -230,31 +237,29 @@ class DF:
 
     @staticmethod
     def _import_table(file_path, sheet_name) -> pd.DataFrame:
-        """Imports a table from a file"""
-        try:
-            # Autodetect the format based on the file extension
-            if file_path.endswith('.xlsx'):
-                table_data = pd.read_excel(
-                    file_path,
-                    sheet_name=sheet_name,
-                    index_col=0,
-                    header=0
-                )
-            elif file_path.endswith('.csv'):
-                table_data = pd.read_csv(
-                    file_path,
-                    index_col=0,
-                    header=0
-                )
-            elif file_path.endswith('.json'):
-                table_data = pd.read_json(
-                    file_path,
-                    orient='table'  # or other orientations based on your json format
-                )
-            else:
-                raise ValueError(f"Unsupported file format: {file_path}")
-        except Exception as exc:
-            raise FileNotFoundError("Error opening the selected files.") from exc
+        """Imports a table from a file or file-like object"""
+        if isinstance(file_path, IO) or isinstance(file_path, BytesIO):
+            # Handle file-like objects
+            try:
+                table_data = pd.read_excel(file_path, sheet_name=sheet_name, index_col=0, header=0)
+            except Exception as exc:
+                raise ValueError("Error reading the file-like object.") from exc
+        elif isinstance(file_path, str):
+            # Handle file paths
+            try:
+                # Autodetect the format based on the file extension
+                if file_path.endswith('.xlsx'):
+                    table_data = pd.read_excel(file_path, sheet_name=sheet_name, index_col=0, header=0)
+                elif file_path.endswith('.csv'):
+                    table_data = pd.read_csv(file_path, index_col=0, header=0)
+                elif file_path.endswith('.json'):
+                    table_data = pd.read_json(file_path, orient='table')
+                else:
+                    raise ValueError(f"Unsupported file format: {file_path}")
+            except Exception as exc:
+                raise FileNotFoundError("Error opening the selected files.") from exc
+        else:
+            raise TypeError("Unsupported file type. Expected str or IO.")
 
         return table_data
 
