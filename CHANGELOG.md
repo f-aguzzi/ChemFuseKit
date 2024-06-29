@@ -1,3 +1,15 @@
+## [3.1.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v3.0.0...v3.1.0-beta.1) (2024-06-29)
+
+
+### Features
+
+* **DF:** add file-like input capabilities ([e5c707b](https://github.com/f-aguzzi/tesi/commit/e5c707bd5897f363a831cb21ae7d81fb0699c3c7))
+
+
+### Docs
+
+* fix broken links in cookbook and documentation ([2353ba9](https://github.com/f-aguzzi/tesi/commit/2353ba928c155a9abf2ff7ba416440e9fe1668f9))
+
 ## [3.0.0](https://github.com/f-aguzzi/tesi/compare/v2.5.1...v3.0.0) (2024-06-27)
 
 
