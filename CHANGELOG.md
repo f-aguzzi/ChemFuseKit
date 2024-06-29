@@ -1,3 +1,29 @@
+## [3.1.0-beta.3](https://github.com/f-aguzzi/tesi/compare/v3.1.0-beta.2...v3.1.0-beta.3) (2024-06-29)
+
+
+### Features
+
+* **DF:** add direct file blob import ([6ea358c](https://github.com/f-aguzzi/tesi/commit/6ea358c99b612fdd2bc79fb7de62cdb85bbf8d1c))
+
+## [3.1.0-beta.2](https://github.com/f-aguzzi/tesi/compare/v3.1.0-beta.1...v3.1.0-beta.2) (2024-06-29)
+
+
+### Features
+
+* add support for BytesIO inputs ([bab82e8](https://github.com/f-aguzzi/tesi/commit/bab82e8cfc208062a66dee871f28ca32835c951d))
+
+## [3.1.0-beta.1](https://github.com/f-aguzzi/tesi/compare/v3.0.0...v3.1.0-beta.1) (2024-06-29)
+
+
+### Features
+
+* **DF:** add file-like input capabilities ([e5c707b](https://github.com/f-aguzzi/tesi/commit/e5c707bd5897f363a831cb21ae7d81fb0699c3c7))
+
+
+### Docs
+
+* fix broken links in cookbook and documentation ([2353ba9](https://github.com/f-aguzzi/tesi/commit/2353ba928c155a9abf2ff7ba416440e9fe1668f9))
+
 ## [3.0.0](https://github.com/f-aguzzi/tesi/compare/v2.5.1...v3.0.0) (2024-06-27)
 
 
