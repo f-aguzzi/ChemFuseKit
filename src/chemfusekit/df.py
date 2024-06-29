@@ -140,11 +140,7 @@ class DF:
                         else:
                             fig.suptitle(f'Imported table: {table.file_path}')
                     else:
-                        file_path = table.file_path.name
-                        if file_path.endswith('.xlsx'):
-                            fig.suptitle(f'Imported table: {table.sheet_name} from {file_path}')
-                        else:
-                            fig.suptitle(f'Imported table: {file_path}') 
+                        fig.suptitle(f'Imported table: ')
                 else:
                     # Let's plot the different datasets we preprocessed
                     fig, ax1 = plt.subplots(1, figsize=(15, 15))
@@ -158,11 +154,7 @@ class DF:
                         else:
                             fig.suptitle(f'Imported table: {table.file_path}  (no preprocessing)')
                     else:
-                        file_path = table.file_path.name
-                        if file_path.endswith('.xlsx'):
-                            fig.suptitle(f'Imported table: {table.sheet_name} from {file_path}')
-                        else:
-                            fig.suptitle(f'Imported table: {file_path}') 
+                        fig.suptitle(f'Imported table (no preprocessing):')
 
             # Create a new DataFrame with the processed numerical attributes
             processed_dataframe_x = pd.DataFrame(
@@ -246,7 +238,7 @@ class DF:
     @staticmethod
     def _import_table(file_path, sheet_name) -> pd.DataFrame:
         """Imports a table from a file or file-like object"""
-        if isinstance(file_path, IO):
+        if isinstance(file_path, IO) or isinstance(file_path, BytesIO):
             # Handle file-like objects
             try:
                 table_data = pd.read_excel(file_path, sheet_name=sheet_name, index_col=0, header=0)
