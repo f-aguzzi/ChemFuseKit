@@ -24,3 +24,10 @@ Zhou, X., Li, X., Zhao, B., Chen, X., Zhang, Q. (2022). Discriminant analysis of
 
 
 
+## Link relativi a ChemFuseKit
+
+Progetto GitHub: \ 
+`https://github.com/f-aguzzi/ChemFuseKit`
+
+Sito *web* ufficiale contenente documentazione ed esempi: \
+`https://f-aguzzi.github.io/ChemFuseKit/`

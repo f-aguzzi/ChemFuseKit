@@ -15,10 +15,10 @@ header-includes: |
 
     \vspace{-5mm}
 
-    \Large
+    \large
     \textbf{UNIVERSITÀ DEGLI STUDI DI BERGAMO} 
 
-    \vspace{8mm}
+    \vspace{12mm}
     
     {
     \large
@@ -27,14 +27,14 @@ header-includes: |
     Classe n. L-8 -  Classe delle lauree in Ingegneria dell'Informazione
     }
 
-    \vspace{8mm}
+    \vfill
     
     {
     \Large
     \textbf{Realizzazione di una libreria Python su cloud per la fusione e l'analisi dei dati dalla scena del crimine}
     }
 
-    \vspace{8mm}
+    \vfill
     
 
 \begin{tabular}{ccc}

@@ -27,7 +27,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'f-aguzzi', // Usually your GitHub org/user name.
-  projectName: 'tesi', // Usually your repo name.
+  projectName: 'ChemFuseKit', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -50,7 +50,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/f-aguzzi/tesi',
+            'https://github.com/f-aguzzi/ChemFuseKit',
           remarkPlugins: [simplePlantUML],
         },
         pages: {
@@ -119,7 +119,7 @@ const config = {
             position: 'right'
           },
           {
-            href: 'https://github.com/f-aguzzi/tesi',
+            href: 'https://github.com/f-aguzzi/ChemFuseKit',
             label: 'GitHub',
             position: 'right',
           },
@@ -161,7 +161,7 @@ const config = {
             items: [ 
               {
                 label: 'GitHub',
-                href: 'https://github.com/f-aguzzi/tesi',
+                href: 'https://github.com/f-aguzzi/ChemFuseKit',
               },
             ],
           },
