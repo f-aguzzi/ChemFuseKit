@@ -19,7 +19,7 @@ Ringrazio Luca, Andrea e Yewon, che con il loro supporto mi hanno fatto tornare 
 Ringrazio Iqbal, Andrea e Fabio, fedeli compagni di lavori a gruppi, insieme ai quali ho imparato a programmare e a gestire lo sviluppo di *software* strutturati.
 
 
-Ringrazio Luca, Andrea, Xhesika, Erika, Michael, Lorenzo, Luca, Simone, Michele, Giorgio, Mattia, Fabio e tutti gli amici di sempre, che non sono mai mancati per me.
+Ringrazio Luca, Andrea, Xhesika, Erika, Michael, Lorenzo, Luca, Simone, Michele, Giorgio, Mattia, Giambattista, Fabio e tutti gli amici di sempre, che non sono mai mancati per me.
 
 Ringrazio i miei genitori, Alberto e Alessandra, che mi hanno sempre incoraggiato a studiare, fornendomi i mezzi necessari.
 

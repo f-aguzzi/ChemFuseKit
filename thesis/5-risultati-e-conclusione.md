@@ -2,7 +2,7 @@
 
 Nella presente sezione sono presentati e discussi i risultati sia dello sviluppo di ChemFuseKit, che dei casi di studio della sezione precedente. Il tentativo è di rispondere alle domande di ricerca poste all'inizio di questa tesi. Valutando attentamente le informazioni emerse, dovrebbe essere possibile trarre conclusioni significative e formulare nuove domande di ricerca per approfondimenti futuri.
 
-## Risultati importanti nei casi di studio
+## Risultati importanti negli studi di caso
 
 *Come si posiziona ChemFuseKit rispetto ad altre librerie in termini di prestazioni, precisione e utilizzabilità?*
 
@@ -47,4 +47,5 @@ Esistono casi in cui utilizzare soluzioni alternative risulta più conveniente. 
 - *limitazioni causate da Jupyter Notebook*: nonostante sia possibile utilizzare la libreria in puro Python, l'output grafico risulta scomodo e limitato se utilizzato al di fuori di Jupyter Notebook, rendendone l'uso una scelta quasi obbligata, con tutte le limitazioni che ne conseguono.
 
 In conclusione, la costruzione diretta di script basati su librerie più elementari, ad esempio quelle che lo stesso ChemFuseKit usa come dipendenze, può risultare più flessibile e personalizzabile per gli utenti esperti.
+
 
