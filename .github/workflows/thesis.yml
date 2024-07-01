@@ -27,21 +27,22 @@ jobs:
         run: npx mmdc -i thesis/all_files.md -o thesis/all_files.md
 
       - name: Convert all SVG files to PNG
-        run: find thesis -type f -name "*.svg" -exec sh -c 'npx svgexport "$1" "${1%.svg}.png" 1200:800 pad' _ {} \;
+        run: find thesis -type f -name "*.svg" -exec sh -c 'npx svgexport "$1" "${1%.svg}.png"' _ {} \;
 
       - name: Substitute all .svg extensions to .png within the file and reformat
         run: |
           sed -i -e s/\.svg/\.png/g thesis/all_files.md
-          sed -i -e '/!\[.*\]\(.*\.png\)/ s/$/{ style="width: 70%; margin: auto;" }/' thesis/all_files.md
+          sed -i -e '/!\[.*\]\(.*\.png\)/ s/$/{  height=350 }/' thesis/all_files.md
       - name: Run Pandoc
         run: |
           cd thesis
-          pandoc -H disable_float.tex -o tesi_federico_aguzzi.tex all_files.md --variable=linestretch=1.5 -V fontsize=12pt -V lang=it -s
+          pandoc -H disable_float.tex -o tesi_federico_aguzzi.tex all_files.md --variable=linestretch=1.5 -V fontsize=12pt -V lang=it --pdf-engine=lualatex -V twoside -s
 
       - uses: xu-cheng/latex-action@v3
         with:
           working_directory: thesis
           root_file: tesi_federico_aguzzi.tex
+          compiler: lualatex
           
       - uses: actions/upload-artifact@v3
         with:
