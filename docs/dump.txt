@@ -1,0 +1,11 @@
+yarn run v1.22.22
+$ docusaurus build
+[INFO] [en] Creating an optimized production build...
+ℹ Compiling Client
+ℹ Compiling Server
+✔ Server: Compiled successfully in 11.76s
+✔ Client: Compiled successfully in 13.15s
+
+[INFO] Docusaurus version: 3.4.0
+Node version: v20.5.0
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

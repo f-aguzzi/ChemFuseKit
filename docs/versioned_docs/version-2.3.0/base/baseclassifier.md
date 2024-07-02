@@ -20,7 +20,7 @@ BaseClassifier(settings: BaseSettings, data: BaseDataModel)
 
 ## Fields
 
-- `settings`: object of type [`KNNSettings`](/tesi/docs/knn/knnsettings). Contains the settings for
+- `settings`: object of type [`KNNSettings`](../knn/knnsettings). Contains the settings for
   the `BaseClassifier` object. 
 - `data`: object of type [`BaseDataModel`](../base/basedatamodel.md). Contains the data to be analyzed.
 - `model`: a `sklearn` model from `scikit-learn`. Defaults to `None`.

@@ -15,7 +15,7 @@ KNN(settings: KNNSettings, fused_data: LLDFModel)
 ## Constructor parameters
 
 - `fused_data`: object of type [`LLDFModel`](../lldf/lldfmodel.md). Contains the data to be analyzed.
-- `settings`: object of type [`KNNSettings`](knnsettings.md). Contains the settings for
+- `settings`: object of type [`KNNSettings`](./knnsettings.md). Contains the settings for
   the `KNN` object.
 
 ## Fields
